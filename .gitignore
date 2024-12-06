@@ -1,3 +1,6 @@
 # ignore keys file
-env
+.env
 cs307-group16-key
+
+# ignore node modules 
+node_modules/
