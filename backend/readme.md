@@ -9,3 +9,4 @@ node app.js
 ## ToDo
 
 ## Issues
+- Issue when connecting to mongodb -> failure to connect
