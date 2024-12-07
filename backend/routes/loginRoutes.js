@@ -2,12 +2,11 @@ import { Router } from 'express';
 import { config } from 'dotenv';
 config({ path: '../../.env' });
 
-import getDatabase from '../database/connectDatabase.js'
+import database from '../database/connectDatabase.js'
 
-const membersDatabase = getDatabase()
+const usersCollection = database.collection(process.env.MONGO_MEMBERS_COLLECTION)
+
 const loginRouter = Router();
-
-const membersCollectionName = process.env.MONGO_MEMBERS_COLLECTION
 
 loginRouter.get('/', async (req, res) => {
   res.send("Validate login")
@@ -18,10 +17,8 @@ loginRouter.post('/registration', async (req, res) => {
   console.log(`Email: ${email} and Password: ${password}`);
 
   try {
-    const membersCollection = membersDatabase.collection(membersCollectionName)
     const newMember = { email, password }
-
-    await membersCollection.insertOne(newMember)
+    await usersCollection.insertOne(newMember)
 
     res.status(201).json({ message: "Registation complete" })
   }
