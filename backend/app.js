@@ -6,7 +6,7 @@ import loginRouter from './routes/loginRoutes.js'
 config({ path: '../.env' });
 
 const app = express();
-const port = process.env.BACKEND_PORT;
+const port = process.env.PORT;
 
 app.use(express.json())
 
