@@ -3,19 +3,18 @@ import { Router } from 'express';
 import { config } from 'dotenv';
 config({ path: '../../.env' });
 
-import database from '../database/connectMembersDatabase.js'
+import database from '../database/connectDatabase.js'
 
 const membersCollection = database.collection(process.env.MONGO_MEMBERS_COLLECTION);
-const tokensCollection = database.collection(process.env.MONGO_MEMBERS_COLLECTION);
-
+const tokensCollection = database.collection(process.env.MONGO_TOKENS_COLLECTION);
 await tokensCollection.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 900 });
 
 const loginRouter = Router();
 
-const tokenCreation = () => {
-  const token = crypto.createHash('sha256').update(email + password).digest('hex');
+const tokenCreation = (id) => {
+  const token = crypto.createHash('sha256').update(id.toString()).digest('hex');
   const expiresAt = new Date(Date.now());
-  return { token, expiresAt }
+  return { tokenValidation: { token, id }, expiresAt }
 }
 
 loginRouter.post('/', async (req, res) => {
@@ -25,8 +24,9 @@ loginRouter.post('/', async (req, res) => {
     const member = await membersCollection.findOne({ email });
 
     if (member && member.password === password) {
-      await tokensCollection.insertOne(tokenCreation());
-      res.status(200).json({ message: "Successful login", token: token });
+      const tokenDocument = tokenCreation(member._id.toString());
+      await tokensCollection.insertOne(tokenDocument);
+      res.status(200).json({ message: "Successful login", token: tokenDocument.tokenValidation.token });
     }
     else {
       res.status(404).json({ message: "Member not found. Please verify you have the right email and password." });
@@ -37,6 +37,7 @@ loginRouter.post('/', async (req, res) => {
   }
 
 })
+
 
 loginRouter.post('/registration', async (req, res) => {
   const { email, password } = req.body
@@ -57,5 +58,6 @@ loginRouter.post('/registration', async (req, res) => {
     res.status(400).json({ message: "Error during registration with error: ", err })
   }
 })
+
 
 export default loginRouter;

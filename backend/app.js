@@ -1,9 +1,10 @@
 import express from 'express'
 import { config } from 'dotenv'
+config({ path: '../.env' });
 
 import loginRouter from './routes/loginRoutes.js'
+import membersRouter from './routes/membersRoute.js'
 
-config({ path: '../.env' });
 
 const app = express();
 const port = process.env.PORT;
@@ -15,6 +16,10 @@ app.get('/', (req, res) => {
 })
 
 app.use('/login', loginRouter)
+app.use('/members', membersRouter)
+app.use((req, res) => {
+  res.redirect('/')
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

@@ -9,17 +9,28 @@ node app.js
 ## ToDo
 1) Working on registration and login
   - Create registration api [Done]
-  - create login verification api [Done]
-    -> Could add hashing to the password on registration
+  - create login verification api 
+    - Create redirection after successful login
+    - Could add hashing to the password on registration
   - Create tokens to reduce members multiple login [Done]
-    -> Add token as response message on login [Done]
-    -> Add time to live to token [Done]
+    - Add token as response message on login [Done]
+    - Add time to live to token [Done]
+  - Create api for logged in user
+    - Dashboard service
+      - Added authentication [Done]
+    - Create Booking service 
+      - Added authentication [Done]
+    - Edit Booking service 
+      - Added authentication [Done]
+    - Confirm appointments service
+      - Added authentication [Done]
   - Create bookings logic for when logged in (api and database)
-    -> create bookings collection
-    -> create bookings api
+    - create bookings collection
+    - create bookings api
   - Create bookings logic for when logged out (api and database)
-    -> create bookings collection
-    -> create bookings api
+    - create bookings collection
+    - create bookings api
 
 ## Issues
 - Issue when connecting to mongodb -> failure to connect [Fixed]
+- On successful login, who should handle the redirection (frontend or backend)?
