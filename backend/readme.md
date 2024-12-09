@@ -17,16 +17,15 @@ node app.js
     - Add time to live to token [Done]
   - Create api for logged in user
     - Dashboard service
-      - Added authentication [Done]
-    - Create Booking service 
-      - Added authentication [Done]
-    - Edit Booking service 
-      - Added authentication [Done]
-    - Confirm appointments service
-      - Added authentication [Done]
-  - Create bookings logic for when logged in (api and database)
-    - create bookings collection
-    - create bookings api
+    - Create Booking service [Done]
+      - Add authentication [Done]
+      - Add option to create booking [Done]
+    - Edit Booking service [Done]
+      - Add authentication [Done]
+      - Add option to edit booking [Done]
+    - Request appointments service [Done]
+      - Add authentication [Done]
+      - Add option to confirm request for extra booking [Done]
   - Create bookings logic for when logged out (api and database)
     - create bookings collection
     - create bookings api
