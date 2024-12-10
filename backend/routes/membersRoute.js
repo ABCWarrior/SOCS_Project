@@ -1,14 +1,20 @@
 import { Router } from 'express';
 
 import { privatePageAuthentification, logoutSecurity } from '../authentification/tokenAuthentification.js';
-import { createBookingService, editBookingService, getAllAppointmentRequests, deleteAppointmentRequest, deleteBookingService } from '../services/bookingServices.js';
+import { getAllBookingsService, createBookingService, editBookingService, getAllAppointmentRequests, deleteAppointmentRequest, deleteBookingService } from '../services/bookingServices.js';
 import { bookingsEnums } from '../enums/bookingsEnums.js';
 
 const membersRouter = Router();
 
-membersRouter.post('/:id/dashboard', (req) => {
-  if (!privatePageAuthentification(req)) res.redirect(301, '/');
-  res.status(200).json({ message: `Allowed to View ${pageName} Page` });
+membersRouter.get('/:id/dashboard', async (req) => {
+  const { token } = req.body;
+
+  if (!privatePageAuthentification(token, req.params.id)) {
+    res.redirect(301, '/');
+    return;
+  }
+
+  return res.status(200).json(await getAllBookingsService(req.params.id));
 })
 
 membersRouter.post('/:id/edit_booking', async (req, res) => {
@@ -19,9 +25,10 @@ membersRouter.post('/:id/edit_booking', async (req, res) => {
     return
   }
 
-  return await editBookingService(professor, date, startTime, endTime) == bookingsEnums.SUCCESSFUL_BOOKING_EDIT ?
+  const { status } = await editBookingService(req.params.id, professor, date, startTime, endTime);
+  return status == bookingsEnums.SUCCESSFUL_BOOKING_EDIT ?
     res.status(201).json({ message: "Succesfully edited the appointment" }) :
-    res.status(500).json({ message: "Failed to edit booking because of the following error", editBookingsResponse });
+    res.status(500).json({ message: "Failed to edit booking" });
 })
 
 membersRouter.post('/:id/create_booking', async (req, res) => {
@@ -32,9 +39,10 @@ membersRouter.post('/:id/create_booking', async (req, res) => {
     return
   }
 
-  return await createBookingService(professor, date, startTime, endTime) == bookingsEnums.SUCCESSFUL_BOOKING_CREATION ?
-    res.status(201).json({ message: "Succesfullly created an appointment" }) :
-    res.status(500).json({ message: "Failed to create booking because of the following error: ", createBookingResponse });
+  const { status, code } = await createBookingService(req.params.id, professor, date, startTime, endTime);
+  return status == bookingsEnums.SUCCESSFUL_BOOKING_CREATION ?
+    res.status(201).json({ message: "Succesfullly created an appointment", code }) :
+    res.status(500).json({ message: "Failed to create booking" });
 })
 
 membersRouter.post('/:id/deleteAppointment', async (req, res) => {
@@ -45,9 +53,10 @@ membersRouter.post('/:id/deleteAppointment', async (req, res) => {
     return
   }
 
-  return await deleteBookingService(professor, date, startTime, endTime) == bookingsEnums.SUCCESSFUL_BOOKING_DELETION ?
+  const { status } = await deleteBookingService(req.params.id, professor, date, startTime, endTime);
+  return status == bookingsEnums.SUCCESSFUL_BOOKING_DELETION ?
     res.status(201).json({ message: "Succesfully delete booking" }) :
-    res.status(500).json({ message: "Failled to delete booking because of the following error: ", deleteBookingResponse });
+    res.status(500).json({ message: "Failled to delete booking" });
 })
 
 membersRouter.get('/:id/request_appointments', async (req, res) => {
@@ -72,9 +81,10 @@ membersRouter.post('/:id/request_appointments/confirmOrDeny', async (req, res) =
   await deleteAppointmentRequest(req.params.id, professor, date, startTime, endTime);
 
   if (answer) {
-    return await createBookingService(professor, date, startTime, endTime) == bookingsEnums.SUCCESSFUL_BOOKING_CREATION ?
-      res.status(201).json({ message: "Succesfullly created an appointment" }) :
-      res.status(500).json({ message: "Failed to create booking because of the following error: ", createBookingResponse });
+    const { status } = await createBookingService(req.params.id, professor, date, startTime, endTime);
+    return status == bookingsEnums.SUCCESSFUL_BOOKING_CREATION ?
+      res.status(201).json({ message: "Succesfullly created an appointment", code }) :
+      res.status(500).json({ message: "Failed to create booking", error: status });
   }
   else {
     return res.status(201).json({ message: "Succesfully rejected an appointment" })

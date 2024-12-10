@@ -17,10 +17,11 @@ npm run dev
     - Add time to live to token [Done]
 
 2) Working on private pages API [Done for now]
-  - Dashboard service
+  - Dashboard service to view all bookings [Done]
   - Create Booking service [Done]
     - Add authentication [Done]
     - Add option to create booking [Done]
+    - Add code/url to be sent back for booking [Done]
   - Edit Booking service
     - Add authentication [Done]
     - Add option to edit booking [Done]
