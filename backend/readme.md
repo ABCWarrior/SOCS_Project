@@ -15,17 +15,25 @@ node app.js
   - Create tokens to reduce members multiple login [Done]
     - Add token as response message on login [Done]
     - Add time to live to token [Done]
-  - Create api for logged in user
-    - Dashboard service
-    - Create Booking service [Done]
-      - Add authentication [Done]
-      - Add option to create booking [Done]
-    - Edit Booking service [Done]
-      - Add authentication [Done]
-      - Add option to edit booking [Done]
-    - Request appointments service [Done]
-      - Add authentication [Done]
-      - Add option to confirm request for extra booking [Done]
+
+2) Working on private pages API [Done for now]
+  - Dashboard service
+  - Create Booking service [Done]
+    - Add authentication [Done]
+    - Add option to create booking [Done]
+  - Edit Booking service
+    - Add authentication [Done]
+    - Add option to edit booking [Done]
+    - Could add email notification on booking edit
+  - Delete Booking service
+    - Add authentication 
+    - Could add email notification on booking deletion
+  - Request appointments service 
+    - Add authentication [Done]
+    - Add option to confirm request for extra booking [Done]
+    - Could add email notification on accept or reject request
+
+3) Create private page accessible with code/URL
   - Create bookings logic for when logged out (api and database)
     - create bookings collection
     - create bookings api

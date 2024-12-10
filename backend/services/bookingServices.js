@@ -31,7 +31,7 @@ export const createBookingService = async (professorName, date, startTime, endTi
   }
 }
 
-export const editBookingService = async (professorName, date, startTime, endTime) => {
+export const editBookingService = async (professor, date, startTime, endTime) => {
   try {
     const startMoment = moment(startTime, "HH:mm:ss", true);
     const endMoment = moment(endTime, "HH:mm:ss", true);
@@ -48,8 +48,26 @@ export const editBookingService = async (professorName, date, startTime, endTime
     if (overlappingBookings == 0) return bookingsEnums.BOOKINGS_NOT_FOUND_ERROR;
     if (overlappingBookings > 1) return bookingsEnums.OVERLAPPING_SCHEDULE_ERROR;
 
-    await bookingsCollection.updateOne(overlappingBookings[0]._id, { professorName, date, startMoment, endMoment })
+    await bookingsCollection.updateOne(overlappingBookings[0]._id, { professor, date, startMoment, endMoment })
     return bookingsEnums.SUCCESSFUL_BOOKING_EDIT;
+  }
+  catch (err) {
+    console.error(err);
+    return bookingsEnums.DATABASE_OPERATION_ERROR;
+  }
+}
+
+export const deleteBookingService = async (professor, date, startTime, endTime) => {
+  try {
+    const startMoment = moment(startTime, "HH:mm:ss", true);
+    const endMoment = moment(endTime, "HH:mm:ss", true);
+
+    if (!startMoment.isValid() || !endMoment.isValid() || !startMoment.isBefore(endMoment)) {
+      return bookingsEnums.WRONG_SCHEDULE_DATA_ERROR;
+    }
+
+    await bookingsCollection.deleteOne({ professor, date, startTime: startMoment, endTime: endMoment });
+    return bookingsEnums.SUCCESSFUL_BOOKING_DELETION;
   }
   catch (err) {
     console.error(err);
@@ -59,10 +77,20 @@ export const editBookingService = async (professorName, date, startTime, endTime
 
 export const getAllAppointmentRequests = async (id) => {
   try {
-    return await requestAppointmentsCollection.find({ 'requestedAppointment.profId': id }).toArray();
+    return await requestAppointmentsCollection.find({ 'requestedAppointment.id': id }).toArray();
   }
   catch (err) {
-    console.log(err)
+    console.error(err)
     return []
+  }
+}
+
+export const deleteAppointmentRequest = async (id, professor, date, startTime, endTime) => {
+  try {
+    await requestAppointmentsCollection.deleteOne({ requestedAppointment: { id, professor, date, startTime, endTime } })
+  }
+  catch (err) {
+    console.error(err);
+    return;
   }
 }
