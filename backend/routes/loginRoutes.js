@@ -39,7 +39,6 @@ loginRouter.post('/', async (req, res) => {
 
 })
 
-
 loginRouter.post('/registration', async (req, res) => {
   const { email, password } = req.body
 
@@ -59,6 +58,5 @@ loginRouter.post('/registration', async (req, res) => {
     res.status(400).json({ message: "Error during registration with error: ", err })
   }
 })
-
 
 export default loginRouter;

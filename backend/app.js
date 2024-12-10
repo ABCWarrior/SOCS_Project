@@ -5,7 +5,6 @@ config({ path: '../.env' });
 import loginRouter from './routes/loginRoutes.js'
 import membersRouter from './routes/membersRoute.js'
 
-
 const app = express();
 const port = process.env.PORT;
 
@@ -22,5 +21,5 @@ app.use((req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`BookMyProf listening at http://localhost:${port}`);
 });

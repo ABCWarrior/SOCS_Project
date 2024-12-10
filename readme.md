@@ -24,7 +24,8 @@ npm install dotenv
 ```
 Then, set your environment variables for you preferences:
 ```
-PORT = <PORT_NUMBER>
+FRONTEND_PORT = <PORT_NUMBER>
+BACKEND_PORT = <PORT_NUMBER>
 
 MONGO_URI = <URI>
 MONGO_USER = <USER>

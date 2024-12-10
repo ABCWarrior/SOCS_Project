@@ -3,7 +3,7 @@
 ## To run
 ```
 npm install
-node app.js
+npm run dev
 ```
 
 ## ToDo
