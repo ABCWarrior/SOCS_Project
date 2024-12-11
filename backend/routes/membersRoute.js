@@ -20,24 +20,10 @@ membersRouter.get('/:id/dashboard', async (req, res) => {
     res.status(500).json({ message: status, all_bookings })
 })
 
-membersRouter.post('/:id/edit_booking', async (req, res) => {
-  const { token, professor, date, startTime, endTime } = req.body;
-
-  if (!privatePageAuthentication(token, req.params.id)) {
-    res.redirect(301, '/');
-    return
-  }
-
-  const { status } = await editBookingService(req.params.id, professor, date, startTime, endTime);
-  return status == bookingsEnums.SUCCESSFUL_BOOKING_EDIT ?
-    res.status(201).json({ message: "Succesfully edited the appointment" }) :
-    res.status(500).json({ message: "Failed to edit booking" });
-})
-
 membersRouter.post('/:id/create_booking', async (req, res) => {
   const { token, professor, date, startTime, endTime } = req.body;
 
-  if (!privatePageAuthentication(token, req.params.id)) {
+  if (!await privatePageAuthentication(token, req.params.id)) {
     res.redirect(301, '/');
     return
   }
@@ -48,15 +34,29 @@ membersRouter.post('/:id/create_booking', async (req, res) => {
     res.status(500).json({ message: "Failed to create booking" });
 })
 
-membersRouter.post('/:id/deleteAppointment', async (req, res) => {
+membersRouter.post('/:id/edit_booking', async (req, res) => {
   const { token, professor, date, startTime, endTime } = req.body;
 
-  if (!privatePageAuthentication(token, req.params.id)) {
+  if (!await privatePageAuthentication(token, req.params.id)) {
     res.redirect(301, '/');
     return
   }
 
-  const { status } = await deleteBookingService(req.params.id, professor, date, startTime, endTime);
+  const status = await editBookingService(req.params.id, professor, date, startTime, endTime);
+  return status == bookingsEnums.SUCCESSFUL_BOOKING_EDIT ?
+    res.status(201).json({ message: "Succesfully edited the appointment" }) :
+    res.status(500).json({ message: "Failed to edit booking" });
+})
+
+membersRouter.post('/:id/delete_booking', async (req, res) => {
+  const { token, professor, date, startTime, endTime } = req.body;
+
+  if (!await privatePageAuthentication(token, req.params.id)) {
+    res.redirect(301, '/');
+    return
+  }
+
+  const status = await deleteBookingService(req.params.id, professor, date, startTime, endTime);
   return status == bookingsEnums.SUCCESSFUL_BOOKING_DELETION ?
     res.status(201).json({ message: "Succesfully delete booking" }) :
     res.status(500).json({ message: "Failled to delete booking" });
@@ -65,7 +65,7 @@ membersRouter.post('/:id/deleteAppointment', async (req, res) => {
 membersRouter.get('/:id/request_appointments', async (req, res) => {
   const { token } = req.body;
 
-  if (!privatePageAuthentication(token, req.params.id)) {
+  if (!await privatePageAuthentication(token, req.params.id)) {
     res.redirect(301, '/');
     return
   }
@@ -76,7 +76,7 @@ membersRouter.get('/:id/request_appointments', async (req, res) => {
 membersRouter.post('/:id/request_appointments/confirmOrDeny', async (req, res) => {
   const { token, answer, professor, date, startTime, endTime } = req.body;
 
-  if (!privatePageAuthentication(token, req.params.id)) {
+  if (!await privatePageAuthentication(token, req.params.id)) {
     res.redirect(301, '/');
     return
   }
@@ -84,8 +84,8 @@ membersRouter.post('/:id/request_appointments/confirmOrDeny', async (req, res) =
   await deleteAppointmentRequest(req.params.id, professor, date, startTime, endTime);
 
   if (answer) {
-    const { status } = await createBookingService(req.params.id, professor, date, startTime, endTime);
-    return status == bookingsEnums.SUCCESSFUL_BOOKING_CREATION ?
+    const status = await createBookingService(req.params.id, professor, date, startTime, endTime);
+    return status == bookingsEnums.SUCCESSFUL_BOOKING_DELETION ?
       res.status(201).json({ message: "Succesfullly created an appointment", code }) :
       res.status(500).json({ message: "Failed to create booking", error: status });
   }

@@ -7,11 +7,20 @@ const bookingsCollection = database.collection(process.env.MONGO_BOOKINGS_COLLEC
 const requestAppointmentsCollection = database.collection(process.env.MONGO_REQUEST_APPOINTMENTS_COLLECTION);
 
 const hasOverlappingBookings = (bookings, startMoment, endMoment) => {
-  const overlaps = bookings.map(({ docStartTime, docEndTime }) => {
-    if (moment(docStartTime, "HH:mm", true).isBefore(endMoment) && startMoment.isBefore(moment(docEndTime, "HH:mm", true))) return [docStartTime, docEndTime];
+  const overlaps = []
+  bookings.forEach(({ startTime, endTime }) => {
+    if (moment(startTime, "HH:mm", true).isBefore(endMoment) && startMoment.isBefore(moment(endTime, "HH:mm", true))) overlaps.push[docStartTime, docEndTime];
   })
+  console.log(overlaps);//test
+  return overlaps.length == 0 || overlaps == undefined ? false : true;
+}
 
-  return overlaps.length == 0 || overlaps != undefined ? false : true;
+const overlappingBookingsList = (bookings, startMoment, endMoment) => {
+  const overlaps = [];
+  bookings.forEach(({ startTime, endTime, _id }) => {
+    if (moment(startTime, "HH:mm", true).isBefore(endMoment) && startMoment.isBefore(moment(endTime, "HH:mm", true))) overlaps.push(_id);
+  })
+  return overlaps;
 }
 
 export const getBookingDetailsForUser = async (bookingId) => {
@@ -33,15 +42,16 @@ export const getAllBookingsService = async (professorDatabaseId) => {
     return { status: bookingsEnums.DATABASE_OPERATION_ERROR, all_bookings: [] };
   }
 }
-export const createBookingService = async (professorDatabaseId, professorName, date, startTime, endTime) => {
+
+export const createBookingService = async (professorDatabaseId, professor, date, startTime, endTime) => {
   try {
     const startMoment = moment(startTime, "HH:mm", true);
     const endMoment = moment(endTime, "HH:mm", true);
 
     if (!startMoment.isValid() || !endMoment.isValid() || !startMoment.isBefore(endMoment)) return bookingsEnums.WRONG_SCHEDULE_DATA_ERROR;
-    if (hasOverlappingBookings(await bookingsCollection.find({ professorDatabaseId, date }).toArray(), startMoment, endMoment)) return bookingsEnums.OVERLAPPING_SCHEDULE_ERROR;
+    if (hasOverlappingBookings(await bookingsCollection.find({ professorDatabaseId, professor, date }).toArray(), startMoment, endMoment)) return bookingsEnums.OVERLAPPING_SCHEDULE_ERROR;
 
-    const insertionResult = await bookingsCollection.insertOne({ professorDatabaseId, professorName, date, startTime, endTime });
+    const insertionResult = await bookingsCollection.insertOne({ professorDatabaseId, professor, date, startTime, endTime });
     return { status: bookingsEnums.SUCCESSFUL_BOOKING_CREATION, bookingCode: insertionResult.insertedId.toString() };
   }
   catch (err) {
@@ -55,21 +65,13 @@ export const editBookingService = async (professorDatabaseId, professor, date, s
     const startMoment = moment(startTime, "HH:mm", true);
     const endMoment = moment(endTime, "HH:mm", true);
 
-    if (!startMoment.isValid() || !endMoment.isValid() || !startMoment, isBefore(endMoment)) {
-      return bookingsEnums.WRONG_SCHEDULE_DATA_ERROR;
-    }
+    if (!startMoment.isValid() || !endMoment.isValid() || !startMoment.isBefore(endMoment)) return bookingsEnums.WRONG_SCHEDULE_DATA_ERROR;
 
-    const query = {
-      professorDatabaseId,
-      date,
-      $and: [{ startTime: { $lt: endMoment.newDate() }, endTime: { $gt: startMoment.newDate() } }]
-    }
-    const overlappingBookings = await bookingsCollection.find(query).toArray();
+    const overlapsId = overlappingBookingsList(await bookingsCollection.find({ professorDatabaseId, professor, date }).toArray(), startMoment, endMoment);
+    console.log(overlapsId);//test
+    if (overlapsId.length != 1) return bookingsEnums.OVERLAPPING_SCHEDULE_ERROR;
 
-    if (overlappingBookings == 0) return bookingsEnums.BOOKINGS_NOT_FOUND_ERROR;
-    if (overlappingBookings > 1) return bookingsEnums.OVERLAPPING_SCHEDULE_ERROR;
-
-    await bookingsCollection.updateOne(overlappingBookings[0]._id, { professorDatabaseId, professor, date, startMoment, endMoment });
+    await bookingsCollection.updateOne({ _id: overlapsId[0] }, { $set: { professorDatabaseId, professor, date, startTime, endTime } });
     return bookingsEnums.SUCCESSFUL_BOOKING_EDIT;
   }
   catch (err) {
@@ -80,14 +82,12 @@ export const editBookingService = async (professorDatabaseId, professor, date, s
 
 export const deleteBookingService = async (professorDatabaseId, professor, date, startTime, endTime) => {
   try {
-    const startMoment = moment(startTime, "HH:mm:ss", true);
-    const endMoment = moment(endTime, "HH:mm:ss", true);
+    const startMoment = moment(startTime, "HH:mm", true);
+    const endMoment = moment(endTime, "HH:mm", true);
 
-    if (!startMoment.isValid() || !endMoment.isValid() || !startMoment.isBefore(endMoment)) {
-      return bookingsEnums.WRONG_SCHEDULE_DATA_ERROR;
-    }
+    if (!startMoment.isValid() || !endMoment.isValid() || !startMoment.isBefore(endMoment)) return bookingsEnums.WRONG_SCHEDULE_DATA_ERROR;
 
-    await bookingsCollection.deleteOne({ professorDatabaseId, professor, date, startTime: startMoment, endTime: endMoment });
+    await bookingsCollection.deleteOne({ professorDatabaseId, professor, date, startTime, endTime });
     return bookingsEnums.SUCCESSFUL_BOOKING_DELETION;
   }
   catch (err) {
