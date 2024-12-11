@@ -1,7 +1,5 @@
 import crypto from 'crypto';
 import { Router } from 'express';
-import { config } from 'dotenv';
-config({ path: '../../.env' });
 
 import database from '../database/connectDatabase.js'
 
@@ -27,6 +25,7 @@ loginRouter.post('/', async (req, res) => {
     if (member && member.password === password) {
       const tokenDocument = tokenCreation(member._id.toString());
       await tokensCollection.insertOne(tokenDocument);
+      console.log("uniqueId for pages: ", member._id.toString());//test
       res.status(200).json({ message: "Successful login", token: tokenDocument.tokenValidation.token });
     }
     else {
@@ -43,7 +42,7 @@ loginRouter.post('/registration', async (req, res) => {
   const { email, password } = req.body
 
   try {
-    const newMember = { email, password }
+    const newMember = { professor, email, password };
     const member = await membersCollection.findOne({ email });
 
     if (!member) {

@@ -16,7 +16,7 @@ npm run dev
     - Add token as response message on login [Done]
     - Add time to live to token [Done]
 
-2) Working on private pages API [Done for now]
+2) Working on private pages API 
   - Dashboard service to view all bookings [Done]
   - Create Booking service [Done]
     - Add authentication [Done]
@@ -29,15 +29,15 @@ npm run dev
   - Delete Booking service
     - Add authentication 
     - Could add email notification on booking deletion
-  - Request appointments service 
+  - Request appointments service [Done for now] 
     - Add authentication [Done]
     - Add option to confirm request for extra booking [Done]
     - Could add email notification on accept or reject request
+  - Need to add other members booking that you've accepted as part of your bookings
 
 3) Create private page accessible with code/URL
   - Create bookings logic for when logged out (api and database)
-    - create bookings collection
-    - create bookings api
+    
 
 ## Issues
 - Issue when connecting to mongodb -> failure to connect [Fixed]

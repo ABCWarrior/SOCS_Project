@@ -1,26 +1,29 @@
 import { Router } from 'express';
 
-import { privatePageAuthentification, logoutSecurity } from '../authentification/tokenAuthentification.js';
+import { privatePageAuthentication, logoutSecurity } from '../authentification/tokenAuthentification.js';
 import { getAllBookingsService, createBookingService, editBookingService, getAllAppointmentRequests, deleteAppointmentRequest, deleteBookingService } from '../services/bookingServices.js';
 import { bookingsEnums } from '../enums/bookingsEnums.js';
 
 const membersRouter = Router();
 
-membersRouter.get('/:id/dashboard', async (req) => {
+membersRouter.get('/:id/dashboard', async (req, res) => {
   const { token } = req.body;
 
-  if (!privatePageAuthentification(token, req.params.id)) {
+  if (!await privatePageAuthentication(token, req.params.id)) {
     res.redirect(301, '/');
     return;
   }
 
-  return res.status(200).json(await getAllBookingsService(req.params.id));
+  const { status, all_bookings } = await getAllBookingsService(req.params.id);
+  return status == bookingsEnums.SUCCESSFUL_BOOKING_QUERY ?
+    res.status(200).json({ message: status, all_bookings }) :
+    res.status(500).json({ message: status, all_bookings })
 })
 
 membersRouter.post('/:id/edit_booking', async (req, res) => {
   const { token, professor, date, startTime, endTime } = req.body;
 
-  if (!privatePageAuthentification(token, req.params.id)) {
+  if (!privatePageAuthentication(token, req.params.id)) {
     res.redirect(301, '/');
     return
   }
@@ -34,7 +37,7 @@ membersRouter.post('/:id/edit_booking', async (req, res) => {
 membersRouter.post('/:id/create_booking', async (req, res) => {
   const { token, professor, date, startTime, endTime } = req.body;
 
-  if (!privatePageAuthentification(token, req.params.id)) {
+  if (!privatePageAuthentication(token, req.params.id)) {
     res.redirect(301, '/');
     return
   }
@@ -48,7 +51,7 @@ membersRouter.post('/:id/create_booking', async (req, res) => {
 membersRouter.post('/:id/deleteAppointment', async (req, res) => {
   const { token, professor, date, startTime, endTime } = req.body;
 
-  if (!privatePageAuthentification(token, req.params.id)) {
+  if (!privatePageAuthentication(token, req.params.id)) {
     res.redirect(301, '/');
     return
   }
@@ -62,7 +65,7 @@ membersRouter.post('/:id/deleteAppointment', async (req, res) => {
 membersRouter.get('/:id/request_appointments', async (req, res) => {
   const { token } = req.body;
 
-  if (!privatePageAuthentification(token, req.params.id)) {
+  if (!privatePageAuthentication(token, req.params.id)) {
     res.redirect(301, '/');
     return
   }
@@ -73,7 +76,7 @@ membersRouter.get('/:id/request_appointments', async (req, res) => {
 membersRouter.post('/:id/request_appointments/confirmOrDeny', async (req, res) => {
   const { token, answer, professor, date, startTime, endTime } = req.body;
 
-  if (!privatePageAuthentification(token, req.params.id)) {
+  if (!privatePageAuthentication(token, req.params.id)) {
     res.redirect(301, '/');
     return
   }

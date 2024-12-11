@@ -2,9 +2,9 @@ import database from '../database/connectDatabase.js';
 
 const tokensCollection = database.collection(process.env.MONGO_TOKENS_COLLECTION);
 
-export const privatePageAuthentification = (token, id) => {
+export const privatePageAuthentication = async (token, id) => {
   try {
-    return tokensCollection.findOne({ tokenValidation: { token, id } }) ? true : false;
+    return await tokensCollection.findOne({ tokenValidation: { token, id } }) != null ? true : false;
   }
   catch (err) {
     console.error("Error querying token ", err)
