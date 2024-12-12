@@ -73,7 +73,7 @@ membersRouter.get('/:id/request_appointments', async (req, res) => {
   return res.status(200).json(await getAllAppointmentRequests(req.params.id));
 })
 
-membersRouter.post('/:id/request_appointments/confirmOrDeny', async (req, res) => {
+membersRouter.post('/:id/request_appointments/confirm_or_deny', async (req, res) => {
   const { token, answer, professor, date, startTime, endTime } = req.body;
 
   if (!await privatePageAuthentication(token, req.params.id)) {

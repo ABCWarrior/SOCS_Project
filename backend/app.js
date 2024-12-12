@@ -5,6 +5,7 @@ config({ path: '../.env' });
 import loginRouter from './routes/loginRoutes.js';
 import membersRouter from './routes/membersRoute.js';
 import usersRouter from './routes/usersRoute.js';
+import bookingsRouter from './routes/bookingsRoute.js';
 
 const app = express();
 const port = process.env.BACKEND_PORT;
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 app.use('/login', loginRouter);
 app.use('/members', membersRouter);
 app.use('/users', usersRouter);
+app.use('/bookings/', bookingsRouter);
 app.use((req, res) => {
   res.redirect('/')
 });
