@@ -33,9 +33,16 @@ export const getBookingDetailsForUser = async (bookingId) => {
   }
 }
 
-export const getAllBookingsService = async (professorDatabaseId) => {
+export const getAllBookingsService = async (professorDatabaseId, protocol, host) => {
   try {
-    return { status: bookingsEnums.SUCCESSFUL_BOOKING_QUERY, all_bookings: await bookingsCollection.find({ professorDatabaseId }).toArray() }
+    return {
+      status: bookingsEnums.SUCCESSFUL_BOOKING_QUERY, all_bookings:
+        (await bookingsCollection.find({ professorDatabaseId }).toArray()).map(booking => {
+          return {
+            ...booking, url: `${protocol}://${host}/${booking._id}`
+          }
+        })
+    }
   }
   catch (err) {
     console.error(err);
@@ -43,7 +50,7 @@ export const getAllBookingsService = async (professorDatabaseId) => {
   }
 }
 
-export const createBookingService = async (professorDatabaseId, professor, date, startTime, endTime) => {
+export const createBookingService = async (professorDatabaseId, professor, date, startTime, endTime, isRecurring) => {
   try {
     const startMoment = moment(startTime, "HH:mm", true);
     const endMoment = moment(endTime, "HH:mm", true);
@@ -51,7 +58,7 @@ export const createBookingService = async (professorDatabaseId, professor, date,
     if (!startMoment.isValid() || !endMoment.isValid() || !startMoment.isBefore(endMoment)) return bookingsEnums.WRONG_SCHEDULE_DATA_ERROR;
     if (hasOverlappingBookings(await bookingsCollection.find({ professorDatabaseId, professor, date }).toArray(), startMoment, endMoment)) return bookingsEnums.OVERLAPPING_SCHEDULE_ERROR;
 
-    const insertionResult = await bookingsCollection.insertOne({ professorDatabaseId, professor, date, startTime, endTime });
+    const insertionResult = await bookingsCollection.insertOne({ professorDatabaseId, professor, date, startTime, endTime, isRecurring });
     return { status: bookingsEnums.SUCCESSFUL_BOOKING_CREATION, bookingCode: insertionResult.insertedId.toString() };
   }
   catch (err) {
@@ -60,7 +67,7 @@ export const createBookingService = async (professorDatabaseId, professor, date,
   }
 }
 
-export const editBookingService = async (professorDatabaseId, professor, date, startTime, endTime) => {
+export const editBookingService = async (professorDatabaseId, professor, date, startTime, endTime, isRecurring) => {
   try {
     const startMoment = moment(startTime, "HH:mm", true);
     const endMoment = moment(endTime, "HH:mm", true);
@@ -71,7 +78,7 @@ export const editBookingService = async (professorDatabaseId, professor, date, s
     console.log(overlapsId);//test
     if (overlapsId.length != 1) return bookingsEnums.OVERLAPPING_SCHEDULE_ERROR;
 
-    await bookingsCollection.updateOne({ _id: overlapsId[0] }, { $set: { professorDatabaseId, professor, date, startTime, endTime } });
+    await bookingsCollection.updateOne({ _id: overlapsId[0] }, { $set: { professorDatabaseId, professor, date, startTime, endTime, isRecurring } });
     return bookingsEnums.SUCCESSFUL_BOOKING_EDIT;
   }
   catch (err) {

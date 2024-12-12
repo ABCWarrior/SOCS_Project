@@ -14,35 +14,37 @@ membersRouter.get('/:id/dashboard', async (req, res) => {
     return;
   }
 
-  const { status, all_bookings } = await getAllBookingsService(req.params.id);
+  const { status, all_bookings } = await getAllBookingsService(req.params.id, req.protocol, req.get('host'));
   return status == bookingsEnums.SUCCESSFUL_BOOKING_QUERY ?
     res.status(200).json({ message: status, all_bookings }) :
     res.status(500).json({ message: status, all_bookings })
 })
 
 membersRouter.post('/:id/create_booking', async (req, res) => {
-  const { token, professor, date, startTime, endTime } = req.body;
+  // Note here that date can either be a specific date, or a day of the week
+  const { token, professor, date, startTime, endTime, isRecurring } = req.body;
 
   if (!await privatePageAuthentication(token, req.params.id)) {
     res.redirect(301, '/');
     return
   }
 
-  const { status, code } = await createBookingService(req.params.id, professor, date, startTime, endTime);
+  const { status, code } = await createBookingService(req.params.id, professor, date, startTime, endTime, isRecurring);
   return status == bookingsEnums.SUCCESSFUL_BOOKING_CREATION ?
     res.status(201).json({ message: "Succesfullly created an appointment", code }) :
     res.status(500).json({ message: "Failed to create booking" });
 })
 
 membersRouter.post('/:id/edit_booking', async (req, res) => {
-  const { token, professor, date, startTime, endTime } = req.body;
+  // Note here that date can either be a specific date, or a day of the week
+  const { token, professor, date, startTime, endTime, isRecurring } = req.body;
 
   if (!await privatePageAuthentication(token, req.params.id)) {
     res.redirect(301, '/');
     return
   }
 
-  const status = await editBookingService(req.params.id, professor, date, startTime, endTime);
+  const status = await editBookingService(req.params.id, professor, date, startTime, endTime, isRecurring);
   return status == bookingsEnums.SUCCESSFUL_BOOKING_EDIT ?
     res.status(201).json({ message: "Succesfully edited the appointment" }) :
     res.status(500).json({ message: "Failed to edit booking" });

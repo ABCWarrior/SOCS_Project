@@ -21,7 +21,6 @@ loginRouter.post('/', async (req, res) => {
   try {
     const member = await membersCollection.findOne({ email });
 
-    // how to redirect here? I need to redirect to a page while also giving a token
     if (member && member.password === password) {
       const tokenDocument = tokenCreation(member._id.toString());
       await tokensCollection.insertOne(tokenDocument);
