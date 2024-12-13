@@ -16,30 +16,30 @@ npm run dev
     - Add token as response message on login [Done]
     - Add time to live to token [Done]
 
-2) Working on private pages API [Done for now]
+2) Working on private pages API [Add email notifications]
   - Dashboard service to view all bookings [Done]
-  - Create Booking service 
+  - Create Booking service [Done]
     - Add authentication [Done]
     - Add option to create booking [Done]
     - Add code/url to be sent back for booking [Done]
     - Need to add the one-time or recurring booking field [Done -> date field should either be a day of the week, of a specific date]
     - Need to store the URL for ease of sharing [Done -> we generate it instead when the public user needs it]
     - Need to send back both the URL and the code (database id) [Done]
-  - Edit Booking service [Done for now]
+  - Edit Booking service 
     - Add authentication [Done]
     - Add option to edit booking [Done]
-    - Could add email notification on booking edit 
-  - Delete Booking service [Done for now]
+    - Add email notification on booking edit 
+  - Delete Booking service 
     - Add authentication [Done]
-    - Could add email notification on booking deletion
-  - Request appointments service [Done for now] 
+    - Add email notification on booking deletion
+  - Request appointments service 
     - Add authentication [Done]
     - Add option to confirm request for extra booking [Done]
-    - Could add email notification on accept or reject request
+    - Add email notification on accept or reject request [This should be implemented as a feature for ease of life]
   - Need to also allow a member to book an appointment without it being public info [Implement this as a features if time allows]
     - Remove from email guests database if an account is created with said email
     - Need to add other members booking that you've accepted as part of your bookings
-  - Need to show in your created bookings who has accepted your bookings
+  - Need to show in your created bookings who has accepted your bookings [Done]
 
 3) Create dynamically generated bookings url [Done]
   - Create get api to see the booking with unique id [Done]
@@ -49,7 +49,10 @@ npm run dev
   - If an account is created, remove from new account email from guest emails [Implement if time allows]
   - Create semi-private page to display all the accepted bookings of a not logged in user using as input an email [Done]
 
-5) Add logic to handle the query with only booking id
+5) Add api to sign up for appointments 
+  - Need login if you're a member to show all bookings in Booked Timeslots
+  - Add api to confirm attendance
+  - Add api to request new appointment
  
 
 ## Issues
