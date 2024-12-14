@@ -4,7 +4,7 @@ config({ path: '../.env' });
 
 import loginRouter from './routes/loginRoutes.js';
 import membersRouter from './routes/membersRoute.js';
-import guestsRoute from './routes/guestsRoute.js';
+import guestsRouter from './routes/guestsRoute.js';
 import bookingsRouter from './routes/bookingsRoute.js';
 
 const app = express();
@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 
 app.use('/login', loginRouter);
 app.use('/members', membersRouter);
-app.use('/guests', guestsRoute);
+app.use('/guests', guestsRouter);
 app.use('/bookings/', bookingsRouter);
 app.use((req, res) => {
   res.redirect('/')

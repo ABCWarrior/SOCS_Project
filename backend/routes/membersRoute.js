@@ -62,7 +62,7 @@ membersRouter.post('/:id/delete_booking', async (req, res) => {
   const status = await deleteBookingService(req.params.id, professor, date, startTime, endTime);
   return status == bookingsEnums.SUCCESSFUL_BOOKING_DELETION ?
     res.status(201).json({ message: "Succesfully delete booking" }) :
-    res.status(500).json({ message: "Failled to delete booking" });
+    res.status(500).json({ message: "Failed to delete booking" });
 })
 
 membersRouter.get('/:id/request_appointments', async (req, res) => {

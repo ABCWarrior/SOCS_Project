@@ -3,9 +3,9 @@ import { Router } from 'express';
 import { bookingsEnums } from '../enums/bookingsEnums.js';
 import { getGuestAttendance } from '../services/guestsService.js';
 
-const usersRouter = Router();
+const guestsRouter = Router();
 
-usersRouter.get('/', async (req, res) => {
+guestsRouter.get('/', async (req, res) => {
   const { email } = req.body;
   const { status, attendances } = getGuestAttendance(email);
   return status == bookingsEnums.SUCCESSFUL_BOOKING_QUERY ?
@@ -13,4 +13,4 @@ usersRouter.get('/', async (req, res) => {
     res.status(500).json({ message: "Unable to retrieve guest attendances", attendances })
 })
 
-export default usersRouter;
+export default guestsRouter;

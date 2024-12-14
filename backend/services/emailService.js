@@ -11,6 +11,8 @@ const transporter = nodemailer.createTransport({
 })
 
 const sendAutomatedEmail = (subject, message, recipients) => {
+  if (recipients == null || recipients == undefined || recipients.length == 0) return emailEnums.NO_EMAILS_TO_SEND;
+
   const email = {
     from: process.env.EMAIL_ADDRESS,
     to: recipients.join(','),
@@ -18,7 +20,6 @@ const sendAutomatedEmail = (subject, message, recipients) => {
     text: message
   }
 
-  if (recipients == null || recipients == undefined || recipients.length == 0) return emailEnums.NO_EMAILS_TO_SEND;
 
   transporter.sendMail(email, (error) => {
     return !error ? emailEnums.SUCCESSFULLY_SENT_EMAILS : emailEnums.UNABLE_TO_SEND_EMAILS;

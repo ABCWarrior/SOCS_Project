@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { ObjectId } from 'mongodb';
 
 import database from '../database/connectDatabase.js';
 
@@ -7,8 +8,12 @@ const bookingsCollection = database.collection(process.env.MONGO_BOOKINGS_COLLEC
 const bookingsRouter = Router();
 
 bookingsRouter.get('/:id', async (req, res) => {
-  const booking = bookingsCollection.findOne({ _id: req.params.id });
-  return booking != null ? res.status(200).json({ message: "Successful booking query", booking }) : res.status(500).json({ message: "Unable to find booking" })
+  const booking = await bookingsCollection.findOne({ _id: new ObjectId(req.params.id) });
+  return booking != null ? res.status(200).json({
+    message: "Successful booking query",
+    booking: { professor: booking.professor, date: booking.date, startTime: booking.startTime, endTime: booking.endTime }
+  }) :
+    res.status(500).json({ message: "Unable to find booking" })
 })
 
 bookingsRouter.post('/:id', async (req, res) => {
@@ -25,3 +30,5 @@ bookingsRouter.post('/:id', async (req, res) => {
     return res.status(500).json({ message: "Unable to add you as a participant" });
   }
 })
+
+export default bookingsRouter;

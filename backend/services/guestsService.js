@@ -1,6 +1,5 @@
 import database from '../database/connectDatabase.js';
 import { bookingsEnums } from '../enums/bookingsEnums.js';
-import bookingsEnums from '../enums/bookingsEnums.js';
 
 const bookingsCollection = database.collection(process.env.MONGO_BOOKINGS_COLLECTION);
 
