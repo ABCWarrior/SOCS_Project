@@ -35,7 +35,7 @@ npm run dev
   - Request appointments service 
     - Add authentication [Done]
     - Add option to confirm request for extra booking [Done]
-    - Add email notification on accept or reject request [This should be implemented as a feature for ease of life]
+    - Add email notification on accept or reject request [Done]
   - Need to also allow a member to book an appointment without it being public info [For now, typing an email just query all the confirmed timeslots, and requires login if the email is from a member]
     - Need to add other members booking that you've accepted as part of your bookings
   - Need to show in your created bookings who has accepted your timeslots [Done]
