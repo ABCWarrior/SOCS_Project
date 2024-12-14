@@ -16,30 +16,29 @@ npm run dev
     - Add token as response message on login [Done]
     - Add time to live to token [Done]
 
-2) Working on private pages API [Add email notifications]
+2) Working on private pages API [Done]
   - Dashboard service to view all bookings [Done]
   - Create Booking service [Done]
     - Add authentication [Done]
     - Add option to create booking [Done]
     - Add code/url to be sent back for booking [Done]
     - Need to add the one-time or recurring booking field [Done -> date field should either be a day of the week, of a specific date]
-    - Need to store the URL for ease of sharing [Done -> we generate it instead when the public user needs it]
+    - Need to store the URL for ease of sharing [Done -> we generate it instead when the member/user needs it]
     - Need to send back both the URL and the code (database id) [Done]
-  - Edit Booking service 
+  - Edit Booking service [Done]
     - Add authentication [Done]
     - Add option to edit booking [Done]
-    - Add email notification on booking edit 
-  - Delete Booking service 
+    - Add email notification on booking edit [Done]
+  - Delete Booking service [Done]
     - Add authentication [Done]
-    - Add email notification on booking deletion
+    - Add email notification on booking deletion [Done]
   - Request appointments service 
     - Add authentication [Done]
     - Add option to confirm request for extra booking [Done]
     - Add email notification on accept or reject request [This should be implemented as a feature for ease of life]
-  - Need to also allow a member to book an appointment without it being public info [Implement this as a features if time allows]
-    - Remove from email guests database if an account is created with said email
+  - Need to also allow a member to book an appointment without it being public info [For now, typing an email just query all the confirmed timeslots, and requires login if the email is from a member]
     - Need to add other members booking that you've accepted as part of your bookings
-  - Need to show in your created bookings who has accepted your bookings [Done]
+  - Need to show in your created bookings who has accepted your timeslots [Done]
 
 3) Create dynamically generated bookings url [Done]
   - Create get api to see the booking with unique id [Done]

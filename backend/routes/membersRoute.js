@@ -1,8 +1,9 @@
 import { Router } from 'express';
 
 import { privatePageAuthentication, logoutSecurity } from '../authentification/tokenAuthentification.js';
-import { getAllBookingsService, createBookingService, editBookingService, getAllAppointmentRequests, deleteAppointmentRequest, deleteBookingService } from '../services/bookingServices.js';
+import { getAllBookingsService, createBookingService, createBookingServiceWithParticipant, editBookingService, getAllAppointmentRequests, deleteAppointmentRequest, deleteBookingService } from '../services/bookingServices.js';
 import { bookingsEnums } from '../enums/bookingsEnums.js';
+import sendAutomatedEmail from '../services/emailService.js';
 
 const membersRouter = Router();
 
@@ -76,7 +77,7 @@ membersRouter.get('/:id/request_appointments', async (req, res) => {
 })
 
 membersRouter.post('/:id/request_appointments/confirm_or_deny', async (req, res) => {
-  const { token, answer, professor, date, startTime, endTime } = req.body;
+  const { token, answer, professor, date, startTime, endTime, isRecurring, email } = req.body;
 
   if (!await privatePageAuthentication(token, req.params.id)) {
     res.redirect(301, '/');
@@ -86,12 +87,15 @@ membersRouter.post('/:id/request_appointments/confirm_or_deny', async (req, res)
   await deleteAppointmentRequest(req.params.id, professor, date, startTime, endTime);
 
   if (answer) {
-    const status = await createBookingService(req.params.id, professor, date, startTime, endTime);
+    const status = await createBookingServiceWithParticipant(req.params.id, professor, date, startTime, endTime, isRecurring, email);
     return status == bookingsEnums.SUCCESSFUL_BOOKING_DELETION ?
       res.status(201).json({ message: "Succesfullly created an appointment", code }) :
       res.status(500).json({ message: "Failed to create booking", error: status });
   }
   else {
+    sendAutomatedEmail(`${professor} Has Rejected Your Appointment Request`,
+      `${professor} has reejected your appointment request at ${date} from ${startTime} to ${endTime}`,
+      [email])
     return res.status(201).json({ message: "Succesfully rejected an appointment" })
   }
 })
