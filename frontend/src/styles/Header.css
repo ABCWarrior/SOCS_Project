@@ -1,0 +1,57 @@
+/* Header.css */
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    font-family: Arial, sans-serif;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.logo {
+    margin-right: 10px;
+}
+
+.site-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.highlight {
+    color: #ff0000;
+}
+
+.header-nav {
+    margin-right: 40px;
+}
+.header-nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: black;
+    font-size: 1.1rem;
+}
+
+.header-nav a[href="/login"] {
+    color: #ED1B2F;
+}
+
+.header-nav a[href="/register"] {
+    color: black;
+}
+
+.header-nav a[href="/login"]:hover {
+    color: #ff7582;
+}
+
+.header-nav a[href="/register"]:hover {
+    color: #77777A;
+}
