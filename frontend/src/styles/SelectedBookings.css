@@ -1,5 +1,3 @@
-/* Landing.css */
-
 .bookings-container {
     display: flex;
     flex-direction: column;
@@ -13,14 +11,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('../img/mcgill_campus.webp');  /* Add your image path here */
-    background-size: cover;  /* Cover the entire area */
-    background-position: center;  /* Center the image */
-    background-repeat: no-repeat;  /* Prevent image from repeating */
-    position: relative;  /* For overlay effects if needed */
+    background-image: url('../img/mcgill_campus.webp');  
+    background-size: cover; 
+    background-position: center;  
+    background-repeat: no-repeat;
+    position: relative;  
 }
 
-/* Optional: Add a semi-transparent overlay for better text readability */
 .bookings-main::before {
     content: '';
     position: absolute;
@@ -28,7 +25,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.25);  /* Semi-transparent black overlay */
+    background-color: rgba(0, 0, 0, 0.25);  
 }
 
 .content-wrapper {
@@ -37,6 +34,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 1;  /* Ensure content is above the overlay */
+    z-index: 1;  
     position: relative;
 }
