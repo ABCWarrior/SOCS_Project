@@ -1,0 +1,62 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    /* justify-content: space-between; */
+    font-family: Arial, sans-serif;
+}
+
+.create-booking-container {
+    display: flex;
+    font-family: Arial, sans-serif;
+}
+  
+.create-booking-content {
+    margin: 20px;
+    flex-grow: 1;
+}
+  
+.create-title {
+    margin-bottom: 20px;
+}
+  
+.create-booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+  
+.input-field,.dropdown {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+  
+.date-time-container, .time-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+  
+.time-container label {
+    margin-right: 5px;
+}
+  
+.time-dropdown {
+    width: 60px;
+}
+  
+.submit-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+  
+.submit-button:hover {
+    background-color: darkred;
+}
+  

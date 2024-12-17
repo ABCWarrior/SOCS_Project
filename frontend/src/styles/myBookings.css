@@ -1,51 +1,38 @@
-.nav{
+.container {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     font-family: Arial, sans-serif;
 }
 
-.main{
-    flex: 1;
-    display: flex;
-}
 
 .mybookings-container {
     display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
+  }
   
 .content {
     flex: 1;
     padding: 20px;
 }
-
+  
 .header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 20px;
 }
-
+  
 .search-bar {
     padding: 8px;
     width: 200px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-
+  
 .sort-dropdown {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-}  
-
-.bookings-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
 }
 
 /* Responsive design */
