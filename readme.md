@@ -17,7 +17,7 @@ npm -v # should print `10.9.0`
 ```
 If you already have npm, use nvm to change version.
 
-Follow the instructions here if you're not only Linux: https://nodejs.org/en/download/package-manager
+Follow the instructions here if you're not on Linux: https://nodejs.org/en/download/package-manager
 
 ### Install dotenv and create a .env file (for easily getting your api keys)
 ```

@@ -2,5 +2,6 @@
 .env
 cs307-group16-key
 
-# ignore node modules 
+# ignore modules and platform specific files
 node_modules/
+.DS_Store

@@ -6,6 +6,16 @@ npm install
 npm run dev
 ```
 
+### Dates Format
+```
+The "date" field if the booking is:
+  -> Not recurring: YYYY-mm-ddd
+  -> Recurring: A day of the week (e.g. Monday, Tuesday, ...)
+
+The "startTime" and "endTime" fields should be:
+  -> Format: HH:mm
+```
+
 ## ToDo
 1) Working on registration and login [Done]
   - Create registration api [Done]
