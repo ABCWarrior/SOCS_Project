@@ -1,0 +1,72 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.request-booking-container {
+    display: flex;
+    font-family: Arial, sans-serif;
+    background-color: #F6F8F9;
+}
+  
+.request-booking-content {
+    margin: 20px;
+    flex-grow: 1;
+}
+  
+.request-title {
+    margin-bottom: 20px;
+}
+  
+.input-field {
+    padding: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+  
+.time-slot-inputs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+  
+.dropdown {
+    padding: 6px;
+    font-size: 14px;
+}
+  
+.time-dropdown {
+    width: 60px;
+}
+  
+.add-button, .request-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+  
+.add-button:hover, .request-button:hover {
+    background-color: darkred;
+}
+  
+.time-slots-list {
+    margin-top: 15px;
+}
+  
+.time-slots-list ul {
+    list-style: none;
+    padding: 0;
+}
+  
+.time-slots-list li {
+    margin: 5px 0;
+}
+  
