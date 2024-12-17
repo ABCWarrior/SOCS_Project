@@ -1,7 +1,7 @@
 # SOCS Server Project
 
 ## To Get Started
-### Install Node.js
+### Install Node.js on Linux 
 ```
 # installs nvm (Node Version Manager)
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
@@ -16,6 +16,8 @@ node -v # should print `v22.12.0`
 npm -v # should print `10.9.0`
 ```
 If you already have npm, use nvm to change version.
+
+Follow the instructions here if you're not only Linux: https://nodejs.org/en/download/package-manager
 
 ### Install dotenv and create a .env file (for easily getting your api keys)
 ```
