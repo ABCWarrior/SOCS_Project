@@ -1,5 +1,6 @@
+// ./components/Header.js
 import React from 'react';
-import '../styles/Header.css';
+import '../styles/Header.css'; // Assuming some external styling
 import logo from '../img/logo_color.jpg';
 
 const Header = () => {
