@@ -1,13 +1,11 @@
-.sidebar {
+.SideMenu {
     display: flex;
     flex-direction: column;
-    gap: 10px;
     background-color: #F6F8F9;
     padding: 20px;
-    height: 100%;
-  }
+}
   
-  .sidebar-button {
+.SideMenu-button {
     background-color: #77777A;
     color: white;
     border-width: 0;
@@ -17,8 +15,11 @@
     font-size: 16px;
     font-weight: 500;
     border-radius: 4px;
-  }
+    margin-bottom: 14px;
+    margin-top: 0px;
+    text-decoration: none;
+}
   
-  .sidebar-button.active {
+.SideMenu-button.active {
     background-color: red;
 }

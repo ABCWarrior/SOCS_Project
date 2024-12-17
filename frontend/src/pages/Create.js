@@ -35,7 +35,7 @@ const CreateBooking = () => {
             <SideMenu />
 
             <div className="create-booking-content">
-                <h1 className="create-title">Create Booking</h1>
+                {/* <h1 className="create-title">Create Booking</h1> */}
 
                 <form onSubmit={handleSubmit} className="create-booking-form">
                     {/* Meeting Name */}

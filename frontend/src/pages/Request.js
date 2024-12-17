@@ -64,7 +64,7 @@ const RequestBooking = () => {
             <SideMenu />
 
             <div className="request-booking-content">
-                <h1 className="request-title">Request Booking</h1>
+                {/* <h1 className="request-title">Request Booking</h1> */}
 
                 {/* Staff Name Input */}
                 <input
