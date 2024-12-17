@@ -58,9 +58,10 @@ The "startTime" and "endTime" fields should be:
 
 5) Add api to sign up for appointments 
   - Need login if you're a member to show all bookings in Booked Timeslots -> query all confi
-  - Add api to confirm attendance [Done in bookingsRoute]
-  - Add api to request new appointment
+  - Add api to confirm attendance 
+  - Add api to request new appointment [Dont in bookingsRoute]
   - Need to also allow a member to book an appointment without it being public info [For now, typing an email in the search bar for confirmed timeslots query all of them for a user, and requires login if the email is from a member]
+    - Don't fully understand this
 
 6) Deploy website on SOCS Server
 

@@ -94,7 +94,7 @@ membersRouter.post('/:id/request_appointments/confirm_or_deny', async (req, res)
   }
   else {
     sendAutomatedEmail(`${professor} Has Rejected Your Appointment Request`,
-      `${professor} has reejected your appointment request at ${date} from ${startTime} to ${endTime}`,
+      `${professor} has rejected your appointment request at ${date} from ${startTime} to ${endTime}`,
       [email])
     return res.status(201).json({ message: "Succesfully rejected an appointment" })
   }
