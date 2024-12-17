@@ -6,7 +6,7 @@ function Sidebar() {
     return (
         <div className="SideMenu">
             <NavLink
-                to="/myBookings"
+                to="/myBooking"
                 className={({ isActive }) =>
                     isActive ? "SideMenu-button active" : "SideMenu-button"
                 }
@@ -15,12 +15,12 @@ function Sidebar() {
             </NavLink>
 
             <NavLink
-                to="/book"
+                to="/myrequest"
                 className={({ isActive }) =>
                     isActive ? "SideMenu-button active" : "SideMenu-button"
                 }
                 >
-                Book
+                myRequests
             </NavLink>
 
             <NavLink
@@ -32,14 +32,32 @@ function Sidebar() {
                 Create
             </NavLink>
 
-            <NavLink
+            {/* <NavLink
+                to="/modify"
+                className={({ isActive }) =>
+                    isActive ? "SideMenu-button active" : "SideMenu-button"
+                }
+                >
+                Modify Bookings
+            </NavLink> */}
+
+            {/* <NavLink
+                to="/bookings"
+                className={({ isActive }) =>
+                    isActive ? "SideMenu-button active" : "SideMenu-button"
+                }
+                >
+                Book
+            </NavLink> */}
+
+            {/* <NavLink
                 to="/request"
                 className={({ isActive }) =>
                     isActive ? "SideMenu-button active" : "SideMenu-button"
                 }
                 >
                 Request
-            </NavLink>
+            </NavLink> */}
         </div>
     );
 }
