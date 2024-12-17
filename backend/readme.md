@@ -57,9 +57,9 @@ The "startTime" and "endTime" fields should be:
   - Create semi-private page to display all the accepted bookings of a not logged in user using as input an email [Done]
 
 5) Add api to sign up for appointments 
-  - Need login if you're a member to show all bookings in Booked Timeslots -> query all confi
-  - Add api to confirm attendance [Done in bookingsRoute]
-  - Add api to request new appointment
+  - Need login if you're a member to show all bookings in Booked Timeslots -> query all confi [Done] (Secure API takes your login email | Non-Secure API lets you type in email)
+  - Add api to confirm attendance [Subscribe user to any booking they confirm attendance to]
+  - Add api to request new appointment [Done]
   - Need to also allow a member to book an appointment without it being public info [For now, typing an email in the search bar for confirmed timeslots query all of them for a user, and requires login if the email is from a member]
 
 6) Deploy website on SOCS Server

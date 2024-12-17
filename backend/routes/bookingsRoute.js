@@ -4,7 +4,6 @@ import { ObjectId } from 'mongodb';
 import database from '../database/connectDatabase.js';
 
 const bookingsCollection = database.collection(process.env.MONGO_BOOKINGS_COLLECTION);
-const requestAppointmentsCollection = database.collection(process.env.MONGO_REQUEST_APPOINTMENTS_COLLECTION);
 
 const bookingsRouter = Router();
 
@@ -33,7 +32,7 @@ bookingsRouter.post('/:id', async (req, res) => {
 })
 
 // Not sure whether to call this "appointment_request" something else since this is similar to the call in membersRoute
-bookingsRouter.post('/:id/appointment_request', async (req, res) => {
+bookingsRouter.post('/appointment_request/:id', async (req, res) => {
   const { userEmail, professor, date, startTime, endTime } = req.body;
   const professorDatabaseId = req.params.id;
   const result = await createAppointmentRequestService(
