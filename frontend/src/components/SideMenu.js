@@ -14,14 +14,14 @@ function Sidebar() {
                 myBookings
             </NavLink>
 
-            {/* <NavLink
+            <NavLink
                 to="/book"
                 className={({ isActive }) =>
                     isActive ? "SideMenu-button active" : "SideMenu-button"
                 }
                 >
                 Book
-            </NavLink> */}
+            </NavLink>
 
             <NavLink
                 to="/create"
