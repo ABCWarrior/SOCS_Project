@@ -1,0 +1,65 @@
+.calendar-event-container {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .calendar-event-number {
+    font-size: 87px;
+    font-weight: 600;
+    color: #ED1B2F;
+    margin-right: 20px;
+  }
+  
+  .calendar-event-details {
+    flex-grow: 1;
+  }
+  
+  .calendar-event-month {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .calendar-event-professor {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 5px;
+  }
+  
+  .calendar-event-time {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .calendar-event-actions {
+    display: flex;
+    flex-direction: column;
+    margin-left: 200px;
+  }
+  
+  .calendar-event-actions button {
+    margin-bottom: 10px;
+    padding: 2px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: white;
+    background-color: #ED1B2F;
+    border-width: 2px;
+    border-color: transparent;
+  }
+
+  .calendar-event-actions button:hover {
+    transition: background-color 0.3s ease;
+    background-color: transparent;
+    color:#ED1B2F;
+    border-color: #ED1B2F;
+  }

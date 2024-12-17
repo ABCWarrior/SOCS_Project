@@ -1,0 +1,39 @@
+.bookings-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+    font-family: Arial, sans-serif;
+}
+
+.bookings-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../img/mcgill_campus.webp');  
+    background-size: cover; 
+    background-position: center;  
+    background-repeat: no-repeat;
+    position: relative;  
+}
+
+.bookings-main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);  
+}
+
+.content-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;  
+    position: relative;
+}
