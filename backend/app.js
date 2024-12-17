@@ -8,7 +8,7 @@ import guestsRouter from './routes/guestsRoute.js';
 import bookingsRouter from './routes/bookingsRoute.js';
 
 const app = express();
-const hostname = process.env.HOSTNAME;
+const hostname = process.env.HOSTNAME; // change hostname as necessary
 const port = process.env.BACKEND_PORT;
 
 app.use(express.json());
