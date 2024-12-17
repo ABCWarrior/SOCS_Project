@@ -13,14 +13,14 @@ const port = process.env.BACKEND_PORT;
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send(('Landing Page!'));
 })
 
-app.use('/login', loginRouter);
-app.use('/members', membersRouter);
-app.use('/guests', guestsRouter);
-app.use('/bookings', bookingsRouter);
+app.use('/api/login', loginRouter);
+app.use('/api/members', membersRouter);
+app.use('/api/guests', guestsRouter);
+app.use('/api/bookings', bookingsRouter);
 app.use((req, res) => {
   res.redirect('/')
 });
