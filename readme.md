@@ -42,4 +42,6 @@ EMAIL_SERVICE = <AUTOMATED_EMAIL_SERVICE>
 EMAIL_ADDRESS = <AUTOMATED_EMAIL_ADDRESS>
 EMAIL_PASSWORD = <AUTOMATED_EMAIL_PASSWORD>
 ```
+### Install MongoDB Server and MongoDB Shell and make sure it is running
 
+Follow the instructions here to download mongodb on linux: https://www.youtube.com/watch?v=HSIh8UswVVY
