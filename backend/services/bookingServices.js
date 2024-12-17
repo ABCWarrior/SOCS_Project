@@ -175,3 +175,29 @@ export const deleteAppointmentRequest = async (professorDatabaseId, professor, d
     return;
   }
 }
+
+export const createAppointmentRequestService = async (userEmail, professorDatabaseId, professor, date, startTime, endTime) => {
+  try {
+    const insertionResult = await requestAppointmentsCollection.insertOne({
+      requestingEmail: userEmail,
+      requestedAppointment: {
+        professorDatabaseId,
+        professor,
+        date,
+        startTime,
+        endTime
+      }
+    });
+    
+    return { 
+      status: bookingsEnums.SUCCESSFUL_REQUEST_CREATION, 
+      requestId: insertionResult.insertedId.toString() 
+    };
+  } catch (err) {
+    console.error(err);
+    return { 
+      status: bookingsEnums.DATABASE_OPERATION_ERROR, 
+      requestId: "" 
+    };
+  }
+}

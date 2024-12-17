@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import database from '../database/connectDatabase.js';
 
 const bookingsCollection = database.collection(process.env.MONGO_BOOKINGS_COLLECTION);
+const requestAppointmentsCollection = database.collection(process.env.MONGO_REQUEST_APPOINTMENTS_COLLECTION);
 
 const bookingsRouter = Router();
 
@@ -31,4 +32,28 @@ bookingsRouter.post('/:id', async (req, res) => {
   }
 })
 
+// Not sure whether to call this "appointment_request" something else since this is similar to the call in membersRoute
+bookingsRouter.post('/:id/appointment_request', async (req, res) => {
+  const { userEmail, professor, date, startTime, endTime } = req.body;
+  const professorDatabaseId = req.params.id;
+  const result = await createAppointmentRequestService(
+    userEmail,
+    professorDatabaseId, 
+    professor,
+    date,
+    startTime,
+    endTime
+  );
+  
+  if (result.status === bookingsEnums.SUCCESSFUL_REQUEST_CREATION) {
+    return res.status(201).json({ 
+      message: "Successfully created appointment request",
+      requestId: result.requestId 
+    });
+  }
+  
+  return res.status(500).json({ 
+    message: "Failed to create appointment request" 
+  });
+});
 export default bookingsRouter;
