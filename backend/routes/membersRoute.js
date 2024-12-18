@@ -125,9 +125,12 @@ membersRouter.post('/:id/logout', (req, res) => {
   logoutSecurity(req, res);
 })
 
-membersRouter.post('/:id/check_token)', (req, res) => {
+membersRouter.post('/:id/check_token)', async (req, res) => {
   const { token } = req.body;
-  privatePageAuthentication(token, req.params.id);
+  if (!await privatePageAuthentication(token, req.params.id)) {
+    res.redirect(301, '/');
+    return
+  }
 })
 
 
