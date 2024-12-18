@@ -22,15 +22,32 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('professorName');
-    
-    setIsLoggedIn(false);
-    setProfessorName('');
-    
-    window.location.href = '/login';
+  const handleLogout = async () => {
+    try {
+      await fetch('http://localhost:5000/api/login/logout', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+  
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('professorName');
+      
+      document.cookie.split(";").forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+      });
+      
+      setIsLoggedIn(false);
+      setProfessorName('');
+      
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   return (
