@@ -3,26 +3,24 @@ import Sidebar from "../components/SideMenu.js";
 import RequestEvent from "../components/RequestEvent.js";
 import HeaderPriv from '../components/HeaderPriv.js';
 import FooterPriv from '../components/FooterPriv.js';
-import "../styles/myBookings.css"; // Add your page-specific styling here
+import "../styles/myBookings.css";
 
 function MyBookings() {
   const [search, setSearch] = useState("");
   
-  // Example booking data
   const bookings = [
     { number: "05", month: "May", userName: "Student Smith", time: "12:00 - 13:00" },
     { number: "10", month: "June", userName: "Student Johnson", time: "14:00 - 15:00" },
     { number: "20", month: "July", userName: "Student Williams", time: "09:00 - 10:00" },
   ];
 
-  // Filter the bookings based on search input
   const filteredBookings = bookings.filter((booking) =>
     booking.userName.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <div className="container">
-		<header><HeaderPriv/></header>
+		<HeaderPriv/>
       	<main className="mybookings-container">
 			<Sidebar />
 			<div className="content">
@@ -53,7 +51,7 @@ function MyBookings() {
 				</div>
 			</div>
       	</main>
-      	<footer><FooterPriv/></footer>
+      	<div className="footer"><FooterPriv/></div>
     </div>
   );
 }
