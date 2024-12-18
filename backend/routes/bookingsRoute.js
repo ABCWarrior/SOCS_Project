@@ -44,7 +44,6 @@ bookingsRouter.post('/:id/add_participants', async (req, res) => {
   return res.status(500).json({ message: result.message });
 });
 
-// Not sure whether to call this "appointment_request" something else since this is similar to the call in membersRoute
 bookingsRouter.post('/:id/appointment_request', async (req, res) => {
   const { userEmail, professor, date, startTime, endTime } = req.body;
   const professorDatabaseId = req.params.id;
@@ -68,4 +67,5 @@ bookingsRouter.post('/:id/appointment_request', async (req, res) => {
     message: "Failed to create appointment request"
   });
 });
+
 export default bookingsRouter;
