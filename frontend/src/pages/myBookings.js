@@ -8,8 +8,9 @@ import "../styles/myBookings.css";
 function MyBookings() {
     const [search, setSearch] = useState("");
 
+    const token = localStorage.getItem('token');
+    const id = localStorage.getItem('userId')
 
-    // Example booking data
     const bookings = [
         { professor: "Jhon", date: "2024-02-01", startTime: "02:15", endTime: "02:30", isRecurring: false},
         { professor: "Jhon", date: "2024-02-01", startTime: "03:15", endTime: "03:30", isRecurring: false},
@@ -21,16 +22,14 @@ function MyBookings() {
         booking.professor.toLowerCase().includes(search.toLowerCase())
     );
 
-    var token = "eda6dc72e7b43bb1b7b1129f22baaafb3660fc9cdf8861f055e189de92924a1f"
-
 	useEffect(() => {
         const fetchData = async() => {
             try {
-                const response = fetch("http://localhost:5000/api/members/67624ff9e9bba47360fe813d/dashboard", {
+                const response = fetch(`http://localhost:5000/api/members/${id}/dashboard`, {
                     method: "GET",
                     headers: { 
                         "Content-Type": "application/json",
-                        "token": "eda6dc72e7b43bb1b7b1129f22baaafb3660fc9cdf8861f055e189de92924a1f"
+                        "token": token
                     },
                 }). then(response => response.json()).then(data  => console.log(data))
             }
@@ -38,6 +37,8 @@ function MyBookings() {
                 console.log(error);
             }
         }
+
+        fetchData()
     })
 
     return (
