@@ -125,5 +125,4 @@ membersRouter.post('/:id/logout', (req, res) => {
   logoutSecurity(req, res);
 })
 
-
 export default membersRouter
