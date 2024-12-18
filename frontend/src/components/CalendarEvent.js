@@ -40,13 +40,13 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page}
             {page === 'mybookings' ? (
                 <>
                 <NavLink to="/modify" className="modify-button">
-                    Modify Bookings
+                    Modify
                 </NavLink>
                 <button className="cancel-button">Cancel</button>
                 </>
             ) : page === 'myrequests' ? (
                 <>
-                <button className="modify-button">Accept</button>
+                <button className="accept-button">Accept</button>
                 <button className="reschedule-button">Refuse</button>
                 </>
             ) : null}

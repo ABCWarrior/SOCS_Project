@@ -8,7 +8,6 @@ import MyBookings from './pages/myBookings';
 import Create from './pages/Create';
 import Request from './pages/Request';
 import MyRequests from './pages/myRequests';
-import Dashboard from './pages/Dashboard';
 import Modify from './pages/Modify';
 
 function App() {
@@ -24,7 +23,6 @@ function App() {
             <Route path="/create" element={<Create />} />
             <Route path="/request" element={<Request />} />
             <Route path="/myrequests" element={<MyRequests />} />
-            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/modify" element={<Modify />} />
         </Routes>
       </div>
