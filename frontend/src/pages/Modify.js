@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SideMenu from "../components/SideMenu";
-import HeaderPriv from '../components/HeaderPriv.js';
-import FooterPriv from '../components/FooterPriv.js';
+import Header from '../components/Header.js';
+import Footer from '../components/Footer.js';
 import "../styles/Create.css";
 
 const CreateBooking = () => {
@@ -106,7 +106,7 @@ const CreateBooking = () => {
 
   return (
     <div className="container">
-		<HeaderPriv/>
+		<Header/>
         <div className="create-booking-container">
             <SideMenu />
 
@@ -262,7 +262,7 @@ const CreateBooking = () => {
                 </form>
             </div>
         </div>
-        <div className="footer"><FooterPriv/></div>
+        <div className="footer"><Footer/></div>
     </div>
   );
 };

@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import SideMenu from "../components/SideMenu";
-import HeaderPriv from '../components/HeaderPriv.js';
-import FooterPriv from '../components/FooterPriv.js';
+import Header from '../components/Header.js';
+import Footer from '../components/Footer.js';
 import "../styles/Create.css";
 
 const CreateBooking = () => {
+    const token = localStorage.getItem('token');
+    const professor = localStorage.getItem('professorName');
+    const id = localStorage.getItem('userId')
+
     const [formData, setFormData] = useState({
         recurrence: "",
         date: "",
@@ -58,17 +62,11 @@ const CreateBooking = () => {
             date = `${currentYear}-${month}-${day}`;
         }
 
-        var token = "eda6dc72e7b43bb1b7b1129f22baaafb3660fc9cdf8861f055e189de92924a1f";
-        var professor = "Jhon";
         var startTime = `${formData.fromHour.padStart(2, "0")}:${formData.fromMin.padStart(2, "0")}`;
         var endTime = `${formData.toHour.padStart(2, "0")}:${formData.toMin.padStart(2, "0")}`;
 
-        console.log(date);
-        console.log(isRecurring);
-
-
         try {
-            const response = await fetch('http://localhost:5000/api/members/67624ff9e9bba47360fe813d/create_booking', {
+            const response = await fetch(`http://localhost:5000/api/members/${id}/create_booking`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -105,7 +103,7 @@ const CreateBooking = () => {
 
   return (
     <div className="container">
-		<HeaderPriv/>
+		<Header/>
         <div className="create-booking-container">
             <SideMenu />
 
@@ -261,7 +259,7 @@ const CreateBooking = () => {
                 </form>
             </div>
         </div>
-        <div className="footer"><FooterPriv/></div>
+        <div className="footer"><Footer/></div>
     </div>
   );
 };
