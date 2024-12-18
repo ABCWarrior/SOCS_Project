@@ -7,7 +7,7 @@ import SelectedBookings from './pages/SelectedBookings';
 import MyBookings from './pages/myBookings';
 import Create from './pages/Create';
 import Request from './pages/Request';
-import MyRequests from './pages/myRequest';
+import MyRequests from './pages/myRequests';
 import Dashboard from './pages/Dashboard';
 import Modify from './pages/Modify';
 
