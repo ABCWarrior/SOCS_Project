@@ -26,7 +26,7 @@
     position: absolute;
     right: 36px;
     top: 50%; 
-    transform: translateY(-50%);
+    transform: translateY(-40%);
 }
 
 .site-name {
