@@ -53,19 +53,24 @@ const Header = () => {
       <nav className={`header-nav ${isMenuOpen ? 'mobile-menu-open' : ''}`}>
         {isLoggedIn ? (
           <>
-            <span className="logged-in-user">
-              Logged in as <b>{professorName}</b>
-            </span>
-            <a 
-              href="#" 
-              onClick={() => {
-                handleLogout();
-                setIsMenuOpen(false);
-              }}
-            >
-              <b>Logout</b>
-            </a>
-          </>
+          <a 
+            id="register" 
+            href="#" 
+            onClick={() => {
+              handleLogout();
+              setIsMenuOpen(false);
+            }}
+          >
+            <b>Logout</b>
+          </a>
+          <a 
+            id="login"
+            href="/dashboard" 
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <b>Dashboard</b>
+          </a>
+        </>
         ) : (
           <>
             <a 
