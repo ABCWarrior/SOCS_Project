@@ -11,7 +11,10 @@ const Landing = () => {
             <main className="landing-main">
                 <div className="content-wrapper">
                     <h1><i>Book a Meeting with your Prof!</i></h1>
-                    <div className="search-bar">
+                    <div className="search-bar"
+                    style={{ width: "500px",
+                        display: "flex",
+                        border: "none"}}>
                         <div className="search-input-container">
                             <Search className="search-icon" />
                             <input 

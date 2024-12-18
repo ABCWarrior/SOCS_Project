@@ -30,8 +30,12 @@ const Login = () => {
         
         localStorage.setItem('token', data.token);
         localStorage.setItem('userId', data.id);
+        localStorage.setItem('professorName', data.professor);
 
-        navigate('/bookings');
+        document.cookie = `userEmail=${email}; expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+        document.cookie = `userToken=${data.token}; expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+
+        navigate('/mybookings');
       } else {
         setError(data.message || 'Login failed');
       }

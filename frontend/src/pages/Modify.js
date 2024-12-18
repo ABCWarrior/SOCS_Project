@@ -37,16 +37,16 @@ const CreateBooking = () => {
             return;
         }
 
-        var bool;
+        var isRecurring;
         var formatDate;
 
         if(formData.recurrence === "weekly"){
-            bool = true;
+            isRecurring = true;
             formatDate = formData.day
         }
         else{
-            bool = false;
-            const currentYear = new Date().getFullYear();
+            isRecurring = false;
+            const year = new Date().getFullYear();
             const monthNames = [
                 "January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"
@@ -55,25 +55,31 @@ const CreateBooking = () => {
             const month = monthIndex.toString().padStart(2, "0");
         
             const day = formData.date.toString().padStart(2, "0");
-            formatDate = `${currentYear}-${month}-${day}`;
+            formatDate = `${year}-${month}-${day}`;
         }
 
-        const bookingData = {
-            token: "some token",
-            professor: "some professor",
-            date: formatDate,
-            startTime: `${formData.fromHour.padStart(2, "0")}:${formData.fromMin.padStart(2, "0")}`,
-            endTime: `${formData.toHour.padStart(2, "0")}:${formData.toMin.padStart(2, "0")}`,
-            isRecurring: bool
-        };
+        var token = "eda6dc72e7b43bb1b7b1129f22baaafb3660fc9cdf8861f055e189de92924a1f";
+        var professor = "Jhon";
+        var startTime = `${formData.fromHour.padStart(2, "0")}:${formData.fromMin.padStart(2, "0")}`;
+        var endTime = `${formData.toHour.padStart(2, "0")}:${formData.toMin.padStart(2, "0")}`;
+
+        console.log(formatDate);
+        console.log(isRecurring);
 
         try {
-            const response = await fetch(`http:localhost/5000/members/:id/create_booking`, {
+            const response = await fetch(`http://localhost:5000/api/members/67624ff9e9bba47360fe813d/edit_booking`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(bookingData)
+                body: JSON.stringify({
+                    token,
+                    professor,
+                    formatDate,
+                    startTime,
+                    endTime,
+                    isRecurring
+                }),
             });
 
             const result = await response.json();
@@ -87,7 +93,14 @@ const CreateBooking = () => {
             console.error("Error during API call:", err);
         }
 
-        console.log("Form Data Submitted:", bookingData);
+        console.log("Form Data Submitted:", 
+            token,
+            professor,
+            formatDate,
+            startTime,
+            endTime,
+            isRecurring
+        );
         // Add API integration or form processing logic here 
     };
 

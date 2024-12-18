@@ -7,19 +7,43 @@ import sendAutomatedEmail from '../services/emailService.js';
 
 const membersRouter = Router();
 
-membersRouter.get('/:id/dashboard', async (req, res) => {
-  const { token } = req.body;
+// In membersRoute for now but might want to move to loginRoutes?
+membersRouter.get('/name', async (req, res) => {
+  const { email } = req.query;
 
-  if (!await privatePageAuthentication(token, req.params.id)) {
-    res.redirect(301, '/');
-    return;
+  if (!email) {
+    return res.status(400).json({ message: "Email required" });
   }
 
-  const { status, all_bookings } = await getAllBookingsService(req.params.id, req.protocol, req.get('host'));
-  return status == bookingsEnums.SUCCESSFUL_BOOKING_QUERY ?
-    res.status(200).json({ message: status, all_bookings }) :
-    res.status(500).json({ message: status, all_bookings })
-})
+  try {
+    const member = await membersCollection.findOne({ email }, { projection: { professor: 1 } });
+
+    if (!member) {
+      return res.status(404).json({ message: "No member found with this email" });
+    }
+
+    res.status(200).json({ professor: member.professor });
+  } catch (err) {
+    console.error("Error fetching name:", err);
+    res.status(500).json({ message: "Failed to fetch name", error: err.message });
+  }
+});
+
+membersRouter.get('/:id/dashboard', async (req, res) => {   
+    const token = req.query.token; // Extract token from query parameters
+    
+    if (!await privatePageAuthentication(token, req.params.id)) {
+      return res.status(401).json({ 
+        message: 'Unauthorized',
+        redirectUrl: '/' 
+      }); // Send an error response instead of redirecting
+    }
+    
+    const { status, all_bookings } = await getAllBookingsService(req.params.id, req.protocol, req.get('host'));
+    return status == bookingsEnums.SUCCESSFUL_BOOKING_QUERY ?
+      res.status(200).json({ message: status, all_bookings }) :
+      res.status(500).json({ message: status, all_bookings });
+});
 
 membersRouter.post('/:id/create_booking', async (req, res) => {
   // Note here that date can either be a specific date, or a day of the week
