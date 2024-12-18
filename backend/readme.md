@@ -67,3 +67,7 @@ The "startTime" and "endTime" fields should be:
 ## Issues
 - Issue when connecting to mongodb -> failure to connect [Fixed]
 - On successful login, who should handle the redirection (frontend or backend)? [Up to design decision -> I think frontend should handle this]
+- We need to allow edit of dates for bookings so that they can be changed to a different date [Fixed]
+  -> The editBookingService function now verifies if the date from the previous booking and the new booking are the same and the determines overlaps accordingly 
+- We need to also be able to make the conversion from weekdays to actual dates to allow editing and creating new booking to work without overlaps [Fixed]
+  -> The overlaps functions now have a conversion to a day of the week if the meeting is meant to be recurring
