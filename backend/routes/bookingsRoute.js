@@ -31,6 +31,19 @@ bookingsRouter.post('/:id', async (req, res) => {
   }
 })
 
+bookingsRouter.post('/add_participant/:id', async (req, res) => {
+  const { email } = req.body;
+  const meetingID = req.params.id;
+
+  const result = await addParticipantToBookingService(meetingID, email);
+
+  if (result.status === bookingsEnums.SUCCESSFUL_BOOKING_UPDATE) {
+    return res.status(201).json({ message: result.message });
+  }
+
+  return res.status(500).json({ message: result.message });
+});
+
 // Not sure whether to call this "appointment_request" something else since this is similar to the call in membersRoute
 bookingsRouter.post('/appointment_request/:id', async (req, res) => {
   const { userEmail, professor, date, startTime, endTime } = req.body;

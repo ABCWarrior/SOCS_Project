@@ -15,7 +15,6 @@ export const getGuestAttendance = async (email) => {
       }
     }
 
-
     return {
       status: bookingsEnums.SUCCESSFUL_BOOKING_QUERY, attendances: bookingsCollection.find({ participants: { $in: [email] } })
     }

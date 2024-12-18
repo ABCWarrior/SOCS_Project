@@ -65,6 +65,24 @@ membersRouter.post('/:id/delete_booking', async (req, res) => {
     res.status(500).json({ message: "Failed to delete booking" });
 })
 
+membersRouter.get('/:id/request_attendance', async (req, res) => {
+  const { token, email } = req.body;
+
+  if (!await privatePageAuthentication(token, req.params.id)) {
+    res.redirect(301, '/');
+    return;
+  }
+
+  const { status, attendances } = await getMemberAttendance(email);
+
+  if (status === bookingsEnums.SUCCESSFUL_BOOKING_QUERY) {
+    return res.status(200).json({ message: "Successfully fetched attendance data", attendances });
+  } 
+  else {
+    return res.status(500).json({ message: "Failed to fetch attendance data", attendances });
+  }
+});
+
 membersRouter.get('/:id/request_appointments', async (req, res) => {
   const { token } = req.body;
 

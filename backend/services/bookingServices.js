@@ -41,6 +41,21 @@ const overlappingBookingsList = (bookings, startMoment, endMoment) => {
   return overlaps;
 }
 
+export const getMemberAttendance = async (email) => {
+  try {
+    const member = await membersCollection.findOne({ email, password: { $exists: true } })
+    return {
+      status: bookingsEnums.SUCCESSFUL_BOOKING_QUERY, attendances: bookingsCollection.find({ participants: { $in: [email] } })
+    }
+  }
+  catch (err) {
+    console.error(err);
+    return {
+      status: bookingsEnums.DATABASE_OPERATION_ERROR, attendances: []
+    }
+  }
+}
+
 export const getBookingDetailsForUser = async (bookingId) => {
   try {
     return { booking: await bookingsCollection.findOne({ _id: bookingId }) }
@@ -105,6 +120,30 @@ export const createBookingServiceWithParticipant = async (professorDatabaseId, p
     return { status: bookingsEnums.DATABASE_OPERATION_ERROR, bookingCode: "" };
   }
 }
+
+export const addParticipantToBookingService = async (meetingID, email) => {
+  try {
+    const booking = await bookingsCollection.findOne({ meetingID });
+
+    if (!booking) {
+      return { status: bookingsEnums.BOOKING_NOT_FOUND, message: "Booking not found" };
+    }
+
+    if (booking.participants.includes(email)) {
+      return { status: bookingsEnums.PARTICIPANT_ALREADY_ADDED, message: "User is already a participant" };
+    }
+
+    booking.participants.push(email);
+
+    await bookingsCollection.updateOne({ meetingID }, { $set: { participants: booking.participants } });
+
+    return { status: bookingsEnums.SUCCESSFUL_BOOKING_UPDATE, message: "Participant added successfully" };
+  } 
+  catch (err) {
+    console.error(err);
+    return { status: bookingsEnums.DATABASE_OPERATION_ERROR, message: "Failed to add participant" };
+  }
+};
 
 export const editBookingService = async (professorDatabaseId, professor, date, startTime, endTime, isRecurring) => {
   try {
@@ -188,16 +227,17 @@ export const createAppointmentRequestService = async (userEmail, professorDataba
         endTime
       }
     });
-    
-    return { 
-      status: bookingsEnums.SUCCESSFUL_REQUEST_CREATION, 
-      requestId: insertionResult.insertedId.toString() 
+
+    return {
+      status: bookingsEnums.SUCCESSFUL_REQUEST_CREATION,
+      requestId: insertionResult.insertedId.toString()
     };
-  } catch (err) {
+  } 
+  catch (err) {
     console.error(err);
-    return { 
-      status: bookingsEnums.DATABASE_OPERATION_ERROR, 
-      requestId: "" 
+    return {
+      status: bookingsEnums.DATABASE_OPERATION_ERROR,
+      requestId: ""
     };
   }
 }
