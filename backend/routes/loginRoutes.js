@@ -76,20 +76,4 @@ loginRouter.post('/registration', async (req, res) => {
   }
 })
 
-loginRouter.post('/logout', async (req, res) => {
-  const token = req.headers.authorization?.split(' ')[1];
-
-  if (!token) {
-    return res.status(400).json({ message: "No token provided" });
-  }
-
-  try {
-    await tokensCollection.deleteOne({ 'tokenValidation.token': token });
-    res.status(200).json({ message: "Logout successful" });
-  } catch (err) {
-    console.error('Logout error:', err);
-    res.status(500).json({ message: "Unable to logout" });
-  }
-});
-
 export default loginRouter;
