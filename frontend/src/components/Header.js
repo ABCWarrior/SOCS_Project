@@ -53,26 +53,6 @@ const Header = () => {
       <nav className={`header-nav ${isMenuOpen ? 'mobile-menu-open' : ''}`}>
         {isLoggedIn ? (
           <>
-          <a 
-            id="register" 
-            href="#" 
-            onClick={() => {
-              handleLogout();
-              setIsMenuOpen(false);
-            }}
-          >
-            <b>Logout</b>
-          </a>
-          <a 
-            id="login"
-            href="/dashboard" 
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <b>Dashboard</b>
-          </a>
-        </>
-        ) : (
-          <>
             <a 
               id="register" 
               href="/register" 
@@ -86,6 +66,24 @@ const Header = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               <b>Log in</b>
+            </a>
+          </>
+        ) : (
+          <>
+            <a 
+              href="/mybookings" 
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <b>Dashboard</b>
+            </a>
+            <a 
+              href="#" 
+              onClick={() => {
+                handleLogout();
+                setIsMenuOpen(false);
+              }}
+            >
+              <b>Logout</b>
             </a>
           </>
         )}
