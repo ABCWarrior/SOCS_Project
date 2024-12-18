@@ -38,14 +38,14 @@ membersRouter.post('/:id/create_booking', async (req, res) => {
 
 membersRouter.post('/:id/edit_booking', async (req, res) => {
   // Note here that date can either be a specific date, or a day of the week
-  const { token, professor, date, startTime, endTime, isRecurring } = req.body;
+  const { token, bookingId, professor, date, startTime, endTime, isRecurring } = req.body;
 
   if (!await privatePageAuthentication(token, req.params.id)) {
     res.redirect(301, '/');
     return
   }
 
-  const status = await editBookingService(req.params.id, professor, date, startTime, endTime, isRecurring);
+  const status = await editBookingService(req.params.id, bookingId, professor, date, startTime, endTime, isRecurring);
   return status == bookingsEnums.SUCCESSFUL_BOOKING_EDIT ?
     res.status(201).json({ message: "Succesfully edited the appointment" }) :
     res.status(500).json({ message: "Failed to edit booking" });
@@ -77,7 +77,7 @@ membersRouter.get('/:id/request_attendance', async (req, res) => {
 
   if (status === bookingsEnums.SUCCESSFUL_BOOKING_QUERY) {
     return res.status(200).json({ message: "Successfully fetched attendance data", attendances });
-  } 
+  }
   else {
     return res.status(500).json({ message: "Failed to fetch attendance data", attendances });
   }
