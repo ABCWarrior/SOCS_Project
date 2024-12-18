@@ -7,6 +7,28 @@ import sendAutomatedEmail from '../services/emailService.js';
 
 const membersRouter = Router();
 
+// In membersRoute for now but might want to move to loginRoutes?
+membersRouter.get('/name', async (req, res) => {
+  const { email } = req.query;
+
+  if (!email) {
+    return res.status(400).json({ message: "Email required" });
+  }
+
+  try {
+    const member = await membersCollection.findOne({ email }, { projection: { professor: 1 } });
+
+    if (!member) {
+      return res.status(404).json({ message: "No member found with this email" });
+    }
+
+    res.status(200).json({ professor: member.professor });
+  } catch (err) {
+    console.error("Error fetching name:", err);
+    res.status(500).json({ message: "Failed to fetch name", error: err.message });
+  }
+});
+
 membersRouter.get('/:id/dashboard', async (req, res) => {   
     const token = req.query.token; // Extract token from query parameters
     
