@@ -11,6 +11,11 @@ const app = express();
 const hostname = process.env.HOSTNAME; // change hostname as necessary
 const port = process.env.BACKEND_PORT;
 
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
+
 app.use(express.json());
 
 app.get('/api', (req, res) => {

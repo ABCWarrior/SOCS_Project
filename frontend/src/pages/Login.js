@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
 import '../styles/Login.css';
@@ -6,10 +7,38 @@ import '../styles/Login.css';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    // Add login logic here, such as sending the email and password to a server for authentication
-    console.log('Logging in with email:', email, 'and password:', password);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log('Login successful', data);
+        
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.id);
+
+        navigate('/bookings');
+      } else {
+        setError(data.message || 'Login failed');
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('Network error. Please try again.');
+    }
   };
 
   return (
@@ -17,8 +46,9 @@ const Login = () => {
       <Header />
       <main className="login-main">
         <div className="login-container">
-          <div className="login-form">
+          <form className="login-form" onSubmit={handleLogin}>
             <h1>Log in to your account</h1>
+            {error && <div className="error-message">{error}</div>}
             <div className="form-group">
               <label htmlFor="email">Email:</label>
               <input
@@ -27,6 +57,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter email"
+                required
               />
             </div>
             <div className="form-group">
@@ -37,12 +68,13 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter password"
+                required
               />
             </div>
-            <button className="login-button" onClick={handleLogin}>
+            <button type="submit" className="login-button">
               <b>Log in</b>
             </button>
-          </div>
+          </form>
         </div>
       </main>
       <Footer />
