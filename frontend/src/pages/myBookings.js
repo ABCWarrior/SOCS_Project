@@ -11,8 +11,8 @@ function MyBookings() {
 
     // Example booking data
     const bookings = [
-        { professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false},
-        { professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false},
+        { professor: "Jhon", date: "2024-02-01", startTime: "02:15", endTime: "02:30", isRecurring: false},
+        { professor: "Jhon", date: "2024-02-01", startTime: "03:15", endTime: "03:30", isRecurring: false},
         { professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false},
     ];
 
@@ -54,7 +54,6 @@ function MyBookings() {
 
   return (
     <div className="container">
-		{/* <header><HeaderPriv/></header> */}
 		<Header/>
       	<main className="mybookings-container">
 			<Sidebar />
@@ -66,11 +65,7 @@ function MyBookings() {
 						value={search}
 						onChange={(e) => setSearch(e.target.value)}
 						className="search-bar"
-						/>
-					{/* <select className="sort-dropdown">
-						<option value="desc">desc</option>
-						<option value="asc">asc</option>
-					</select> */}
+                    />
 				</div>
 
 				<div className="bookings-list">
