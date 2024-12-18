@@ -11,8 +11,8 @@ function MyBookings() {
 
     // Example booking data
     const bookings = [
-        { professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false},
-        { professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false},
+        { professor: "Jhon", date: "2024-02-01", startTime: "02:15", endTime: "02:30", isRecurring: false},
+        { professor: "Jhon", date: "2024-02-01", startTime: "03:15", endTime: "03:30", isRecurring: false},
         { professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false},
     ];
 
@@ -21,39 +21,39 @@ function MyBookings() {
         booking.professor.toLowerCase().includes(search.toLowerCase())
     );
 
-    // var token = "eda6dc72e7b43bb1b7b1129f22baaafb3660fc9cdf8861f055e189de92924a1f"
+    var token = "eda6dc72e7b43bb1b7b1129f22baaafb3660fc9cdf8861f055e189de92924a1f"
 
-	// useEffect(() => { 
-    //     fetch(`http://localhost:5000/api/members/67624ff9e9bba47360fe813d/dashboard?token=${token}`, {
-    //       method: "GET",
-    //       headers: { 
-    //         "Content-Type": "application/json", 
-    //       },
-    //     })
-    //     .then((response) => {
-    //       if (!response.ok) {
-    //         if (response.status === 401) {
-    //           // Handle unauthorized case, maybe redirect to login
-    //           return response.json().then(data => {
-    //             window.location.href = data.redirectUrl;
-    //             throw new Error('Unauthorized');
-    //           });
-    //         }
-    //         throw new Error(`HTTP error! status: ${response.status}`);
-    //       }
-    //       return response.json();
-    //     })
-    //     .then((data) => {
-    //       console.log("API Response:", data);
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error fetching data:", error);
-    //     }); 
-    //   }, [token]);
+	useEffect(() => { 
+        fetch(`http://localhost:5000/api/members/67624ff9e9bba47360fe813d/dashboard?token=${token}`, {
+          method: "GET",
+          headers: { 
+            "Content-Type": "application/json",
+            "token": "eda6dc72e7b43bb1b7b1129f22baaafb3660fc9cdf8861f055e189de92924a1f"
+          },
+        })
+        .then((response) => {
+          if (!response.ok) {
+            if (response.status === 401) {
+              // Handle unauthorized case, maybe redirect to login
+              return response.json().then(data => {
+                window.location.href = data.redirectUrl;
+                throw new Error('Unauthorized');
+              });
+            }
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("API Response:", data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        }); 
+      }, [token]);
 
   return (
     <div className="container">
-		{/* <header><HeaderPriv/></header> */}
 		<Header/>
       	<main className="mybookings-container">
 			<Sidebar />
@@ -65,11 +65,7 @@ function MyBookings() {
 						value={search}
 						onChange={(e) => setSearch(e.target.value)}
 						className="search-bar"
-						/>
-					{/* <select className="sort-dropdown">
-						<option value="desc">desc</option>
-						<option value="asc">asc</option>
-					</select> */}
+                    />
 				</div>
 
 				<div className="bookings-list">
