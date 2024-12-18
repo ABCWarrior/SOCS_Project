@@ -23,69 +23,57 @@ function MyBookings() {
 
     var token = "eda6dc72e7b43bb1b7b1129f22baaafb3660fc9cdf8861f055e189de92924a1f"
 
-	useEffect(() => { 
-        fetch(`http://localhost:5000/api/members/67624ff9e9bba47360fe813d/dashboard?token=${token}`, {
-          method: "GET",
-          headers: { 
-            "Content-Type": "application/json",
-            "token": "eda6dc72e7b43bb1b7b1129f22baaafb3660fc9cdf8861f055e189de92924a1f"
-          },
-        })
-        .then((response) => {
-          if (!response.ok) {
-            if (response.status === 401) {
-              // Handle unauthorized case, maybe redirect to login
-              return response.json().then(data => {
-                window.location.href = data.redirectUrl;
-                throw new Error('Unauthorized');
-              });
+	useEffect(() => {
+        const fetchData = async() => {
+            try {
+                const response = fetch("http://localhost:5000/api/members/67624ff9e9bba47360fe813d/dashboard", {
+                    method: "GET",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "token": "eda6dc72e7b43bb1b7b1129f22baaafb3660fc9cdf8861f055e189de92924a1f"
+                    },
+                }). then(response => response.json()).then(data  => console.log(data))
             }
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log("API Response:", data);
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        }); 
-      }, [token]);
+            catch (error) {
+                console.log(error);
+            }
+        }
+    })
 
-  return (
-    <div className="container">
-		<Header/>
-      	<main className="mybookings-container">
-			<Sidebar />
-			<div className="content">
-				<div className="header">
-					<input
-						type="text"
-						placeholder="Search"
-						value={search}
-						onChange={(e) => setSearch(e.target.value)}
-						className="search-bar"
-                    />
-				</div>
+    return (
+        <div className="container">
+            <Header/>
+            <main className="mybookings-container">
+                <Sidebar />
+                <div className="content">
+                    <div className="header">
+                        <input
+                            type="text"
+                            placeholder="Search"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            className="search-bar"
+                        />
+                    </div>
 
-				<div className="bookings-list">
-					{filteredBookings.map((booking, index) => (
-						<CalendarEvent
-							key={index}
-							professor={booking.professor}
-							date={booking.date}
-							startTime={booking.startTime}
-							endTime={booking.endTime}
-                            isRecurring={booking.isRecurring}
-                            page="mybookings"
-						/>
-					))}
-				</div>
-			</div>
-      	</main>
-      	<div class="footer"><Footer/></div>
-    </div>
-  );
+                    <div className="bookings-list">
+                        {filteredBookings.map((booking, index) => (
+                            <CalendarEvent
+                                key={index}
+                                professor={booking.professor}
+                                date={booking.date}
+                                startTime={booking.startTime}
+                                endTime={booking.endTime}
+                                isRecurring={booking.isRecurring}
+                                page="mybookings"
+                            />
+                        ))}
+                    </div>
+                </div>
+            </main>
+            <div class="footer"><Footer/></div>
+        </div>
+    );
 }
 
 export default MyBookings;
