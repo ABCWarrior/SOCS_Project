@@ -37,3 +37,9 @@
     z-index: 1; 
     position: relative;
 }
+
+.content-wrapper {
+    font-size: 3rem;
+    text-align: center;
+    color: white;  
+}
