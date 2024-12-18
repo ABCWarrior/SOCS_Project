@@ -47,10 +47,7 @@ h1 {
 }
 
 .search-bar {
-    width: 10000px;
-    display: flex;
     justify-content: center;
-    border: none;
 }
 
 .search-input-container {
