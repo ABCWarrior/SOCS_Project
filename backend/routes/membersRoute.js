@@ -125,4 +125,10 @@ membersRouter.post('/:id/logout', (req, res) => {
   logoutSecurity(req, res);
 })
 
+membersRouter.post('/:id/check_token)', (req, res) => {
+  const { token } = req.body;
+  privatePageAuthentication(token, req.params.id);
+})
+
+
 export default membersRouter
