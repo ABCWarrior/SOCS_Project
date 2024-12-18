@@ -14,6 +14,8 @@ const port = process.env.BACKEND_PORT;
 
 app.use(cors({
   origin: 'http://localhost:3000',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
 

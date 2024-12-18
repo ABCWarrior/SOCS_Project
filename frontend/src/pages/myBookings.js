@@ -22,7 +22,8 @@ function MyBookings() {
 
   return (
     <div className="container">
-		<header><HeaderPriv/></header>
+		{/* <header><HeaderPriv/></header> */}
+		<HeaderPriv/>
       	<main className="mybookings-container">
 			<Sidebar />
 			<div className="content">
@@ -53,7 +54,7 @@ function MyBookings() {
 				</div>
 			</div>
       	</main>
-      	<footer><FooterPriv/></footer>
+      	<div class="footer"><FooterPriv/></div>
     </div>
   );
 }

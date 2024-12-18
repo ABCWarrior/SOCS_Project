@@ -106,7 +106,7 @@ const CreateBooking = () => {
                         name="recurrence"
                         value={formData.recurrence}
                         onChange={handleChange}
-                        className="recurrence-dropdown"
+                        className="dropdown"
                     >
                         <option value="" disabled>
                             Recurrence
@@ -188,7 +188,7 @@ const CreateBooking = () => {
                             name="fromHour"
                             value={formData.fromHour}
                             onChange={handleChange}
-                            className="time-dropdown"
+                            className="dropdown time-dropdown"
                         >
                             <option value="" disabled>Hour</option>
                             {[...Array(24)].map((_, i) => (
@@ -202,7 +202,7 @@ const CreateBooking = () => {
                             name="fromMin"
                             value={formData.fromMin}
                             onChange={handleChange}
-                            className="time-dropdown"
+                            className="dropdown time-dropdown"
                         >
                             <option value="" disabled>Min</option>
                             {[0, 15, 30, 45].map((min) => (
@@ -217,7 +217,7 @@ const CreateBooking = () => {
                             name="toHour"
                             value={formData.toHour}
                             onChange={handleChange}
-                            className="time-dropdown"
+                            className="dropdown time-dropdown"
                         >
                             <option value="" disabled>Hour</option>
                             {[...Array(24)].map((_, i) => (
@@ -231,7 +231,7 @@ const CreateBooking = () => {
                             name="toMin"
                             value={formData.toMin}
                             onChange={handleChange}
-                            className="time-dropdown"
+                            className="dropdown time-dropdown"
                         >
                         <option value="" disabled>Min</option>
                         {[0, 15, 30, 45].map((min) => (

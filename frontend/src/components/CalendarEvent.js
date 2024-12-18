@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from "react-router-dom";
 import '../styles/CalendarEvent.css';
 
 const CalendarEvent = ({ number, month, professorName, time }) => {
@@ -11,8 +12,7 @@ const CalendarEvent = ({ number, month, professorName, time }) => {
         <div className="calendar-event-time">{time}</div>
       </div>
       <div className="calendar-event-actions">
-        <button className="modify-button">Modify</button>
-        <button className="reschedule-button">Reschedule</button>
+        <NavLink to="/modify" className="modify-button"> Modify Bookings </NavLink>
         <button className="cancel-button">Cancel</button>
       </div>
     </div>

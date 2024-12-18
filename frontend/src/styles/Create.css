@@ -32,6 +32,14 @@
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
+.recurrence-dropdown {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 150px;
+}
   
 .date-time-container, .time-container {
     display: flex;
@@ -44,7 +52,10 @@
 }
   
 .time-dropdown {
-    width: 60px;
+    padding: 5px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
   
 .submit-button {

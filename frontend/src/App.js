@@ -4,26 +4,28 @@ import Landing from './pages/Landing';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import SelectedBookings from './pages/SelectedBookings';
-import MyBookings from './pages/myBooking';
+import MyBookings from './pages/myBookings';
 import Create from './pages/Create';
 import Request from './pages/Request';
-import MyRequest from './pages/myRequest';
-import Dashboard from './pages/Dashboard'
+import MyRequests from './pages/myRequest';
+import Dashboard from './pages/Dashboard';
+import Modify from './pages/Modify';
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/bookings" element={<SelectedBookings />} />
-          <Route path="/mybooking" element={<MyBookings />} />
-          <Route path="/create" element={<Create />} />
-          <Route path="/request" element={<Request />} />
-          <Route path="/myrequest" element={<MyRequest />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/bookings" element={<SelectedBookings />} />
+            <Route path="/mybookings" element={<MyBookings />} />
+            <Route path="/create" element={<Create />} />
+            <Route path="/request" element={<Request />} />
+            <Route path="/myrequests" element={<MyRequests />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/modify" element={<Modify />} />
         </Routes>
       </div>
     </Router>
