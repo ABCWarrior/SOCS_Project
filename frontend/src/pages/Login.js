@@ -30,8 +30,9 @@ const Login = () => {
         
         localStorage.setItem('token', data.token);
         localStorage.setItem('userId', data.id);
+        localStorage.setItem('professorName', data.professor);
 
-        navigate('/bookings');
+        navigate('/mybookings');
       } else {
         setError(data.message || 'Login failed');
       }

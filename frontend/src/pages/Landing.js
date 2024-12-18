@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
-import { Search } from 'lucide-react'; // Adding lucide-react for the search icon
+import { Search } from 'lucide-react'; 
 import '../styles/Landing.css';
 
 const Landing = () => {
@@ -11,7 +11,10 @@ const Landing = () => {
             <main className="landing-main">
                 <div className="content-wrapper">
                     <h1><i>Book a Meeting with your Prof!</i></h1>
-                    <div className="search-bar">
+                    <div className="search-bar"
+                    style={{ width: "500px",
+                        display: "flex",
+                        border: "none"}}>
                         <div className="search-input-container">
                             <Search className="search-icon" />
                             <input 

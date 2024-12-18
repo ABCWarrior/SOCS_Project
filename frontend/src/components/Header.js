@@ -1,13 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Header.css';
 import logo from '../img/logo_color.jpg';
 import { Menu, X } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [professorName, setProfessorName] = useState('');
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const storedName = localStorage.getItem('professorName');
+    
+    if (token && storedName) {
+      setIsLoggedIn(true);
+      setProfessorName(storedName);
+    }
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('professorName');
+    
+    setIsLoggedIn(false);
+    setProfessorName('');
+    
+    window.location.href = '/login';
   };
 
   return (
@@ -28,20 +51,39 @@ const Header = () => {
       </div>
 
       <nav className={`header-nav ${isMenuOpen ? 'mobile-menu-open' : ''}`}>
-        <a 
-          id="register" 
-          href="/register" 
-          onClick={() => setIsMenuOpen(false)}
-        >
-          <b>Register</b>
-        </a>
-        <a 
-          id="login" 
-          href="/login" 
-          onClick={() => setIsMenuOpen(false)}
-        >
-          <b>Log in</b>
-        </a>
+        {isLoggedIn ? (
+          <>
+            <span className="logged-in-user">
+              Logged in as <b>{professorName}</b>
+            </span>
+            <a 
+              href="#" 
+              onClick={() => {
+                handleLogout();
+                setIsMenuOpen(false);
+              }}
+            >
+              <b>Logout</b>
+            </a>
+          </>
+        ) : (
+          <>
+            <a 
+              id="register" 
+              href="/register" 
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <b>Register</b>
+            </a>
+            <a 
+              id="login" 
+              href="/login" 
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <b>Log in</b>
+            </a>
+          </>
+        )}
       </nav>
     </header>
   );

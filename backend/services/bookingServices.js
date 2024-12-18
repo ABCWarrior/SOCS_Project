@@ -7,12 +7,17 @@ import sendAutomatedEmail from './emailService.js';
 const bookingsCollection = database.collection(process.env.MONGO_BOOKINGS_COLLECTION)
 const requestAppointmentsCollection = database.collection(process.env.MONGO_REQUEST_APPOINTMENTS_COLLECTION);
 
+const DAYS_OF_THE_WEEK = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
 const hasOverlappingBookings = (bookings, startMoment, endMoment) => {
   const overlaps = []
 
   bookings.forEach((booking) => {
     const currStartMoment = moment(booking.startTime, "HH:mm", true);
     const currEndMoment = moment(booking.endTime, "HH:mm", true);
+    const bookingDate = new Date(booking.date);
+
+    if (isRecurring && DAYS_OF_THE_WEEK[bookingDate.getDay()] != date) return;
 
     if (currStartMoment.isBefore(endMoment) && startMoment.isBefore(currEndMoment) ||
       currStartMoment.isSame(startMoment) ||
@@ -24,12 +29,15 @@ const hasOverlappingBookings = (bookings, startMoment, endMoment) => {
   return overlaps.length == 0 || overlaps == undefined ? false : true;
 }
 
-const overlappingBookingsList = (bookings, startMoment, endMoment) => {
+const overlappingBookingsList = (bookings, startMoment, endMoment, date, isRecurring) => {
   const overlaps = [];
 
   bookings.forEach((booking) => {
     const currStartMoment = moment(booking.startTime, "HH:mm", true);
     const currEndMoment = moment(booking.endTime, "HH:mm", true);
+    const bookingDate = new Date(booking.date);
+
+    if (isRecurring && DAYS_OF_THE_WEEK[bookingDate.getDay()] != date) return;
 
     if (currStartMoment.isBefore(endMoment) && startMoment.isBefore(currEndMoment) ||
       currStartMoment.isSame(startMoment) ||
@@ -89,7 +97,7 @@ export const createBookingService = async (professorDatabaseId, professor, date,
     const endMoment = moment(endTime, "HH:mm", true);
 
     if (!startMoment.isValid() || !endMoment.isValid() || !startMoment.isBefore(endMoment)) return bookingsEnums.WRONG_SCHEDULE_DATA_ERROR;
-    if (hasOverlappingBookings(await bookingsCollection.find({ professorDatabaseId, professor, date }).toArray(), startMoment, endMoment)) return bookingsEnums.OVERLAPPING_SCHEDULE_ERROR;
+    if (hasOverlappingBookings(await bookingsCollection.find({ professorDatabaseId, professor, date }).toArray(), startMoment, endMoment), date, isRecurring) return bookingsEnums.OVERLAPPING_SCHEDULE_ERROR;
 
     const insertionResult = await bookingsCollection.insertOne({ professorDatabaseId, professor, date, startTime, endTime, isRecurring });
     return { status: bookingsEnums.SUCCESSFUL_BOOKING_CREATION, bookingCode: insertionResult.insertedId.toString() };
@@ -106,7 +114,7 @@ export const createBookingServiceWithParticipant = async (professorDatabaseId, p
     const endMoment = moment(endTime, "HH:mm", true);
 
     if (!startMoment.isValid() || !endMoment.isValid() || !startMoment.isBefore(endMoment)) return bookingsEnums.WRONG_SCHEDULE_DATA_ERROR;
-    if (hasOverlappingBookings(await bookingsCollection.find({ professorDatabaseId, professor, date }).toArray(), startMoment, endMoment)) return bookingsEnums.OVERLAPPING_SCHEDULE_ERROR;
+    if (hasOverlappingBookings(await bookingsCollection.find({ professorDatabaseId, professor, date }).toArray(), startMoment, endMoment), date, isRecurring) return bookingsEnums.OVERLAPPING_SCHEDULE_ERROR;
 
     const insertionResult = await bookingsCollection.insertOne({ professorDatabaseId, professor, date, startTime, endTime, isRecurring, participants: [email] });
     sendAutomatedEmail(`${professor} Has Accepted Your Appointment Request`,
@@ -138,23 +146,28 @@ export const addParticipantToBookingService = async (meetingID, email) => {
     await bookingsCollection.updateOne({ meetingID }, { $set: { participants: booking.participants } });
 
     return { status: bookingsEnums.SUCCESSFUL_BOOKING_UPDATE, message: "Participant added successfully" };
-  } 
+  }
   catch (err) {
     console.error(err);
     return { status: bookingsEnums.DATABASE_OPERATION_ERROR, message: "Failed to add participant" };
   }
 };
 
-export const editBookingService = async (professorDatabaseId, professor, date, startTime, endTime, isRecurring) => {
+export const editBookingService = async (bookingId, professorDatabaseId, professor, date, startTime, endTime, isRecurring) => {
   try {
     const startMoment = moment(startTime, "HH:mm", true);
     const endMoment = moment(endTime, "HH:mm", true);
 
     if (!startMoment.isValid() || !endMoment.isValid() || !startMoment.isBefore(endMoment)) return bookingsEnums.WRONG_SCHEDULE_DATA_ERROR;
 
-    const overlappingBookings = overlappingBookingsList(await bookingsCollection.find({ professorDatabaseId, professor, date }).toArray(), startMoment, endMoment);
-    console.log(overlappingBookings);//test
-    if (overlappingBookings.length != 1) return bookingsEnums.OVERLAPPING_SCHEDULE_ERROR;
+    const previousBooking = await bookingsCollection.findOne({ _id: new ObjectId(bookingId) });
+    const overlappingBookings = overlappingBookingsList(await bookingsCollection.find({ professorDatabaseId, professor, date }).toArray(), startMoment, endMoment, date, isRecurring);
+
+    if ((overlappingBookings.length > 1) ||
+      (overlappingBookings.length == 1 && previousBooking.date === date && bookingId !== previousBooking._id.toString()) ||
+      (overlappingBookings.length != 0 && previousBooking.date !== date)) {
+      return bookingsEnums.OVERLAPPING_SCHEDULE_ERROR;
+    }
 
     await bookingsCollection.updateOne({ _id: overlappingBookings[0]._id }, { $set: { professorDatabaseId, professor, date, startTime, endTime, isRecurring } });
 
@@ -232,7 +245,7 @@ export const createAppointmentRequestService = async (userEmail, professorDataba
       status: bookingsEnums.SUCCESSFUL_REQUEST_CREATION,
       requestId: insertionResult.insertedId.toString()
     };
-  } 
+  }
   catch (err) {
     console.error(err);
     return {

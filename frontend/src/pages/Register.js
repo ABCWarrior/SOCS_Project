@@ -93,7 +93,8 @@ const Registration = () => {
                 placeholder="Enter your McGill email"
                 required
               />
-              <small>Must be @mail.mcgill.ca or @mcgill.ca</small>
+              <small style={{ color: '#666'}}> 
+                Must be @mail.mcgill.ca or @mcgill.ca</small>
             </div>
             <div className="form-group">
               <label htmlFor="password">Password:</label>

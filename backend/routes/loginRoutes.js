@@ -34,7 +34,12 @@ loginRouter.post('/', async (req, res) => {
       const tokenDocument = tokenCreation(member._id.toString());
       await tokensCollection.insertOne(tokenDocument);
       console.log("uniqueId for pages: ", member._id.toString());//test
-      res.status(200).json({ message: "Successful login", token: tokenDocument.tokenValidation.token, id: member._id });
+      res.status(200).json({ 
+        message: "Successful login", 
+        token: tokenDocument.tokenValidation.token, 
+        id: member._id,
+        professor: member.professor 
+      });
     }
     else {
       res.status(404).json({ message: "Member not found. Please verify you have the right email and password." });
