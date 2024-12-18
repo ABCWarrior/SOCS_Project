@@ -35,7 +35,6 @@
     border-radius: 4px;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
     .main-content-wrapper {
         flex-direction: column;
