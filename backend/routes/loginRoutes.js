@@ -15,8 +15,17 @@ const tokenCreation = (id) => {
   return { tokenValidation: { token, id }, expiresAt }
 }
 
+const isValidMcGillEmail = (email) => {
+  const mcgillEmailRegex = /^[a-zA-Z0-9._%+-]+@(mail\.mcgill\.ca|mcgill\.ca)$/;
+  return mcgillEmailRegex.test(email);
+};
+
 loginRouter.post('/', async (req, res) => {
   const { email, password } = req.body;
+
+  if (!isValidMcGillEmail(email)) {
+    return res.status(400).json({ message: "Invalid McGill email address" });
+  }
 
   try {
     const member = await membersCollection.findOne({ email });
@@ -39,6 +48,10 @@ loginRouter.post('/', async (req, res) => {
 
 loginRouter.post('/registration', async (req, res) => {
   const { professor, email, password } = req.body
+
+  if (!isValidMcGillEmail(email)) {
+    return res.status(400).json({ message: "Only McGill email addresses (@mail.mcgill.ca or @mcgill.ca) are allowed" });
+  }
 
   try {
     const newMember = { professor, email, password };
