@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
-import { Search } from 'lucide-react'; // Adding lucide-react for the search icon
+import { Search } from 'lucide-react'; 
 import '../styles/Landing.css';
 
 const Landing = () => {
