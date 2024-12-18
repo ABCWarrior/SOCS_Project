@@ -220,7 +220,6 @@ export const deleteBookingService = async (professorDatabaseId, professor, date,
     if (!startMoment.isValid() || !endMoment.isValid() || !startMoment.isBefore(endMoment)) return bookingsEnums.WRONG_SCHEDULE_DATA_ERROR;
 
     const previousBooking = await bookingsCollection.findOne({ professorDatabaseId, professor, date, startTime, endTime });
-    //console.log(previousBooking)//test
     await bookingsCollection.deleteOne({ professorDatabaseId, professor, date, startTime, endTime });
 
     sendAutomatedEmail(`Booking Deletion for ${professor}`,
