@@ -1,12 +1,11 @@
 import { Router } from 'express';
 import { ObjectId } from 'mongodb';
-import cors from 'cors';
 
 import database from '../database/connectDatabase.js';
 
 const bookingsCollection = database.collection(process.env.MONGO_BOOKINGS_COLLECTION);
 
-bookingsRouter.use(cors());
+const bookingsRouter = Router();
 
 bookingsRouter.get('/:id', async (req, res) => {
   const booking = await bookingsCollection.findOne({ _id: new ObjectId(req.params.id) });
