@@ -32,6 +32,7 @@ loginRouter.post('/', async (req, res) => {
     const member = await membersCollection.findOne({ email });
 
     if (member && member.password === password) {
+      // TODO: Make tokenCreation randomized on login
       const tokenDocument = tokenCreation(member._id.toString());
       await tokensCollection.insertOne(tokenDocument);
       console.log("uniqueId for pages: ", member._id.toString());//test
@@ -43,7 +44,8 @@ loginRouter.post('/', async (req, res) => {
       });
     }
     else {
-      res.status(404).json({ message: "Member not found. Please verify you have the right email and password." });
+      // TODO: Could seperate checks to see if email is registered and if it is, wrong password
+      res.status(404).json({ message: "Please verify you have the right email and/or password." });
     }
   }
   catch (err) {
@@ -75,21 +77,5 @@ loginRouter.post('/registration', async (req, res) => {
     res.status(400).json({ message: "Error during registration with error: ", err })
   }
 })
-
-loginRouter.post('/logout', async (req, res) => {
-  const token = req.headers.authorization?.split(' ')[1];
-
-  if (!token) {
-    return res.status(400).json({ message: "No token provided" });
-  }
-
-  try {
-    await tokensCollection.deleteOne({ 'tokenValidation.token': token });
-    res.status(200).json({ message: "Logout successful" });
-  } catch (err) {
-    console.error('Logout error:', err);
-    res.status(500).json({ message: "Unable to logout" });
-  }
-});
 
 export default loginRouter;
