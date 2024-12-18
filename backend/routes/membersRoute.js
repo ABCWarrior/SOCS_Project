@@ -7,19 +7,21 @@ import sendAutomatedEmail from '../services/emailService.js';
 
 const membersRouter = Router();
 
-membersRouter.get('/:id/dashboard', async (req, res) => {
-  const { token } = req.body;
-
-  if (!await privatePageAuthentication(token, req.params.id)) {
-    res.redirect(301, '/');
-    return;
-  }
-
-  const { status, all_bookings } = await getAllBookingsService(req.params.id, req.protocol, req.get('host'));
-  return status == bookingsEnums.SUCCESSFUL_BOOKING_QUERY ?
-    res.status(200).json({ message: status, all_bookings }) :
-    res.status(500).json({ message: status, all_bookings })
-})
+membersRouter.get('/:id/dashboard', async (req, res) => {   
+    const token = req.query.token; // Extract token from query parameters
+    
+    if (!await privatePageAuthentication(token, req.params.id)) {
+      return res.status(401).json({ 
+        message: 'Unauthorized',
+        redirectUrl: '/' 
+      }); // Send an error response instead of redirecting
+    }
+    
+    const { status, all_bookings } = await getAllBookingsService(req.params.id, req.protocol, req.get('host'));
+    return status == bookingsEnums.SUCCESSFUL_BOOKING_QUERY ?
+      res.status(200).json({ message: status, all_bookings }) :
+      res.status(500).json({ message: status, all_bookings });
+});
 
 membersRouter.post('/:id/create_booking', async (req, res) => {
   // Note here that date can either be a specific date, or a day of the week
