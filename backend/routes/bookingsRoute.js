@@ -31,7 +31,7 @@ bookingsRouter.post('/:id', async (req, res) => {
   }
 })
 
-bookingsRouter.post('/add_participant/:id', async (req, res) => {
+bookingsRouter.post('/:id/add_participants', async (req, res) => {
   const { email } = req.body;
   const meetingID = req.params.id;
 
@@ -45,27 +45,27 @@ bookingsRouter.post('/add_participant/:id', async (req, res) => {
 });
 
 // Not sure whether to call this "appointment_request" something else since this is similar to the call in membersRoute
-bookingsRouter.post('/appointment_request/:id', async (req, res) => {
+bookingsRouter.post('/:id/appointment_request', async (req, res) => {
   const { userEmail, professor, date, startTime, endTime } = req.body;
   const professorDatabaseId = req.params.id;
   const result = await createAppointmentRequestService(
     userEmail,
-    professorDatabaseId, 
+    professorDatabaseId,
     professor,
     date,
     startTime,
     endTime
   );
-  
+
   if (result.status === bookingsEnums.SUCCESSFUL_REQUEST_CREATION) {
-    return res.status(201).json({ 
+    return res.status(201).json({
       message: "Successfully created appointment request",
-      requestId: result.requestId 
+      requestId: result.requestId
     });
   }
-  
-  return res.status(500).json({ 
-    message: "Failed to create appointment request" 
+
+  return res.status(500).json({
+    message: "Failed to create appointment request"
   });
 });
 export default bookingsRouter;

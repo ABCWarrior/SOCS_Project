@@ -59,3 +59,12 @@
 .footer-links a:hover {
     text-decoration: underline;
 }
+
+@media screen and (max-width: 768px) {
+    .footer-links {
+        display: none;
+    }
+    .footer-address {
+        display: none;
+    }
+}
