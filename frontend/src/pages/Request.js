@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import SideMenu from "../components/SideMenu";
-import HeaderPriv from '../components/HeaderPriv.js';
-import FooterPriv from '../components/FooterPriv.js';
-import "../styles/Request.css"; // Import the CSS file for styling
+import Header from '../components/Header.js';
+import Footer from '../components/Footer.js';
+import "../styles/Request.css"; 
 
 const RequestBooking = () => {
   const [staffName, setStaffName] = useState("");
@@ -59,7 +59,7 @@ const RequestBooking = () => {
 
   return (
     <div className="container">
-		<header><HeaderPriv/></header>
+		<header><Header/></header>
         <div className="request-booking-container">
             <SideMenu />
 
@@ -192,7 +192,7 @@ const RequestBooking = () => {
                 </button>
             </div>
         </div>
-        <footer><FooterPriv/></footer>
+        <footer><Footer/></footer>
     </div>
   );
 };

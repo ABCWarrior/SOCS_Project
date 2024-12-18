@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/SideMenu";
 import CalendarEvent from "../components/CalendarEvent";
-import HeaderPriv from '../components/HeaderPriv.js';
-import FooterPriv from '../components/FooterPriv.js';
+import Header from '../components/Header.js';
+import Footer from '../components/Footer.js';
 import "../styles/myBookings.css";
 
 function MyBookings() {
@@ -54,7 +54,7 @@ function MyBookings() {
   return (
     <div className="container">
 		{/* <header><HeaderPriv/></header> */}
-		<HeaderPriv/>
+		<Header/>
       	<main className="mybookings-container">
 			<Sidebar />
 			<div className="content">
@@ -87,7 +87,7 @@ function MyBookings() {
 				</div>
 			</div>
       	</main>
-      	<div class="footer"><FooterPriv/></div>
+      	<div class="footer"><Footer/></div>
     </div>
   );
 }
