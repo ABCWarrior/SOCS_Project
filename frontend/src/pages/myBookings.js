@@ -36,6 +36,7 @@ function MyBookings() {
             }
         }
         fetchData()
+        // console.log(bookings._id)//not able to get the id
     });
 
   return (
@@ -64,7 +65,7 @@ function MyBookings() {
                 endTime={booking.endTime}
                 isRecurring={booking.isRecurring}
                 page="mybookings"
-                id={booking._id}
+                // id={booking._id}
               />
             ))}
           </div>

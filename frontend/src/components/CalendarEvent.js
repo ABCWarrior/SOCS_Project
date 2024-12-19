@@ -77,11 +77,36 @@ const requestDecision = async ({ answer, professor, date, startTime, endTime, is
         console.error("Error in setting request decision:", error);    }
 }
 
-const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page, id}) => {
+const book = async ({bookingId}) => {
+    const email = "someone@mcgill.ca"
+
+    try {
+        const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}/add_participants`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email
+            }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            console.log("Booking deleted successfully:", data);
+        } else {
+            console.error("Failed to delete booking:", data.message);
+        }
+    } catch (error) {
+        console.error("Error deleting booking:", error);
+    }
+}
+
+
+const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page}) => {
     var month
     var number
-
-    id.toString()
     
     if(isRecurring){
         number = dayAbbreviations[date]
@@ -104,82 +129,54 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page,
             </div>
 
             <div className="calendar-event-actions">
-                {(() => {
-                    switch(page) {
-                        case 'mybookings':
-                            return (
-                                <>
-                                    <NavLink to="/modify" className="modify-button">
-                                        Modify
-                                    </NavLink>
-                                    <button
-                                        className="cancel-button"
-                                        onClick={() => cancel({
-                                            professor,
-                                            date,
-                                            startTime,
-                                            endTime
-                                        })}
-                                    >
-                                        Cancel
-                                    </button>
-                                </>
-                            );
-        
-                        case 'myrequests':
-                            return (
-                                <>
-                                    <button
-                                        className="accept-button"
-                                        onClick={() => requestDecision({
-                                            answer: true,
-                                            professor,
-                                            date,
-                                            startTime,
-                                            endTime,
-                                            isRecurring
-                                        })}
-                                    >
-                                        Accept
-                                    </button>
-                                    <button
-                                        className="reschedule-button"
-                                        onClick={() => requestDecision({
-                                            answer: false,
-                                            professor,
-                                            date,
-                                            startTime,
-                                            endTime,
-                                            isRecurring
-                                        })}
-                                    >
-                                        Refuse
-                                    </button>
-                                </>
-                            );
-            
-                        // case 'selected':
-                        //     return (
-                        //         <>
-                        //             <button
-                        //                 className="special-action-button"
-                        //                 onClick={() => book({
-                        //                     professor,
-                        //                     date,
-                        //                     startTime,
-                        //                     endTime,
-                        //                     isRecurring
-                        //                 })}
-                        //             >
-                        //                 Book
-                        //             </button>
-                        //         </>
-                        //     );
-        
-                    default:
-                        return null; // Return nothing if the page doesn't match any case
-                    }
-                })}
+                
+                {page === 'mybookings' ? (
+                    <>
+                    <NavLink to="/modify" className="modify-button">
+                        Modify
+                    </NavLink>
+                    <button className="cancel-button"
+                        onClick={() => cancel({
+                            professor,
+                            date,
+                            startTime,
+                            endTime
+                    })}> Cancel</button>
+                    </>
+                ) : page === 'myrequests' ? (
+                    <>
+                    <button className="accept-button"
+                    onClick={() => requestDecision({
+                        answer: true, 
+                        professor, 
+                        date, 
+                        startTime, 
+                        endTime, 
+                        isRecurring
+                    })}>Accept</button>
+                    <button className="reschedule-button"
+                    onClick={() => requestDecision({
+                        answer: false, 
+                        professor, 
+                        date, 
+                        startTime, 
+                        endTime, 
+                        isRecurring
+                    })}>Refuse</button>
+                    </>
+                ) : <>
+                    <NavLink to="/requests" className="modify-button">
+                        Request
+                    </NavLink>
+                    <button className="cancel-button"
+                        onClick={() => book({
+                            professor,
+                            date,
+                            startTime,
+                            endTime
+                    })}> book </button>
+                    </>
+                }
             </div>
         </div>
     );

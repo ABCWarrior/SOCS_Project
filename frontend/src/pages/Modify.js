@@ -4,7 +4,7 @@ import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
 import "../styles/Create.css";
 
-const CreateBooking = () => {
+const Modify = () => {
     const [formData, setFormData] = useState({
         recurrence: "",
         date: "",
@@ -58,22 +58,22 @@ const CreateBooking = () => {
             formatDate = `${year}-${month}-${day}`;
         }
 
-        var token = "eda6dc72e7b43bb1b7b1129f22baaafb3660fc9cdf8861f055e189de92924a1f";
-        var professor = "Jhon";
         var startTime = `${formData.fromHour.padStart(2, "0")}:${formData.fromMin.padStart(2, "0")}`;
         var endTime = `${formData.toHour.padStart(2, "0")}:${formData.toMin.padStart(2, "0")}`;
-
-        console.log(formatDate);
-        console.log(isRecurring);
+        const token = localStorage.getItem('token');
+        const professor = localStorage.getItem('professorName');
+        const id = localStorage.getItem('userId')
+        const bookingId = localStorage.getItem('modifyBookingId');
 
         try {
-            const response = await fetch(`http://localhost:5000/api/members/67624ff9e9bba47360fe813d/edit_booking`, {
+            const response = await fetch(`http://localhost:5000/api/members/${id}/edit_booking`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     token,
+                    bookingId,
                     professor,
                     formatDate,
                     startTime,
@@ -101,7 +101,6 @@ const CreateBooking = () => {
             endTime,
             isRecurring
         );
-        // Add API integration or form processing logic here 
     };
 
   return (
@@ -111,10 +110,7 @@ const CreateBooking = () => {
             <SideMenu />
 
             <div className="create-booking-content">
-
                 <form onSubmit={handleSubmit} className="create-booking-form">
-
-                    {/* Recurrence Dropdown */}
                     <select
                         name="recurrence"
                         value={formData.recurrence}
@@ -128,10 +124,8 @@ const CreateBooking = () => {
                         <option value="weekly">Weekly</option>
                     </select>
 
-                    {/* Date and Month Dropdowns */}
                     <div className="date-time-container">
                         {formData.recurrence === "weekly" ? (
-                            // Day selection for weekly recurrence
                             <select
                                 name="day"
                                 value={formData.day}
@@ -148,7 +142,6 @@ const CreateBooking = () => {
                                 )}
                                 </select>
                         ) : (
-                            // Default Date and Month selection
                             <>
                                 <select
                                     name="date"
@@ -255,7 +248,6 @@ const CreateBooking = () => {
                         </select>
                     </div>
 
-                    {/* Submit Button */}
                     <button type="submit" className="submit-button">
                         Submit
                     </button>
@@ -267,4 +259,4 @@ const CreateBooking = () => {
   );
 };
 
-export default CreateBooking;
+export default Modify;
