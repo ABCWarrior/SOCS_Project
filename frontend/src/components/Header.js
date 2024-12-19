@@ -6,15 +6,11 @@ import { Menu, X } from 'lucide-react';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [professorName, setProfessorName] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const storedName = localStorage.getItem('professorName');
-    
-    if (token && storedName) {
+    if (token) {
       setIsLoggedIn(true);
-      setProfessorName(storedName);
     }
   }, []);
 
@@ -35,7 +31,6 @@ const Header = () => {
   
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
-      localStorage.removeItem('professorName');
       
       document.cookie.split(";").forEach((c) => {
         document.cookie = c
@@ -44,8 +39,6 @@ const Header = () => {
       });
       
       setIsLoggedIn(false);
-      setProfessorName('');
-      
       window.location.href = '/login';
     } catch (error) {
       console.error('Logout failed:', error);
@@ -72,39 +65,39 @@ const Header = () => {
       <nav className={`header-nav ${isMenuOpen ? 'mobile-menu-open' : ''}`}>
         {isLoggedIn ? (
            <>
-           <a 
-             href="/mybookings" 
-             onClick={() => setIsMenuOpen(false)}
-           >
-             <b>Dashboard</b>
-           </a>
-           <a 
-             href="#" 
-             onClick={() => {
-               handleLogout();
-               setIsMenuOpen(false);
-             }}
-           >
-             <b>Logout</b>
-           </a>
-         </>
+             <a 
+               href="/mybookings" 
+               onClick={() => setIsMenuOpen(false)}
+             >
+               <b>Dashboard</b>
+             </a>
+             <a 
+               href="#" 
+               onClick={() => {
+                 handleLogout();
+                 setIsMenuOpen(false);
+               }}
+             >
+               <b>Logout</b>
+             </a>
+           </>
         ) : (
           <>
-          <a 
-            id="register" 
-            href="/register" 
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <b>Register</b>
-          </a>
-          <a 
-            id="login" 
-            href="/login" 
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <b>Log in</b>
-          </a>
-        </>
+            <a 
+              id="register" 
+              href="/register" 
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <b>Register</b>
+            </a>
+            <a 
+              id="login" 
+              href="/login" 
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <b>Log in</b>
+            </a>
+          </>
         )}
       </nav>
     </header>
