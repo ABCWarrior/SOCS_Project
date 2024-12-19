@@ -4,17 +4,23 @@ import logo from '../img/logo_bw.jpg';
 
 const Footer = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [professorName, setProfessorName] = useState('');
 
     useEffect(() => {
         const token = localStorage.getItem('token');
+        const storedProfessorName = localStorage.getItem('professorName');
         if (token) {
             setIsLoggedIn(true);
+            if (storedProfessorName) {
+                setProfessorName(storedProfessorName);
+            }
         }
     }, []);
 
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
+        localStorage.removeItem('professorName');
         setIsLoggedIn(false);
         window.location.href = '/login';
     };
@@ -36,7 +42,10 @@ const Footer = () => {
                 </div>
                 <div className="footer-links">
                     {isLoggedIn ? (
-                        <a href="#" onClick={handleLogout}>Logout</a>
+                        <div className="footer-user-info">
+                            <span className="professor-name">Logged in as {professorName}</span>
+                            <a href="#" onClick={handleLogout}>Logout</a>
+                        </div>
                     ) : (
                         <>
                             <a href="/login">Log In</a>
