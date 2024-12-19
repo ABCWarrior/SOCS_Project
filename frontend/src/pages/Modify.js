@@ -95,6 +95,7 @@ const Modify = () => {
 
         console.log("Form Data Submitted:", 
             token,
+            bookingId,
             professor,
             formatDate,
             startTime,
@@ -187,7 +188,6 @@ const Modify = () => {
                         )}
                     </div>
 
-                    {/* Time Selection */}
                     <div className="time-container">
                         <label>From:</label>
                         <select

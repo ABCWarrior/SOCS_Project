@@ -44,9 +44,8 @@ const cancel = async ({ professor, date, startTime, endTime}) => {
     }
 }
 
-const requestDecision = async ({ answer, professor, date, startTime, endTime, isRecurring }) => {
+const requestDecision = async ({ answer, professor, date, startTime, endTime, isRecurring, email }) => {
     var token = "eda6dc72e7b43bb1b7b1129f22baaafb3660fc9cdf8861f055e189de92924a1f"
-    var email = "a@mcgill.ca"
 
     try {
         const response = await fetch(`http://localhost:5000/api/members/${id}/request_appointments/confirm_or_deny`, {
@@ -104,9 +103,11 @@ const book = async ({bookingId}) => {
 }
 
 
-const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page}) => {
+const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page, bookingId, email}) => {
     var month
     var number
+
+    console.log(bookingId)
     
     if(isRecurring){
         number = dayAbbreviations[date]
@@ -152,7 +153,8 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page}
                         date, 
                         startTime, 
                         endTime, 
-                        isRecurring
+                        isRecurring, 
+                        email
                     })}>Accept</button>
                     <button className="reschedule-button"
                     onClick={() => requestDecision({
