@@ -19,7 +19,7 @@ function MyRequests() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        fetch(`http://127.0.0.1:5000/api/members/${id}/requested_appointments`, {
+        fetch(`http://127.0.0.1:3000/api/members/${id}/requested_appointments`, {
           method: "GET",
           headers: {
             'Content-Type': 'application/json',

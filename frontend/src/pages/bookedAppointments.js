@@ -19,7 +19,7 @@ function Booked() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetch('http://127.0.0.1:5000/api/guests/', {
+        await fetch('http://127.0.0.1:3000/api/guests/', {
           method: "GET",
           headers: {
             'Content-Type': 'application/json',

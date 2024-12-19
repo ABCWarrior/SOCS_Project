@@ -12,18 +12,18 @@ const Intermediary = () => {
   const handleGuestContinue = async (e) => {
     e.preventDefault();
     setError('');
-  
+
     try {
-      const response = await fetch('http://localhost:5000/api/login/check_email', {
+      const response = await fetch('http://127.0.0.1:3000/api/login/check_email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email }),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok && data.exists) {
         console.log('Guest access successful', data);
         localStorage.setItem('guestEmail', email);
@@ -38,7 +38,7 @@ const Intermediary = () => {
       setError('Network error. Please try again.');
     }
   };
-    
+
   const handleLoginRedirect = () => {
     navigate('/login');
   };
@@ -50,9 +50,9 @@ const Intermediary = () => {
         <div className="intermediary-container">
           <form className="intermediary-form" onSubmit={handleGuestContinue}>
             {error && <div className="error-message">{error}</div>}
-            
-            <button 
-              type="button" 
+
+            <button
+              type="button"
               className="login-redirect-button"
               onClick={handleLoginRedirect}
             >

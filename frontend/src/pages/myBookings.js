@@ -21,7 +21,7 @@ function MyBookings() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetch(`http://127.0.0.1:5000/api/members/${id}/dashboard`, {
+        await fetch(`http://127.0.0.1:3000/api/members/${id}/dashboard`, {
           method: "GET",
           headers: {
             'Content-Type': 'application/json',

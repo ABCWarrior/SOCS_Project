@@ -46,7 +46,7 @@ const Request = () => {
     const userEmail = localStorage.getItem('guestEmail');
 
     try {
-      const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}/appointment_request`, {
+      const response = await fetch(`http://127.0.0.1:3000/api/bookings/${bookingId}/appointment_request`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -22,12 +22,12 @@ const Header = () => {
     try {
       const userId = localStorage.getItem('userId');
       const token = localStorage.getItem('token');
-      
+
       if (!userId || !token) {
         throw new Error('No user credentials found');
       }
 
-      const response = await fetch(`http://localhost:5000/api/${userId}/logout`, {
+      const response = await fetch(`http://127.0.0.1:3000/api/${userId}/logout`, {
         method: 'POST',
         headers: {
           'token': token
@@ -39,13 +39,13 @@ const Header = () => {
       }
 
       localStorage.clear();
-      
+
       document.cookie.split(";").forEach((c) => {
         document.cookie = c
           .replace(/^ +/, "")
           .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
       });
-      
+
       setIsLoggedIn(false);
       window.location.href = '/login';
     } catch (error) {
@@ -64,10 +64,10 @@ const Header = () => {
     <header className="header-container">
       <div className="logo-container">
         <a href="/">
-          <img 
-            src={logo} 
-            alt="McGill logo" 
-            className="logo" 
+          <img
+            src={logo}
+            alt="McGill logo"
+            className="logo"
             style={{ width: '250px', height: 'auto' }}
           />
         </a>
@@ -79,35 +79,35 @@ const Header = () => {
 
       <nav className={`header-nav ${isMenuOpen ? 'mobile-menu-open' : ''}`}>
         {isLoggedIn ? (
-           <>
-             <a 
-               href="/mybookings" 
-               onClick={() => setIsMenuOpen(false)}
-             >
-               <b>Dashboard</b>
-             </a>
-             <a 
-               href="#" 
-               onClick={() => {
-                 handleLogout();
-                 setIsMenuOpen(false);
-               }}
-             >
-               <b>Logout</b>
-             </a>
-           </>
+          <>
+            <a
+              href="/mybookings"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <b>Dashboard</b>
+            </a>
+            <a
+              href="#"
+              onClick={() => {
+                handleLogout();
+                setIsMenuOpen(false);
+              }}
+            >
+              <b>Logout</b>
+            </a>
+          </>
         ) : (
           <>
-            <a 
-              id="register" 
-              href="/register" 
+            <a
+              id="register"
+              href="/register"
               onClick={() => setIsMenuOpen(false)}
             >
               <b>Register</b>
             </a>
-            <a 
-              id="login" 
-              href="/login" 
+            <a
+              id="login"
+              href="/login"
               onClick={() => setIsMenuOpen(false)}
             >
               <b>Log in</b>

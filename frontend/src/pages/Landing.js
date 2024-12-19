@@ -13,7 +13,7 @@ const Landing = () => {
     e.preventDefault();
     try {
       console.log(searchCode)
-      const response = await fetch(`http://localhost:5000/api/bookings/${searchCode}`, {
+      const response = await fetch(`http://127.0.0.1:3000/api/bookings/${searchCode}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
