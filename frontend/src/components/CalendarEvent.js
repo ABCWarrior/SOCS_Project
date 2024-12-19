@@ -14,6 +14,7 @@ const dayAbbreviations = {
 
 const token = localStorage.getItem('token');
 const id = localStorage.getItem('userId')
+// const navigate = useNavigate();
 
 const cancel = async ({ professor, date, startTime, endTime }) => {
 
@@ -109,6 +110,7 @@ const book = async ({ bookingId }) => {
       localStorage.setItem('selectedBookingCode', '');
       alert("You have been booked")
       // navigate("/SelectedBookings")
+      window.location.href = "/"
       
     } else {
       console.error("Failed to add participant:", data.message);
