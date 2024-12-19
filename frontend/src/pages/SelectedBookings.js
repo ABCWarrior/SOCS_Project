@@ -31,7 +31,6 @@ const SelectedBookings = () => {
             </div>
         );
     }
-    console.log("parsed booking is", booking._id) //test
 
     return (
         <div className="bookings-container">
