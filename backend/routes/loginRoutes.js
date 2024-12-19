@@ -40,7 +40,8 @@ loginRouter.post('/', async (req, res) => {
         message: "Successful login", 
         token: tokenDocument.tokenValidation.token, 
         id: member._id,
-        professor: member.professor 
+        professor: member.professor, 
+        professorName: member.professor
       });
     }
     else {

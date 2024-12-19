@@ -9,6 +9,7 @@ import Create from './pages/Create';
 import Request from './pages/Request';
 import MyRequests from './pages/myRequests';
 import Modify from './pages/Modify';
+import Intermediary from './pages/Intermediary';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/request" element={<Request />} />
             <Route path="/myrequests" element={<MyRequests />} />
             <Route path="/modify" element={<Modify />} />
+            <Route path="/intermediary" element={<Intermediary />} />
         </Routes>
       </div>
     </Router>

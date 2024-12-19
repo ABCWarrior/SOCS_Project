@@ -23,7 +23,7 @@ const Landing = () => {
 
             if (response.ok) {
                 localStorage.setItem('selectedBooking', JSON.stringify(data.booking));
-                navigate('/selected-bookings');
+                navigate('/intermediary');
             } else {
                 alert(data.message || 'Can\'t find booking');
             }
