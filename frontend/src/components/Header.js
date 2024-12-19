@@ -19,19 +19,26 @@ const Header = () => {
   };
 
   const handleLogout = async () => {
-    const userId = localStorage.getItem('userId');
-  
     try {
-      await fetch(`http://localhost:5000/api/${userId}/logout`, {
+      const userId = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
+      
+      if (!userId || !token) {
+        throw new Error('No user credentials found');
+      }
+
+      const response = await fetch(`http://localhost:5000/api/${userId}/logout`, {
         method: 'POST',
         headers: {
-          'token': localStorage.getItem('token')
+          'token': token
         }
       });
-  
-      localStorage.removeItem('token');
-      localStorage.removeItem('userId');
-      localStorage.removeItem('professorName');
+
+      if (!response.ok) {
+        throw new Error('Logout failed');
+      }
+
+      localStorage.clear();
       
       document.cookie.split(";").forEach((c) => {
         document.cookie = c
@@ -42,7 +49,14 @@ const Header = () => {
       setIsLoggedIn(false);
       window.location.href = '/login';
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error('Logout error:', error);
+      localStorage.clear();
+      document.cookie.split(";").forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+      });
+      window.location.href = '/login';
     }
   };
 
