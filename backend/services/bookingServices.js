@@ -159,10 +159,18 @@ export const createBookingServiceWithParticipant = async (professorDatabaseId, p
 
 export const addParticipantToBookingService = async (meetingID, email) => {
   try {
-    const booking = await bookingsCollection.findOne({ meetingID });
+    console.log(meetingID)
+
+    const booking = await bookingsCollection.findOne({ _id: new ObjectId(meetingID) });
+
+    console.log(booking);
 
     if (!booking) {
       return { status: bookingsEnums.BOOKING_NOT_FOUND, message: "Booking not found" };
+    }
+
+    if (!booking.participants) {
+      booking.participants = [];
     }
 
     if (booking.participants.includes(email)) {
@@ -171,15 +179,18 @@ export const addParticipantToBookingService = async (meetingID, email) => {
 
     booking.participants.push(email);
 
-    await bookingsCollection.updateOne({ meetingID }, { $set: { participants: booking.participants } });
+    await bookingsCollection.updateOne(
+      { _id: new ObjectId(meetingID) },
+      { $set: { participants: booking.participants } }
+    );
 
     return { status: bookingsEnums.SUCCESSFUL_BOOKING_UPDATE, message: "Participant added successfully" };
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err);
     return { status: bookingsEnums.DATABASE_OPERATION_ERROR, message: "Failed to add participant" };
   }
 };
+
 
 export const editBookingService = async (professorDatabaseId, bookingId, professor, date, startTime, endTime, isRecurring) => {
   try {
