@@ -66,7 +66,7 @@ loginRouter.post('/registration', async (req, res) => {
     const newMember = { professor, email, password };
     const member = await membersCollection.findOne({ email });
 
-    if (!member) {
+    if (!member || !member.password) {
       await membersCollection.insertOne(newMember);
       res.status(201).json({ message: "Successful Registration" })
     }
