@@ -18,14 +18,23 @@ const Landing = () => {
                     'Content-Type': 'application/json'
                 }
             });
-
+    
             const data = await response.json();
-
+    
             if (response.ok) {
                 localStorage.setItem('selectedBooking', JSON.stringify(data.booking));
                 navigate('/intermediary');
             } else {
-                alert(data.message || 'Can\'t find booking');
+                switch (response.status) {
+                    case 400:
+                        alert('Invalid booking code format. Please check the code and try again.');
+                        break;
+                    case 404:
+                        alert('Booking not found. Please check the code and try again.');
+                        break;
+                    default:
+                        alert(data.message || 'An error occurred while searching for the booking');
+                }
             }
         } catch (error) {
             console.error('Search error:', error);
