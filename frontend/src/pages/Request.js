@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
 import "../styles/Request.css";
+import { Navigate } from "react-router-dom";
 
 const Request = () => {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         date: "",
         month: "",
@@ -68,11 +72,15 @@ const Request = () => {
 
             if (response.ok) {
                 console.log("Booking request successfully:", result.message);
+                alert("Successful request!")
+                navigate("/SelectedBookings")
             } else {
                 console.error("Failed to request booking:", result.message);
+                alert("Something went wrong please try again.")
             }
         } catch (err) {
             console.error("Error during API call:", err);
+            alert("Something went wrong please try again.")
         }
 
         console.log("Form Data Submitted:", 
@@ -80,7 +88,8 @@ const Request = () => {
             professor, 
             date, 
             startTime, 
-            endTime
+            endTime,
+            bookingId
         );
     };
 

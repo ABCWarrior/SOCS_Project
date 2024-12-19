@@ -79,6 +79,7 @@ const requestDecision = async ({ answer, professor, date, startTime, endTime, is
 
 // BOOKING!
 const book = async ({ bookingId }) => {
+<<<<<<< HEAD
   let email = ''
   if (localStorage.getItem('isGuest'))
   {
@@ -88,6 +89,9 @@ const book = async ({ bookingId }) => {
   {
     email = localStorage.getItem('userEmail')
   }
+=======
+  const email = localStorage.getItem('guestEmail');
+>>>>>>> 26c980b4412c6a0a0a3348850ca53ae994acf63f
 
   console.log(email)
   
@@ -188,10 +192,7 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page,
                 <>
                     <button className="cancel-button"
                         onClick={() => book({
-                            professor,
-                            date,
-                            startTime,
-                            endTime
+                          bookingId
                     })}> book </button>
                     <NavLink to="/request" 
                         onClick={() => {

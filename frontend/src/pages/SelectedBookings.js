@@ -12,7 +12,6 @@ const SelectedBookings = () => {
             try {
                 const parsedBooking = JSON.parse(storedBooking);
                 setBooking(parsedBooking);
-                // console.log("parsed booking is", parsedBooking) //test
             } catch (error) {
                 console.error('Error parsing booking:', error);
             }
@@ -46,7 +45,7 @@ const SelectedBookings = () => {
                             endTime={booking.endTime}
                             isRecurring={booking.isRecurring}
                             page="selectedbookings"
-                            id={booking._id}
+                            bookingId={booking._id}
                             email={localStorage.getItem('guestEmail')}
                         />
                     ) : (
