@@ -80,7 +80,8 @@ const Request = () => {
             professor, 
             date, 
             startTime, 
-            endTime
+            endTime,
+            bookingId
         );
     };
 

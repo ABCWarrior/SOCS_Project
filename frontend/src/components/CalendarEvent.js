@@ -78,7 +78,7 @@ const requestDecision = async ({ answer, professor, date, startTime, endTime, is
 }
 
 const book = async ({ bookingId }) => {
-  const email = "someone@mcgill.ca"
+  const email = localStorage.getItem('guestEmail');
 
   try {
     const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}/add_participants`, {
@@ -174,10 +174,7 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page,
                 <>
                     <button className="cancel-button"
                         onClick={() => book({
-                            professor,
-                            date,
-                            startTime,
-                            endTime
+                          bookingId
                     })}> book </button>
                     <NavLink to="/request" 
                         onClick={() => {
