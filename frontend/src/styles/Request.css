@@ -1,11 +1,11 @@
-.container {
+.request-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     font-family: Arial, sans-serif;
 }
 
-.create-booking-container {
+.request-booking-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,7 +17,7 @@
     position: relative;
 }
 
-.create-booking-container::before {
+.request-booking-container::before {
     content: '';
     position: absolute;
     top: 0;
@@ -27,7 +27,7 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.create-booking-content {
+.request-booking-content {
     position: relative;
     z-index: 1;
     width: 280px;
@@ -41,14 +41,14 @@
     align-items: center; 
 }
 
-.create-booking-content h1 {
+.request-booking-content h1 {
     margin-bottom: 40px;
     color: #ED1B2F;
     font-size: 24px;
     font-weight: 600;
 }
 
-.create-booking-form {
+.request-booking-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -62,32 +62,32 @@
     border-radius: 4px;
 }
 
-.date-time-container {
+.request-date-time-container {
     display: flex;
     gap: 10px;
     align-items: center;
     margin-bottom: 20px;
 }
 
-.time-container {
+.request-time-container {
     display: flex;
     flex-direction: column;
     gap: 15px;
     margin-bottom: 20px;
 }
 
-.time-row {
+.request-time-row {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.time-container label {
+.request-time-container label {
     width: 45px;
     margin-right: 5px;
 }
 
-.time-dropdown {
+.request-time-dropdown {
     padding: 8px;
     width: 70px !important;
     font-size: 14px;
@@ -96,7 +96,7 @@
     margin-right: 10px;
 }
 
-.submit-button {
+.request-submit-button {
     background-color: #ED1B2F;
     color: white;
     border: none;
@@ -108,7 +108,7 @@
     margin-top: 10px;
 }
 
-.submit-button:hover {
+.request-submit-button:hover {
     background-color: #ff7582;
 }
 

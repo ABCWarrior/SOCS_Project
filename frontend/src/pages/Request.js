@@ -67,9 +67,9 @@ const Request = () => {
             const result = await response.json();
 
             if (response.ok) {
-                console.log("Booking created successfully:", result.message);
+                console.log("Booking request successfully:", result.message);
             } else {
-                console.error("Failed to create booking:", result.message);
+                console.error("Failed to request booking:", result.message);
             }
         } catch (err) {
             console.error("Error during API call:", err);
@@ -87,11 +87,11 @@ const Request = () => {
   return (
     <div className="container">
 		<Header/>
-        <div className="create-booking-container">
-            <div className="create-booking-content">
+        <div className="request-booking-container">
+            <div className="request-booking-content">
                 <h1>Reschedule your appointment</h1>
-                <form onSubmit={handleSubmit} className="create-booking-form">
-                    <div className="date-time-container">
+                <form onSubmit={handleSubmit} className="request-booking-form">
+                    <div className="request-date-time-container">
                         <>
                             <select
                                 name="date"
@@ -136,14 +136,14 @@ const Request = () => {
                         </>
                     </div>
 
-                    <div className="time-container">
-    <div className="time-row">
+                    <div className="request-time-container">
+    <div className="request-time-row">
         <label>From:</label>
         <select
             name="fromHour"
             value={formData.fromHour}
             onChange={handleChange}
-            className="dropdown time-dropdown"
+            className="dropdown request-time-dropdown"
         >
             <option value="" disabled>Hour</option>
             {[...Array(24)].map((_, i) => (
@@ -157,7 +157,7 @@ const Request = () => {
             name="fromMin"
             value={formData.fromMin}
             onChange={handleChange}
-            className="dropdown time-dropdown"
+            className="dropdown request-time-dropdown"
         >
             <option value="" disabled>Min</option>
             {[0, 15, 30, 45].map((min) => (
@@ -174,7 +174,7 @@ const Request = () => {
             name="toHour"
             value={formData.toHour}
             onChange={handleChange}
-            className="dropdown time-dropdown"
+            className="dropdown request-time-dropdown"
         >
             <option value="" disabled>Hour</option>
             {[...Array(24)].map((_, i) => (
@@ -188,7 +188,7 @@ const Request = () => {
             name="toMin"
             value={formData.toMin}
             onChange={handleChange}
-            className="dropdown time-dropdown"
+            className="dropdown request-time-dropdown"
         >
             <option value="" disabled>Min</option>
             {[0, 15, 30, 45].map((min) => (

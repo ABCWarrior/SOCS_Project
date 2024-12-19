@@ -31,33 +31,6 @@ function Sidebar() {
                 >
                 Create
             </NavLink>
-
-            {/* <NavLink
-                to="/modify"
-                className={({ isActive }) =>
-                    isActive ? "SideMenu-button active" : "SideMenu-button"
-                }
-                >
-                Modify Bookings
-            </NavLink> */}
-
-            {/* <NavLink
-                to="/bookings"
-                className={({ isActive }) =>
-                    isActive ? "SideMenu-button active" : "SideMenu-button"
-                }
-                >
-                Book
-            </NavLink> */}
-
-            {/* <NavLink
-                to="/request"
-                className={({ isActive }) =>
-                    isActive ? "SideMenu-button active" : "SideMenu-button"
-                }
-                >
-                Request
-            </NavLink> */}
         </div>
     );
 }

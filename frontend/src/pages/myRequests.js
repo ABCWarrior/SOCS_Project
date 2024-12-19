@@ -6,7 +6,6 @@ import Footer from '../components/Footer.js';
 import "../styles/myBookings.css";
 
 function MyRequests() {
-
 	const [search, setSearch] = useState("");
 	const [bookings, setBookings] = useState([]);
 	
@@ -31,6 +30,7 @@ function MyRequests() {
 				})
 				.then(res => res.json())
 				.then( data => {
+					console.log("data is", data) //test
 					setBookings(data.all_bookings || []);
 				})
 			}
@@ -39,8 +39,7 @@ function MyRequests() {
 			}
 		}
 		fetchData()
-		console.log(bookings)
-	}, []);
+	}, [id, token]);
 	
 
   	return (

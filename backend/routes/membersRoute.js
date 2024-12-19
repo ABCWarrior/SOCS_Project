@@ -86,8 +86,9 @@ membersRouter.get('/:id/request_attendance', async (req, res) => {
 });
 
 membersRouter.get('/:member_id/requested_appointments', async (req, res) => {
-  // console.log(req.params.member_id);//test
+  // console.log("member id is", req.params.member_id);//test
   const { token } = req.headers;
+  // console.log("token is", token) //test
 
   if (!await privatePageAuthentication(token, req.params.member_id)) {
     res.redirect(301, '/');
