@@ -75,6 +75,7 @@ bookingsRouter.post('/:id/add_participants', async (req, res) => {
 
 bookingsRouter.post('/:booking_id/appointment_request', async (req, res) => {
   const { userEmail, professor, date, startTime, endTime } = req.body;
+  console.log(req.params.booking_id)//test
   const { professorDatabaseId } = await bookingsCollection.findOne({ _id: new ObjectId(req.params.booking_id) })
   const result = await createAppointmentRequestService(
     userEmail,

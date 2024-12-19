@@ -44,9 +44,13 @@ const Request = () => {
         const professor = localStorage.getItem('requestProf');
         const bookingId = localStorage.getItem('bookingId');
         const userEmail = localStorage.getItem('guestEmail');
+        // const professor = "Matthew"; test
+        // const bookingId = "6763337055cf2dfd1e95c317";
+        // const userEmail = "Matthew@mail.mcgill.ca"; test
+        // console.log(`http://localhost:5000/api/bookings/${bookingId}/edit_booking`) test
 
         try {
-            const response = await fetch(`http://localhost:5000/api/members/${bookingId}/edit_booking`, {
+            const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}/appointment_request`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
