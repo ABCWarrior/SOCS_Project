@@ -45,7 +45,6 @@ const cancel = async ({ professor, date, startTime, endTime}) => {
 }
 
 const requestDecision = async ({ answer, professor, date, startTime, endTime, isRecurring, email }) => {
-    var token = "eda6dc72e7b43bb1b7b1129f22baaafb3660fc9cdf8861f055e189de92924a1f"
 
     try {
         const response = await fetch(`http://localhost:5000/api/members/${id}/request_appointments/confirm_or_deny`, {
@@ -133,7 +132,11 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page,
                 
                 {page === 'mybookings' ? (
                     <>
-                    <NavLink to="/modify" className="modify-button">
+                    <NavLink to="/modify" 
+                        onClick={() => {
+                            localStorage.setItem("bookingId", bookingId);
+                        }}
+                        className="modify-button">
                         Modify
                     </NavLink>
                     <button className="cancel-button"
@@ -163,7 +166,8 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page,
                         date, 
                         startTime, 
                         endTime, 
-                        isRecurring
+                        isRecurring, 
+                        email
                     })}>Refuse</button>
                     </>
                 ) : <>
@@ -172,10 +176,7 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page,
                     </NavLink>
                     <button className="cancel-button"
                         onClick={() => book({
-                            professor,
-                            date,
-                            startTime,
-                            endTime
+                            email
                     })}> book </button>
                     </>
                 }
