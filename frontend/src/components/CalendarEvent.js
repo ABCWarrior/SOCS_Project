@@ -45,7 +45,7 @@ const cancel = async ({ professor, date, startTime, endTime }) => {
 }
 
 const requestDecision = async ({ answer, professor, date, startTime, endTime, isRecurring, email }) => {
-  var token = "eda6dc72e7b43bb1b7b1129f22baaafb3660fc9cdf8861f055e189de92924a1f"
+  const token = localStorage.getItem('token');
 
   try {
     const response = await fetch(`http://localhost:5000/api/members/${id}/request_appointments/confirm_or_deny`, {
@@ -169,7 +169,18 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page,
                 isRecurring
               })}>Refuse</button>
           </>
-        ) : <>
+        ) : page === 'selectedbookings' ? (
+          <>
+            <button className="accept-button"
+              onClick={() => book({
+                bookingId
+              })}>Accept</button>
+            <NavLink to="/publicreschedule" //need to change path
+              className="modify-button">
+              Reschedule
+            </NavLink>
+          </>
+        ): <>
           <NavLink to="/requests" 
             onClick={() => {
               localStorage.setItem('modifyBookingId', bookingId);

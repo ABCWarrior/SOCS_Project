@@ -18,6 +18,20 @@ const SelectedBookings = () => {
         }
     }, []);
 
+    if (!booking) {
+        return (
+            <div className="bookings-container">
+                <Header />
+                <main className="landing-main">
+                    <div className="content-wrapper">
+                        <p className="none">No booking selected</p>
+                    </div>
+                </main>
+                <Footer />
+            </div>
+        );
+    }
+
     return (
         <div className="bookings-container">
             <Header />
@@ -30,9 +44,9 @@ const SelectedBookings = () => {
                             startTime={booking.startTime}
                             endTime={booking.endTime}
                             isRecurring={booking.isRecurring}
-                            page=""
+                            page="selectedbookings"
                             id={booking._id}
-                            email=""
+                            email={localStorage.getItem('guestEmail')}
                         />
                     ) : (
                         <p className="none">No booking selected</p>
