@@ -10,6 +10,7 @@ import Request from './pages/Request';
 import MyRequests from './pages/myRequests';
 import Modify from './pages/Modify';
 import Intermediary from './pages/Intermediary';
+import BookedAppointment from './pages/bookedAppointments';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/myrequests" element={<MyRequests />} />
             <Route path="/modify" element={<Modify />} />
             <Route path="/intermediary" element={<Intermediary />} />
+            <Route path="/booked-appointments" element={<BookedAppointment />} />
         </Routes>
       </div>
     </Router>
