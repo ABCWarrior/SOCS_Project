@@ -79,4 +79,25 @@ loginRouter.post('/registration', async (req, res) => {
   }
 })
 
+loginRouter.post('/checkEmail', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const member = await membersCollection.findOne({ email });
+
+    if (!member) {
+      await membersCollection.insertOne({ email });
+      return res.status(200).json({ exists: true });
+    }
+
+    if (member.password) {
+      return res.status(200).json({ exists: false });
+    } else {
+      return res.status(200).json({ exists: true });
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Error checking email", error: err });
+  }
+});
+
 export default loginRouter;
