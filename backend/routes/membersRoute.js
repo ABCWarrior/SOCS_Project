@@ -68,53 +68,54 @@ membersRouter.post('/:id/delete_booking', async (req, res) => {
     res.status(500).json({ message: "Failed to delete booking" });
 })
 
-membersRouter.get('/:id/request_attendance', async (req, res) => {
-  const { token, email } = req.headers;
+//membersRouter.get('/:id/request_attendance', async (req, res) => {
+//  const { token, email } = req.headers;
+//
+//  if (!await privatePageAuthentication(token, req.params.id)) {
+//    res.redirect(301, '/');
+//    return;
+//  }
+//
+//  const { status, attendances } = await getMemberAttendance(email);
+//
+//  if (status === bookingsEnums.SUCCESSFUL_BOOKING_QUERY) {
+//    return res.status(200).json({ message: "Successfully fetched attendance data", attendances });
+//  }
+//  else {
+//    return res.status(500).json({ message: "Failed to fetch attendance data", attendances });
+//  }
+//});
 
-  if (!await privatePageAuthentication(token, req.params.id)) {
-    res.redirect(301, '/');
-    return;
-  }
-
-  const { status, attendances } = await getMemberAttendance(email);
-
-  if (status === bookingsEnums.SUCCESSFUL_BOOKING_QUERY) {
-    return res.status(200).json({ message: "Successfully fetched attendance data", attendances });
-  }
-  else {
-    return res.status(500).json({ message: "Failed to fetch attendance data", attendances });
-  }
-});
-
-membersRouter.get('/:id/request_appointments', async (req, res) => {
+membersRouter.get('/:member_id/requested_appointments', async (req, res) => {
+  console.log(req.params.member_id);//test
   const { token } = req.headers;
 
-  if (!await privatePageAuthentication(token, req.params.id)) {
+  if (!await privatePageAuthentication(token, req.params.member_id)) {
     res.redirect(301, '/');
     return
   }
 
-  return res.status(200).json(await getAllAppointmentRequests(req.params.id));
+  return res.status(200).json(await getAllAppointmentRequests(req.params.member_id));
 })
 
-membersRouter.post('/:id/request_appointments/confirm_or_deny', async (req, res) => {
+membersRouter.post('/:member_id/requested_appointments/confirm_or_deny', async (req, res) => {
   const { token, answer, professor, date, startTime, endTime, isRecurring, email } = req.body;
 
-  if (!await privatePageAuthentication(token, req.params.id)) {
+  if (!await privatePageAuthentication(token, req.params.member_id)) {
     res.redirect(301, '/');
     return
   }
 
-  await deleteAppointmentRequest(req.params.id, professor, date, startTime, endTime);
+  await deleteAppointmentRequest(req.params.member_id, professor, date, startTime, endTime);
 
   if (answer) {
-    const status = await createBookingServiceWithParticipant(req.params.id, professor, date, startTime, endTime, isRecurring, email);
+    const status = await createBookingServiceWithParticipant(req.params.member_id, professor, date, startTime, endTime, isRecurring, email);
     return status == bookingsEnums.SUCCESSFUL_BOOKING_DELETION ?
       res.status(201).json({ message: "Succesfullly created an appointment", code }) :
       res.status(500).json({ message: "Failed to create booking", error: status });
   }
   else {
-    sendAutomatedEmail(`${professor} Has Rejected Your Appointment Request`,
+    await sendAutomatedEmail(`${professor} Has Rejected Your Appointment Request`,
       `${professor} has rejected your appointment request at ${date} from ${startTime} to ${endTime}`,
       [email])
     return res.status(201).json({ message: "Succesfully rejected an appointment" })
@@ -123,6 +124,14 @@ membersRouter.post('/:id/request_appointments/confirm_or_deny', async (req, res)
 
 membersRouter.post('/:id/logout', (req, res) => {
   logoutSecurity(req, res);
+})
+
+membersRouter.post('/:id/check_token)', async (req, res) => {
+  const { token } = req.body;
+  if (!await privatePageAuthentication(token, req.params.id)) {
+    res.redirect(301, '/');
+    return
+  }
 })
 
 

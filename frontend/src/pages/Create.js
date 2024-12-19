@@ -193,6 +193,7 @@ const CreateBooking = () => {
 
                     {/* Time Selection */}
                     <div className="time-container">
+                        <div>
                         <label>From:</label>
                         <select
                             name="fromHour"
@@ -221,7 +222,9 @@ const CreateBooking = () => {
                                 </option>
                             ))}
                         </select>
+                        </div>
 
+                        <div>
                         <label>To:</label>
                         <select
                             name="toHour"
@@ -250,6 +253,7 @@ const CreateBooking = () => {
                             </option>
                         ))}
                         </select>
+                        </div>
                     </div>
 
                     {/* Submit Button */}
