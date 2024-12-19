@@ -14,11 +14,6 @@ function MyRequests() {
   // console.log("token", token) //test
   // console.log("id", id) //test
 
-  const filteredBookings = () =>
-    bookings.filter((booking) =>
-      booking.professor.toLowerCase().includes(search.toLowerCase())
-    );
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,8 +30,18 @@ function MyRequests() {
           .then((res) => res.json())
           .then((data) => {
             console.log("data is", data); //test
-            setBookings(data.all_bookings || []);
-          });
+            const addBooking = (newBook) => {
+              const book = newBook.map((booking) => ({
+                professor: booking.requestedAppointment.professor,
+                date: booking.requestedAppointment.date,
+                startTime: booking.requestedAppointment.startTime,
+                endTime: booking.requestedAppointment.endTime,
+                _id: booking._id,
+                email: booking.requestingEmail
+              }))
+            }
+            setBookings((bookings) => [...bookings, ...book]);
+            });
       } catch (error) {
         console.log(error);
       }
@@ -50,28 +55,19 @@ function MyRequests() {
       <main className="mybookings-container">
         <Sidebar />
         <div className="content">
-          <div className="header">
-            <input
-              type="text"
-              placeholder="Search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="search-bar"
-            />
-          </div>
 
           <div className="bookings-list">
-            {filteredBookings().map((booking, index) => (
+            {bookings.map((booking, index) => (
               <CalendarEvent
                 key={index}
-                professor={booking.requestedAppointment.professor}
-                date={booking.requestedAppointment.date}
-                startTime={booking.requestedAppointment.startTime}
-                endTime={booking.requestedAppointment.endTime}
+                professor={booking.professor}
+                date={booking.date}
+                startTime={booking.startTime}
+                endTime={booking.endTime}
                 isRecurring={false}
                 page="myrequests"
                 bookingId={booking._id}
-                email={booking.requestingEmail}
+                email={booking.email}
               />
             ))}
           </div>

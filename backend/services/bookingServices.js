@@ -196,7 +196,9 @@ export const editBookingService = async (professorDatabaseId, bookingId, profess
     const startMoment = moment(startTime, "HH:mm", true);
     const endMoment = moment(endTime, "HH:mm", true);
 
-    if (!startMoment.isValid() || !endMoment.isValid() || !startMoment.isBefore(endMoment)) return bookingsEnums.WRONG_SCHEDULE_DATA_ERROR;
+    if (!startMoment.isValid() || !endMoment.isValid() || !startMoment.isBefore(endMoment)) {
+      console.log("here 1")
+      return bookingsEnums.WRONG_SCHEDULE_DATA_ERROR;}
 
     const previousBooking = await bookingsCollection.findOne({ _id: new ObjectId(bookingId) });
     const overlappingBookings = overlappingBookingsList(await bookingsCollection.find({ professorDatabaseId, professor }).toArray(), startMoment, endMoment, date, isRecurring);
@@ -212,7 +214,7 @@ export const editBookingService = async (professorDatabaseId, bookingId, profess
     sendAutomatedEmail(`Booking Time Change for ${professor}`,
       `This is a notice that the booking with ${professor} which was during ${previousBooking.date} from ${previousBooking.startTime} to ${previousBooking.endTime} 
           has been changed to ${date} from ${startTime} to ${endTime} and ${isRecurring ? "is" : "is not"} recurring. \n
-        Please sign up again to the booking with id ${overlappingBookings[0].id}`,
+        Please sign up again to the booking with id ${previousBooking._id}`,
       previousBooking.participants);
 
     return bookingsEnums.SUCCESSFUL_BOOKING_EDIT;
