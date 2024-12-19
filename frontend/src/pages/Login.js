@@ -33,8 +33,7 @@ const Login = () => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('userId', data.id);
         localStorage.setItem('professorName', data.professorName);
-        localStorage.setItem("userEmail", email);
-        localStorage.setItem("guestEmail", '');
+        localStorage.setItem("guestEmail", email);
 
         document.cookie = `userEmail=${email}; expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
         document.cookie = `userToken=${data.token}; expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}; path=/`;

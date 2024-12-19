@@ -36,12 +36,15 @@ const cancel = async ({ professor, date, startTime, endTime }) => {
     const data = await response.json();
 
     if (response.ok) {
-      console.log("Booking successfully:", data);
+      console.log("Booking cancelled successfully:", data);
+      alert("Booking cancelled successfully!")
     } else {
       console.error("Failed to add participant:", data.message);
+      alert("Booking cancel failed")
     }
   } catch (error) {
     console.error("Error adding participant:", error);
+    alert("Error in booking cancel")
   }
 }
 
@@ -70,11 +73,14 @@ const requestDecision = async ({ answer, professor, date, startTime, endTime, is
 
     if (response.ok) {
       console.log("Request decision set:", data);
+      alert("Request answer sent")
     } else {
       console.error("Failed to set request decision:", data.message);
+      alert("Request answer failed")
     }
   } catch (error) {
     console.error("Error in setting request decision:", error);
+    alert("Error in sending request answer")
   }
 }
 
@@ -87,10 +93,9 @@ const book = async ({ bookingId }) => {
   }
   else
   {
-    email = localStorage.getItem('userEmail')
+    email = localStorage.getItem('guestEmail')
   }
-  // console.log(email)
-  
+
   try {
     const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}/add_participants`, {
       method: "POST",
@@ -109,7 +114,6 @@ const book = async ({ bookingId }) => {
       localStorage.setItem('isBooking', 'false');
       localStorage.setItem('selectedBookingCode', '');
       alert("You have been booked")
-      // navigate("/SelectedBookings")
       window.location.href = "/"
       
     } else {
