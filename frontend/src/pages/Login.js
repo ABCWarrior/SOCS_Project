@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header.js';
-import Footer from '../components/Footer.js';
-import '../styles/Login.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Header from "../components/Header.js";
+import Footer from "../components/Footer.js";
+import "../styles/Login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     try {
-      const response = await fetch('http://localhost:5000/api/login', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       });
@@ -28,31 +28,34 @@ const Login = () => {
       if (response.ok) {
         // console.log('Login successful', data); //test
         // console.log("email", email)
-        localStorage.setItem('isGuest', 'false');
+        localStorage.setItem("isGuest", "false");
 
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('userId', data.id);
-        localStorage.setItem('professorName', data.professorName);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.id);
+        localStorage.setItem("professorName", data.professorName);
         localStorage.setItem("guestEmail", email);
 
-        document.cookie = `userEmail=${email}; expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
-        document.cookie = `userToken=${data.token}; expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
-        
-        if(localStorage.getItem('isBooking') && (localStorage.getItem('selectedBookingCode') != ''))
-        {
-          navigate('/SelectedBookings');
-        }
-        else
-        {
-          navigate('/mybookings');
-        }
+        document.cookie = `userEmail=${email}; expires=${new Date(
+          Date.now() + 24 * 60 * 60 * 1000
+        ).toUTCString()}; path=/`;
+        document.cookie = `userToken=${data.token}; expires=${new Date(
+          Date.now() + 24 * 60 * 60 * 1000
+        ).toUTCString()}; path=/`;
 
+        if (
+          localStorage.getItem("isBooking") &&
+          localStorage.getItem("selectedBookingCode") != ""
+        ) {
+          navigate("/SelectedBookings");
+        } else {
+          navigate("/");
+        }
       } else {
-        setError(data.message || 'Login failed');
+        setError(data.message || "Login failed");
       }
     } catch (err) {
-      console.error('Login error:', err);
-      setError('Network error. Please try again.');
+      console.error("Login error:", err);
+      setError("Network error. Please try again.");
     }
   };
 
