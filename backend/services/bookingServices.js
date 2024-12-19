@@ -4,7 +4,6 @@ import { ObjectId } from 'mongodb';
 import database from '../database/connectDatabase.js';
 import { bookingsEnums } from '../enums/bookingsEnums.js';
 import sendAutomatedEmail from './emailService.js';
-import { request } from 'express';
 
 const bookingsCollection = database.collection(process.env.MONGO_BOOKINGS_COLLECTION)
 const requestAppointmentsCollection = database.collection(process.env.MONGO_REQUEST_APPOINTMENTS_COLLECTION);
