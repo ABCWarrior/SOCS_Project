@@ -68,11 +68,14 @@
     color: white;
     background-color: #ED1B2F;
     border-width: 0;
-    padding: 3px;
+    padding: 4px 20px;
+    font-size: 16px;
+    font-weight: 500;
     margin-bottom: 10px;
     text-decoration: none;
     text-align: center;
     border-radius: 4px;
+    width: 125px;
 }
 
 .accept-button {
@@ -104,7 +107,7 @@
         font-size: 56px;
         font-weight: 800;
     }
-    .calendar-event-actions button {
+    .calendar-event-actions button, .modify-button {
         padding: 4px 8px;
         width: 80px;
         font-size: 14px;
