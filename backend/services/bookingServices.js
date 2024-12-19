@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import database from '../database/connectDatabase.js';
 import { bookingsEnums } from '../enums/bookingsEnums.js';
 import sendAutomatedEmail from './emailService.js';
+import { request } from 'express';
 
 const bookingsCollection = database.collection(process.env.MONGO_BOOKINGS_COLLECTION)
 const requestAppointmentsCollection = database.collection(process.env.MONGO_REQUEST_APPOINTMENTS_COLLECTION);
@@ -144,7 +145,7 @@ export const createBookingServiceWithParticipant = async (professorDatabaseId, p
     if (hasOverlappingBookings(await bookingsCollection.find({ professorDatabaseId, professor }).toArray(), startMoment, endMoment, date, isRecurring)) return bookingsEnums.OVERLAPPING_SCHEDULE_ERROR;
 
     const insertionResult = await bookingsCollection.insertOne({ professorDatabaseId, professor, date, startTime, endTime, isRecurring, participants: [email] });
-    sendAutomatedEmail(`${professor} Has Accepted Your Appointment Request`,
+    await sendAutomatedEmail(`${professor} Has Accepted Your Appointment Request`,
       `${professor} has accepted your appointment request from at ${date} from ${startTime} to ${endTime} and you have been automatically registerd to it.`,
       [email]
     );
@@ -220,7 +221,6 @@ export const deleteBookingService = async (professorDatabaseId, professor, date,
     if (!startMoment.isValid() || !endMoment.isValid() || !startMoment.isBefore(endMoment)) return bookingsEnums.WRONG_SCHEDULE_DATA_ERROR;
 
     const previousBooking = await bookingsCollection.findOne({ professorDatabaseId, professor, date, startTime, endTime });
-    //console.log(previousBooking)//test
     await bookingsCollection.deleteOne({ professorDatabaseId, professor, date, startTime, endTime });
 
     sendAutomatedEmail(`Booking Deletion for ${professor}`,
@@ -237,7 +237,8 @@ export const deleteBookingService = async (professorDatabaseId, professor, date,
 
 export const getAllAppointmentRequests = async (professorDatabaseId) => {
   try {
-    return { appointmentRequests: await requestAppointmentsCollection.find({ 'requestedAppointment.professorDatabaseId': professorDatabaseId }).toArray() };
+    const appointmentRequests = await requestAppointmentsCollection.find({ "requestedAppointment.professorDatabaseId": professorDatabaseId }).toArray()
+    return appointmentRequests;
   }
   catch (err) {
     console.error(err)
