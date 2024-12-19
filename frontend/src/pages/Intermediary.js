@@ -29,6 +29,7 @@ const Intermediary = () => {
         localStorage.setItem('guestEmail', email);
         document.cookie = `userEmail=${email}; expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
         localStorage.setItem('isGuest', 'true');
+        localStorage.setItem('isBooking', 'true');
         navigate('/SelectedBookings');
       } else {
         setError(data.message || 'Failed to continue as guest');
@@ -40,6 +41,7 @@ const Intermediary = () => {
   };
     
   const handleLoginRedirect = () => {
+    localStorage.setItem('isBooking', 'true');
     navigate('/login');
   };
 

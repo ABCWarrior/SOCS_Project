@@ -15,8 +15,6 @@ const dayAbbreviations = {
 const token = localStorage.getItem('token');
 const id = localStorage.getItem('userId')
 
-const navigate = useNavigate();
-
 const cancel = async ({ professor, date, startTime, endTime }) => {
 
   try {
@@ -37,12 +35,12 @@ const cancel = async ({ professor, date, startTime, endTime }) => {
     const data = await response.json();
 
     if (response.ok) {
-      console.log("Booking deleted successfully:", data);
+      console.log("Booking successfully:", data);
     } else {
-      console.error("Failed to delete booking:", data.message);
+      console.error("Failed to add participant:", data.message);
     }
   } catch (error) {
-    console.error("Error deleting booking:", error);
+    console.error("Error adding participant:", error);
   }
 }
 
@@ -79,9 +77,19 @@ const requestDecision = async ({ answer, professor, date, startTime, endTime, is
   }
 }
 
+// BOOKING!
 const book = async ({ bookingId }) => {
-  const email = localStorage.getItem('guestEmail');
-
+  let email = ''
+  if (localStorage.getItem('isGuest'))
+  {
+    email = localStorage.getItem('guestEmail')
+  }
+  else
+  {
+    email = localStorage.getItem('userEmail')
+  }
+  // console.log(email)
+  
   try {
     const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}/add_participants`, {
       method: "POST",
@@ -96,15 +104,18 @@ const book = async ({ bookingId }) => {
     const data = await response.json();
 
     if (response.ok) {
-      console.log("Booking deleted successfully:", data);
-      alert("You have booked the meeting")
-      navigate("/SelectedBookings")
+      console.log("Added participant:", data);
+      localStorage.setItem('isBooking', 'false');
+      localStorage.setItem('selectedBookingCode', '');
+      alert("You have been booked")
+      // navigate("/SelectedBookings")
+      
     } else {
-      console.error("Failed to delete booking:", data.message);
+      console.error("Failed to add participant:", data.message);
       alert("Something went wrong")
     }
   } catch (error) {
-    console.error("Error deleting booking:", error);
+    console.error("Error adding participant:", error);
     alert("Something went wrong")
   }
 }

@@ -36,6 +36,7 @@ const Footer = () => {
             if (!response.ok) {
                 throw new Error('Logout failed');
             }
+            localStorage.setItem("userEmail", '');
 
             localStorage.clear();
             document.cookie.split(";").forEach((c) => {

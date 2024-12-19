@@ -24,6 +24,7 @@ const Landing = () => {
             // console.log(data) //test
     
             if (response.ok) {
+                localStorage.setItem('selectedBookingCode', searchCode);
                 localStorage.setItem('selectedBooking', JSON.stringify(data.booking));
                 navigate('/intermediary');
             } else {

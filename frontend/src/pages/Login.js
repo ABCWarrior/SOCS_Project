@@ -28,16 +28,26 @@ const Login = () => {
       if (response.ok) {
         // console.log('Login successful', data); //test
         // console.log("email", email)
-        
+        localStorage.setItem('isGuest', 'false');
+
         localStorage.setItem('token', data.token);
         localStorage.setItem('userId', data.id);
         localStorage.setItem('professorName', data.professorName);
-        localStorage.setItem("guestEmail", email);
+        localStorage.setItem("userEmail", email);
+        localStorage.setItem("guestEmail", '');
 
         document.cookie = `userEmail=${email}; expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
         document.cookie = `userToken=${data.token}; expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+        
+        if(localStorage.getItem('isBooking') && (localStorage.getItem('selectedBookingCode') != ''))
+        {
+          navigate('/SelectedBookings');
+        }
+        else
+        {
+          navigate('/mybookings');
+        }
 
-        navigate('/mybookings');
       } else {
         setError(data.message || 'Login failed');
       }

@@ -54,6 +54,7 @@ const Registration = () => {
 
       if (response.ok) {
         console.log('Registration successful', data);
+        localStorage.setItem('isBooking', 'false');
         navigate('/login');
       } else {
         setError(data.message || 'Registration failed');
