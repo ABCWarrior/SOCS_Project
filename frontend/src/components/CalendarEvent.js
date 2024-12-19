@@ -180,8 +180,8 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page,
             })}> book </button>
         </>
         }
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 

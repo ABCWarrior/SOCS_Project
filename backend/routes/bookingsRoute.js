@@ -11,13 +11,39 @@ const bookingsCollection = database.collection(process.env.MONGO_BOOKINGS_COLLEC
 const bookingsRouter = Router();
 
 bookingsRouter.get('/:id', async (req, res) => {
-  const booking = await bookingsCollection.findOne({ _id: new ObjectId(req.params.id) });
-  return booking != null ? res.status(200).json({
-    message: "Successful booking query",
-    booking: { professor: booking.professor, date: booking.date, startTime: booking.startTime, endTime: booking.endTime }
-  }) :
-    res.status(500).json({ message: "Unable to find booking" })
-})
+  try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ 
+        message: "Invalid booking code format" 
+      });
+    }
+
+    const booking = await bookingsCollection.findOne({ 
+      _id: new ObjectId(req.params.id) 
+    });
+
+    if (!booking) {
+      return res.status(404).json({ 
+        message: "Unable to find booking" 
+      });
+    }
+
+    return res.status(200).json({
+      message: "Successful booking query",
+      booking: { 
+        professor: booking.professor, 
+        date: booking.date, 
+        startTime: booking.startTime, 
+        endTime: booking.endTime 
+      }
+    });
+  } catch (error) {
+    console.error('Booking query error:', error);
+    return res.status(500).json({ 
+      message: "Server error while finding booking" 
+    });
+  }
+});
 
 //bookingsRouter.post('/:id', async (req, res) => {
 //  const { email } = req.body;
