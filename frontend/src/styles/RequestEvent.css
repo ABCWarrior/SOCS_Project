@@ -46,15 +46,15 @@
 }
 
 .calendar-event-actions button {
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     color: white;
     background-color: #ED1B2F;
     border-width: 0;
-    padding: 4px 20px;
-    font-size: 16px;
-    font-weight: 500;
 }
 
 .calendar-event-actions button:hover {
@@ -63,54 +63,10 @@
 }
 
 .modify-button {
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    color: white;
-    background-color: #ED1B2F;
-    border-width: 0;
-    padding: 4px 20px;
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 10px;
-    text-decoration: none;
-    text-align: center;
-    border-radius: 4px;
-    width: 125px;
-}
-
-.accept-button {
     margin-bottom: 10px;
     width: 125px;
 }
 
 .reschedule-button {
     margin-bottom: 10px;
-}
-
-@media screen and (max-width: 768px) {
-    .calendar-event-actions {
-        margin-left: 40px;
-    }
-    .calendar-event-month {
-        font-size: 16px;
-    }
-    
-    .calendar-event-professor {
-        font-size: 14px;
-    }
-    
-    .calendar-event-time {
-        font-size: 14px;
-    }
-
-    .calendar-event-number {
-        font-size: 56px;
-        font-weight: 800;
-    }
-    .calendar-event-actions button, .modify-button {
-        padding: 4px 8px;
-        width: 80px;
-        font-size: 14px;
-        font-weight: 500;
-    }
 }

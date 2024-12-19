@@ -1,10 +1,10 @@
-.registration-page-container {
+.intermediary-page-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
   }
   
-  .registration-main {
+  .intermediary-main {
     flex: 1;
     display: flex;
     justify-content: center;
@@ -16,7 +16,7 @@
     position: relative;
   }
   
-  .registration-main::before {
+  .intermediary-main::before {
     content: '';
     position: absolute;
     top: 0;
@@ -26,20 +26,17 @@
     background-color: rgba(0, 0, 0, 0.5);
   }
   
-  .registration-container {
+  .intermediary-container {
     position: relative;
     z-index: 1;
     width: 400px;
-    padding-top: 50px;
-    padding-bottom: 30px;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding: 60px 40px 50px;
     background-color: white;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
   }
   
-  .registration-form h1 {
+  .intermediary-form h1 {
     text-align: center;
     margin-bottom: 30px;
     color: #ED1B2F;
@@ -59,15 +56,15 @@
   }
   
   .form-group input {
-    width: calc(100% - 0px); 
+    width: 100%;
     padding: 12px 16px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; 
+    box-sizing: border-box;
   }
   
-  .registration-button {
+  .login-redirect-button {
     display: block;
     width: 100%;
     padding: 14px 0;
@@ -79,20 +76,49 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 28px;
   }
   
-  .registration-button:hover {
+  .guest-button {
+    display: block;
+    width: 100%;
+    padding: 14px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    background-color: #ED1B2F;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-redirect-button:hover,
+  .guest-button:hover {
     background-color: #c10500;
   }
-
-  .error-message {
-    font-size: 14px;
-    color: #ED1B2F;
+  
+  .divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 24px 0;
   }
-
+  
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .divider span {
+    padding: 0 10px;
+    color: #666;
+    font-size: 14px;
+  }
+  
   @media screen and (max-width: 768px) {
-    .registration-container {
+    .intermediary-container {
       width: 340px;
     }
-}
+  }

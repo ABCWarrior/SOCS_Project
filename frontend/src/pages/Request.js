@@ -1,200 +1,214 @@
 import React, { useState } from "react";
-import SideMenu from "../components/SideMenu";
-import HeaderPriv from '../components/HeaderPriv.js';
-import FooterPriv from '../components/FooterPriv.js';
-import "../styles/Request.css"; // Import the CSS file for styling
+import Header from '../components/Header.js';
+import Footer from '../components/Footer.js';
+import "../styles/Request.css";
 
-const RequestBooking = () => {
-  const [staffName, setStaffName] = useState("");
-  const [date, setDate] = useState("");
-  const [month, setMonth] = useState("");
-  const [fromHour, setFromHour] = useState("");
-  const [fromMin, setFromMin] = useState("");
-  const [toHour, setToHour] = useState("");
-  const [toMin, setToMin] = useState("");
-  const [timeSlots, setTimeSlots] = useState([]);
+const Request = () => {
+    const [formData, setFormData] = useState({
+        date: "",
+        month: "",
+        fromHour: "",
+        fromMin: "",
+        toHour: "",
+        toMin: "",
+    });
 
-  // Add time slot to the list
-  const addTimeSlot = () => {
-    if (date && month && fromHour && fromMin && toHour && toMin) {
-      const timeSlot = `${date}/${month} from ${fromHour.padStart(
-        2,
-        "0"
-      )}:${fromMin.padStart(2, "0")} to ${toHour.padStart(
-        2,
-        "0"
-      )}:${toMin.padStart(2, "0")}`;
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
-      setTimeSlots([...timeSlots, timeSlot]);
-      resetTimeFields();
-    } else {
-      alert("Please fill in all fields to add a time slot.");
-    }
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-  // Reset time input fields
-  const resetTimeFields = () => {
-    setDate("");
-    setMonth("");
-    setFromHour("");
-    setFromMin("");
-    setToHour("");
-    setToMin("");
-  };
+        const isFormValid = Object.values(formData).every((value) => value !== "");
 
-  // Handle form submission
-  const handleRequest = () => {
-    if (staffName && timeSlots.length > 0) {
-      console.log("Request Submitted:", {
-        staffName,
-        timeSlots,
-      });
-      alert("Your request has been submitted!");
-      setStaffName("");
-      setTimeSlots([]);
-    } else {
-      alert("Please provide staff name and at least one time slot.");
-    }
-  };
+        if (!isFormValid) {
+            alert("Please fill out all the required fields before submitting.");
+            return;
+        }
+
+        const year = new Date().getFullYear();
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        const monthIndex = monthNames.indexOf(formData.month) + 1;
+        const month = monthIndex.toString().padStart(2, "0");
+    
+        const day = formData.date.toString().padStart(2, "0");
+        const date = `${year}-${month}-${day}`;
+
+        var startTime = `${formData.fromHour.padStart(2, "0")}:${formData.fromMin.padStart(2, "0")}`;
+        var endTime = `${formData.toHour.padStart(2, "0")}:${formData.toMin.padStart(2, "0")}`;
+        const professor = localStorage.getItem('requestProf');
+        const bookingId = localStorage.getItem('requestBookingId');
+        const userEmail = localStorage.getItem('guestEmail');
+        // const professor = "Matthew";
+        // const bookingId = "6763ce6b94edf13c1898c952";
+        // const userEmail = "Matthew@mail.mcgill.ca";
+        // console.log(`http://localhost:5000/api/bookings/${bookingId}/edit_booking`) test
+
+        try {
+            const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}/appointment_request`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userEmail, 
+                    professor, 
+                    date, 
+                    startTime, 
+                    endTime
+                }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                console.log("Booking request successfully:", result.message);
+            } else {
+                console.error("Failed to request booking:", result.message);
+            }
+        } catch (err) {
+            console.error("Error during API call:", err);
+        }
+
+        console.log("Form Data Submitted:", 
+            userEmail, 
+            professor, 
+            date, 
+            startTime, 
+            endTime
+        );
+    };
 
   return (
     <div className="container">
-		<header><HeaderPriv/></header>
+		<Header/>
         <div className="request-booking-container">
-            <SideMenu />
-
             <div className="request-booking-content">
-                {/* <h1 className="request-title">Request Booking</h1> */}
+                <h1>Reschedule your appointment</h1>
+                <form onSubmit={handleSubmit} className="request-booking-form">
+                    <div className="request-date-time-container">
+                        <>
+                            <select
+                                name="date"
+                                value={formData.date}
+                                onChange={handleChange}
+                                className="dropdown"
+                            >
+                                <option value="" disabled>Date</option>
+                                {[...Array(31)].map((_, i) => (
+                                <option key={i} value={i + 1}>
+                                    {i + 1}
+                                </option>
+                                ))}
+                            </select>
 
-                {/* Staff Name Input */}
-                <input
-                type="text"
-                placeholder="Staff name (sends feedback if name not in database)"
-                value={staffName}
-                onChange={(e) => setStaffName(e.target.value)}
-                className="input-field"
-                />
-
-                {/* Time Slot Input */}
-                <div className="time-slot-inputs">
-                    <select
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        className="dropdown"
-                    >
-                        <option value="">Date</option>
-                            {[...Array(31)].map((_, i) => (
-                        <option key={i} value={i + 1}>
-                            {i + 1}
-                        </option>
-                        ))}
-                    </select>
-
-                    <select
-                        value={month}
-                        onChange={(e) => setMonth(e.target.value)}
-                        className="dropdown"
-                    >
-
-                        <option value="">Month</option>
-                            {[
-                            "01",
-                            "02",
-                            "03",
-                            "04",
-                            "05",
-                            "06",
-                            "07",
-                            "08",
-                            "09",
-                            "10",
-                            "11",
-                            "12",
-                            ].map((m, i) => (
-                            <option key={i} value={m}>
-                                {m}
-                        </option>
-                        ))}
-                    </select>
-
-                    {/* Time Ranges */}
-                    <label>From:</label>
-                    <select
-                        value={fromHour}
-                        onChange={(e) => setFromHour(e.target.value)}
-                        className="dropdown time-dropdown"
-                    >
-                        <option value="">Hour</option>
-                        {[...Array(24)].map((_, i) => (
-                        <option key={i} value={i}>
-                            {i.toString().padStart(2, "0")}
-                        </option>
-                        ))}
-                    </select>
-                    <select
-                        value={fromMin}
-                        onChange={(e) => setFromMin(e.target.value)}
-                        className="dropdown time-dropdown"
-                    >
-                        <option value="">Min</option>
-                        {[0, 15, 30, 45].map((m) => (
-                        <option key={m} value={m}>
-                            {m.toString().padStart(2, "0")}
-                        </option>
-                        ))}
-                    </select>
-
-                    <label>To:</label>
-                    <select
-                        value={toHour}
-                        onChange={(e) => setToHour(e.target.value)}
-                        className="dropdown time-dropdown"
-                    >
-                        <option value="">Hour</option>
-                        {[...Array(24)].map((_, i) => (
-                        <option key={i} value={i}>
-                            {i.toString().padStart(2, "0")}
-                        </option>
-                        ))}
-                    </select>
-                    <select
-                        value={toMin}
-                        onChange={(e) => setToMin(e.target.value)}
-                        className="dropdown time-dropdown"
-                    >
-                        <option value="">Min</option>
-                        {[0, 15, 30, 45].map((m) => (
-                        <option key={m} value={m}>
-                            {m.toString().padStart(2, "0")}
-                        </option>
-                        ))}
-                    </select>
-
-                    {/* Add Time Slot Button */}
-                    <button type="button" className="add-button" onClick={addTimeSlot}>
-                        Add time slot
-                    </button>
+                            <select
+                            name="month"
+                            value={formData.month}
+                            onChange={handleChange}
+                            className="dropdown"
+                            >
+                                <option value="" disabled>Month</option>
+                                {[
+                                    "January",
+                                    "February",
+                                    "March",
+                                    "April",
+                                    "May",
+                                    "June",
+                                    "July",
+                                    "August",
+                                    "September",
+                                    "October",
+                                    "November",
+                                    "December",
+                                ].map((month, i) => (
+                                    <option key={i} value={month}>
+                                        {month}
+                                    </option>
+                                ))}
+                            </select>
+                        </>
                     </div>
 
-                    {/* Display Added Time Slots */}
-                    <div className="time-slots-list">
-                    <h3>Picked time slots:</h3>
-                    <ul>
-                        {timeSlots.map((slot, index) => (
-                        <li key={index}>{slot}</li>
-                        ))}
-                    </ul>
-                </div>
+                    <div className="request-time-container">
+    <div className="request-time-row">
+        <label>From:</label>
+        <select
+            name="fromHour"
+            value={formData.fromHour}
+            onChange={handleChange}
+            className="dropdown request-time-dropdown"
+        >
+            <option value="" disabled>Hour</option>
+            {[...Array(24)].map((_, i) => (
+                <option key={i} value={i}>
+                    {i.toString().padStart(2, "0")}
+                </option>
+            ))}
+        </select>
 
-                {/* Request Button */}
-                <button type="button" className="request-button" onClick={handleRequest}>
-                    Request
-                </button>
+        <select
+            name="fromMin"
+            value={formData.fromMin}
+            onChange={handleChange}
+            className="dropdown request-time-dropdown"
+        >
+            <option value="" disabled>Min</option>
+            {[0, 15, 30, 45].map((min) => (
+                <option key={min} value={min}>
+                    {min.toString().padStart(2, "0")}
+                </option>
+            ))}
+        </select>
+    </div>
+
+    <div className="time-row">
+        <label>To:</label>
+        <select
+            name="toHour"
+            value={formData.toHour}
+            onChange={handleChange}
+            className="dropdown request-time-dropdown"
+        >
+            <option value="" disabled>Hour</option>
+            {[...Array(24)].map((_, i) => (
+                <option key={i} value={i}>
+                    {i.toString().padStart(2, "0")}
+                </option>
+            ))}
+        </select>
+
+        <select
+            name="toMin"
+            value={formData.toMin}
+            onChange={handleChange}
+            className="dropdown request-time-dropdown"
+        >
+            <option value="" disabled>Min</option>
+            {[0, 15, 30, 45].map((min) => (
+                <option key={min} value={min}>
+                    {min.toString().padStart(2, "0")}
+                </option>
+            ))}
+        </select>
+    </div>
+</div>
+
+                    <button type="submit" className="submit-button">
+                        Request
+                    </button>
+                </form>
             </div>
         </div>
-        <footer><FooterPriv/></footer>
+        <Footer/>
     </div>
   );
 };
 
-export default RequestBooking;
+export default Request;

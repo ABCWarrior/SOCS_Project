@@ -57,9 +57,9 @@ The "startTime" and "endTime" fields should be:
   - Create semi-private page to display all the accepted bookings of a not logged in user using as input an email [Done]
 
 5) Add api to sign up for appointments 
-  - Need login if you're a member to show all bookings in Booked Timeslots -> query all confi
-  - Add api to confirm attendance [Done in bookingsRoute]
-  - Add api to request new appointment
+  - Need login if you're a member to show all bookings in Booked Timeslots -> query all confi [Done] (Secure API takes your login email | Non-Secure API lets you type in email)
+  - Add api to confirm attendance [Subscribe user to any booking they confirm attendance to]
+  - Add api to request new appointment [Done]
   - Need to also allow a member to book an appointment without it being public info [For now, typing an email in the search bar for confirmed timeslots query all of them for a user, and requires login if the email is from a member]
 
 6) Deploy website on SOCS Server
@@ -67,3 +67,7 @@ The "startTime" and "endTime" fields should be:
 ## Issues
 - Issue when connecting to mongodb -> failure to connect [Fixed]
 - On successful login, who should handle the redirection (frontend or backend)? [Up to design decision -> I think frontend should handle this]
+- We need to allow edit of dates for bookings so that they can be changed to a different date [Fixed]
+  -> The editBookingService function now verifies if the date from the previous booking and the new booking are the same and the determines overlaps accordingly 
+- We need to also be able to make the conversion from weekdays to actual dates to allow editing and creating new booking to work without overlaps [Fixed]
+  -> The overlaps functions now have a conversion to a day of the week if the meeting is meant to be recurring

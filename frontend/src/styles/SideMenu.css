@@ -21,5 +21,11 @@
 }
   
 .SideMenu-button.active {
-    background-color: red;
+    background-color: #ED1B2F;
+}
+
+@media screen and (max-width: 768px) {
+    .SideMenu-button {
+        font-size: 14px;
+    }
 }

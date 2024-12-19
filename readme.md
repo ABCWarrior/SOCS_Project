@@ -28,6 +28,7 @@ Then, set your environment variables for you preferences:
 ```
 FRONTEND_PORT = <PORT_NUMBER>
 BACKEND_PORT = <PORT_NUMBER>
+HOSTNAME = <SERVER_HOSTNAME>
 
 MONGO_URI = <URI>
 MONGO_USER = <USER>

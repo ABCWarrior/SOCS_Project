@@ -1,72 +1,114 @@
 .container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
     font-family: Arial, sans-serif;
 }
 
 .request-booking-container {
     display: flex;
-    font-family: Arial, sans-serif;
-    background-color: #F6F8F9;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('../img/mcgill_campus.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
 }
-  
+
+.request-booking-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 .request-booking-content {
-    margin: 20px;
-    flex-grow: 1;
+    position: relative;
+    z-index: 1;
+    width: 260px;
+    padding: 60px 40px 50px;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
 }
-  
-.request-title {
-    margin-bottom: 20px;
+
+.request-booking-content h1 {
+    margin-bottom: 40px;
+    color: #ED1B2F;
+    font-size: 24px;
+    font-weight: 600;
 }
-  
-.input-field {
+
+.request-booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-field,
+.dropdown {
     padding: 8px;
-    margin-bottom: 15px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 100%;
 }
-  
-.time-slot-inputs {
+
+.request-date-time-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.request-time-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.time-row,
+.request-time-row {
     display: flex;
     align-items: center;
     gap: 10px;
 }
-  
-.dropdown {
-    padding: 6px;
+
+.request-time-container label {
+    width: 45px;
+    margin-right: 5px;
+}
+
+.request-time-dropdown {
+    padding: 8px;
+    width: 70px !important;
     font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
 }
-  
-.time-dropdown {
-    width: 60px;
-}
-  
-.add-button, .request-button {
-    background-color: red;
+
+.submit-button {
+    background-color: #ED1B2F;
     color: white;
     border: none;
-    padding: 8px 12px;
+    padding: 10px;
     cursor: pointer;
     border-radius: 4px;
+    font-size: 0.9rem;
+    width: 100%;
+    margin-top: 10px;
 }
-  
-.add-button:hover, .request-button:hover {
-    background-color: darkred;
+
+.submit-button:hover {
+    background-color: #ff7582;
 }
-  
-.time-slots-list {
-    margin-top: 15px;
-}
-  
-.time-slots-list ul {
-    list-style: none;
-    padding: 0;
-}
-  
-.time-slots-list li {
-    margin: 5px 0;
-}
-  

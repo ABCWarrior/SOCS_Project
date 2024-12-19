@@ -4,11 +4,7 @@ import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
 import "../styles/Create.css";
 
-const CreateBooking = () => {
-    const token = localStorage.getItem('token');
-    const professor = localStorage.getItem('professorName');
-    const id = localStorage.getItem('userId')
-
+const Modify = () => {
     const [formData, setFormData] = useState({
         recurrence: "",
         date: "",
@@ -42,15 +38,15 @@ const CreateBooking = () => {
         }
 
         var isRecurring;
-        var date;
+        var formatDate;
 
         if(formData.recurrence === "weekly"){
             isRecurring = true;
-            date = formData.day
+            formatDate = formData.day
         }
         else{
             isRecurring = false;
-            const currentYear = new Date().getFullYear();
+            const year = new Date().getFullYear();
             const monthNames = [
                 "January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"
@@ -59,22 +55,27 @@ const CreateBooking = () => {
             const month = monthIndex.toString().padStart(2, "0");
         
             const day = formData.date.toString().padStart(2, "0");
-            date = `${currentYear}-${month}-${day}`;
+            formatDate = `${year}-${month}-${day}`;
         }
 
         var startTime = `${formData.fromHour.padStart(2, "0")}:${formData.fromMin.padStart(2, "0")}`;
         var endTime = `${formData.toHour.padStart(2, "0")}:${formData.toMin.padStart(2, "0")}`;
+        const token = localStorage.getItem('token');
+        const professor = localStorage.getItem('professorName');
+        const id = localStorage.getItem('userId')
+        const bookingId = localStorage.getItem('modifyBookingId');
 
         try {
-            const response = await fetch(`http://localhost:5000/api/members/${id}/create_booking`, {
+            const response = await fetch(`http://localhost:5000/api/members/${id}/edit_booking`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     token,
+                    bookingId,
                     professor,
-                    date,
+                    formatDate,
                     startTime,
                     endTime,
                     isRecurring
@@ -92,9 +93,11 @@ const CreateBooking = () => {
             console.error("Error during API call:", err);
         }
 
-        console.log("Form Data Submitted:", token,
+        console.log("Form Data Submitted:", 
+            token,
+            bookingId,
             professor,
-            date,
+            formatDate,
             startTime,
             endTime,
             isRecurring
@@ -108,15 +111,12 @@ const CreateBooking = () => {
             <SideMenu />
 
             <div className="create-booking-content">
-
                 <form onSubmit={handleSubmit} className="create-booking-form">
-
-                    {/* Recurrence Dropdown */}
                     <select
                         name="recurrence"
                         value={formData.recurrence}
                         onChange={handleChange}
-                        className="recurrence-dropdown"
+                        className="dropdown"
                     >
                         <option value="" disabled>
                             Recurrence
@@ -125,10 +125,8 @@ const CreateBooking = () => {
                         <option value="weekly">Weekly</option>
                     </select>
 
-                    {/* Date and Month Dropdowns */}
                     <div className="date-time-container">
                         {formData.recurrence === "weekly" ? (
-                            // Day selection for weekly recurrence
                             <select
                                 name="day"
                                 value={formData.day}
@@ -145,7 +143,6 @@ const CreateBooking = () => {
                                 )}
                                 </select>
                         ) : (
-                            // Default Date and Month selection
                             <>
                                 <select
                                     name="date"
@@ -191,15 +188,13 @@ const CreateBooking = () => {
                         )}
                     </div>
 
-                    {/* Time Selection */}
                     <div className="time-container">
-                        <div>
                         <label>From:</label>
                         <select
                             name="fromHour"
                             value={formData.fromHour}
                             onChange={handleChange}
-                            className="time-dropdown"
+                            className="dropdown time-dropdown"
                         >
                             <option value="" disabled>Hour</option>
                             {[...Array(24)].map((_, i) => (
@@ -213,7 +208,7 @@ const CreateBooking = () => {
                             name="fromMin"
                             value={formData.fromMin}
                             onChange={handleChange}
-                            className="time-dropdown"
+                            className="dropdown time-dropdown"
                         >
                             <option value="" disabled>Min</option>
                             {[0, 15, 30, 45].map((min) => (
@@ -222,15 +217,13 @@ const CreateBooking = () => {
                                 </option>
                             ))}
                         </select>
-                        </div>
 
-                        <div>
                         <label>To:</label>
                         <select
                             name="toHour"
                             value={formData.toHour}
                             onChange={handleChange}
-                            className="time-dropdown"
+                            className="dropdown time-dropdown"
                         >
                             <option value="" disabled>Hour</option>
                             {[...Array(24)].map((_, i) => (
@@ -244,7 +237,7 @@ const CreateBooking = () => {
                             name="toMin"
                             value={formData.toMin}
                             onChange={handleChange}
-                            className="time-dropdown"
+                            className="dropdown time-dropdown"
                         >
                         <option value="" disabled>Min</option>
                         {[0, 15, 30, 45].map((min) => (
@@ -253,10 +246,8 @@ const CreateBooking = () => {
                             </option>
                         ))}
                         </select>
-                        </div>
                     </div>
 
-                    {/* Submit Button */}
                     <button type="submit" className="submit-button">
                         Submit
                     </button>
@@ -268,4 +259,4 @@ const CreateBooking = () => {
   );
 };
 
-export default CreateBooking;
+export default Modify;
