@@ -79,7 +79,7 @@ loginRouter.post('/registration', async (req, res) => {
   }
 })
 
-loginRouter.post('/checkEmail', async (req, res) => {
+loginRouter.post('/check_email', async (req, res) => {
   const { email } = req.body;
 
   try {
