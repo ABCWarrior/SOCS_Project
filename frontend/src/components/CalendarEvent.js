@@ -107,7 +107,7 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page,
     var month
     var number
 
-    console.log(bookingId)
+    console.log(date)
     
     if(isRecurring){
         number = dayAbbreviations[date]

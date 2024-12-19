@@ -36,7 +36,7 @@ function MyBookings() {
             }
         }
         fetchData()
-        console.log(bookings.professor)//not able to get the id
+        // console.log(bookings.professor)//not able to get the id
     });
 
   return (
@@ -66,7 +66,7 @@ function MyBookings() {
                 isRecurring={booking.isRecurring}
                 page="mybookings"
                 id={booking._id}
-                email="someone@mail.mcgill.ca"
+                email=""
               />
             ))}
           </div>
