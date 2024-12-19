@@ -87,6 +87,10 @@
     margin-bottom: 10px;
 }
 
+.cancel-button {
+    margin-bottom: 10px;
+}
+
 @media screen and (max-width: 768px) {
     .calendar-event-actions {
         margin-left: 40px;
