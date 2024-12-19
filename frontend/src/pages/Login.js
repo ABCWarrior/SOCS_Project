@@ -26,9 +26,6 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // console.log('Login successful', data); //test
-        // console.log("email", email)
-        
         localStorage.setItem('token', data.token);
         localStorage.setItem('userId', data.id);
         localStorage.setItem('professorName', data.professorName);

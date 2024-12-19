@@ -36,17 +36,16 @@ const Registration = () => {
       return;
     }
 
-    // console.log(professor + " " + email + " " + password);
     try {
       const response = await fetch('http://localhost:5000/api/login/registration', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           professor,
-          email, 
-          password 
+          email,
+          password
         }),
       });
 
@@ -93,7 +92,7 @@ const Registration = () => {
                 placeholder="Enter your McGill email"
                 required
               />
-              <small style={{ color: '#666'}}> 
+              <small style={{ color: '#666' }}>
                 Must be @mail.mcgill.ca or @mcgill.ca</small>
             </div>
             <div className="form-group">
