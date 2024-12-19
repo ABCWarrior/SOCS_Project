@@ -1,4 +1,4 @@
-.request-container {
+.container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -30,7 +30,7 @@
 .request-booking-content {
     position: relative;
     z-index: 1;
-    width: 280px;
+    width: 260px;
     padding: 60px 40px 50px;
     background-color: white;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -76,6 +76,7 @@
     margin-bottom: 20px;
 }
 
+.time-row,
 .request-time-row {
     display: flex;
     align-items: center;
@@ -96,7 +97,7 @@
     margin-right: 10px;
 }
 
-.request-submit-button {
+.submit-button {
     background-color: #ED1B2F;
     color: white;
     border: none;
@@ -108,10 +109,6 @@
     margin-top: 10px;
 }
 
-.request-submit-button:hover {
+.submit-button:hover {
     background-color: #ff7582;
-}
-
-@media screen and (max-width: 768px) {
-    
 }
