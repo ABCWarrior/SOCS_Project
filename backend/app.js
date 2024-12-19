@@ -16,7 +16,7 @@ const port = process.env.BACKEND_PORT;
 app.use(express.static('../frontend/build'));
 
 app.use(cors({
-  origin: 'http://127.0.0.1:3000',
+  origin: `http://${process.env.HOSTNAME}:${process.env.BACKEND_PORT}`,
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'token', 'email'],
   credentials: true
@@ -28,16 +28,14 @@ app.get('/api', (req, res) => {
   res.send(('Landing Page!'));
 })
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve('../frontend/build', 'index.html'));
-});
 
 app.use('/api/login', loginRouter);
 app.use('/api/members', membersRouter);
 app.use('/api/guests', guestsRouter);
 app.use('/api/bookings', bookingsRouter);
-app.use((req, res) => {
-  res.redirect('/')
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve('../frontend/build', 'index.html'));
 });
 
 app.listen(port, hostname, () => {
