@@ -89,6 +89,7 @@ const Request = () => {
 		<Header/>
         <div className="create-booking-container">
             <div className="create-booking-content">
+                <h1>Reschedule your appointment</h1>
                 <form onSubmit={handleSubmit} className="create-booking-form">
                     <div className="date-time-container">
                         <>
@@ -136,64 +137,68 @@ const Request = () => {
                     </div>
 
                     <div className="time-container">
-                        <label>From:</label>
-                        <select
-                            name="fromHour"
-                            value={formData.fromHour}
-                            onChange={handleChange}
-                            className="dropdown time-dropdown"
-                        >
-                            <option value="" disabled>Hour</option>
-                            {[...Array(24)].map((_, i) => (
-                                <option key={i} value={i}>
-                                    {i.toString().padStart(2, "0")}
-                                </option>
-                            ))}
-                        </select>
+    <div className="time-row">
+        <label>From:</label>
+        <select
+            name="fromHour"
+            value={formData.fromHour}
+            onChange={handleChange}
+            className="dropdown time-dropdown"
+        >
+            <option value="" disabled>Hour</option>
+            {[...Array(24)].map((_, i) => (
+                <option key={i} value={i}>
+                    {i.toString().padStart(2, "0")}
+                </option>
+            ))}
+        </select>
 
-                        <select
-                            name="fromMin"
-                            value={formData.fromMin}
-                            onChange={handleChange}
-                            className="dropdown time-dropdown"
-                        >
-                            <option value="" disabled>Min</option>
-                            {[0, 15, 30, 45].map((min) => (
-                                <option key={min} value={min}>
-                                    {min.toString().padStart(2, "0")}
-                                </option>
-                            ))}
-                        </select>
+        <select
+            name="fromMin"
+            value={formData.fromMin}
+            onChange={handleChange}
+            className="dropdown time-dropdown"
+        >
+            <option value="" disabled>Min</option>
+            {[0, 15, 30, 45].map((min) => (
+                <option key={min} value={min}>
+                    {min.toString().padStart(2, "0")}
+                </option>
+            ))}
+        </select>
+    </div>
 
-                        <label>To:</label>
-                        <select
-                            name="toHour"
-                            value={formData.toHour}
-                            onChange={handleChange}
-                            className="dropdown time-dropdown"
-                        >
-                            <option value="" disabled>Hour</option>
-                            {[...Array(24)].map((_, i) => (
-                                <option key={i} value={i}>
-                                    {i.toString().padStart(2, "0")}
-                                </option>
-                            ))}
-                        </select>
+    <div className="time-row">
+        <label>To:</label>
+        <select
+            name="toHour"
+            value={formData.toHour}
+            onChange={handleChange}
+            className="dropdown time-dropdown"
+        >
+            <option value="" disabled>Hour</option>
+            {[...Array(24)].map((_, i) => (
+                <option key={i} value={i}>
+                    {i.toString().padStart(2, "0")}
+                </option>
+            ))}
+        </select>
 
-                        <select
-                            name="toMin"
-                            value={formData.toMin}
-                            onChange={handleChange}
-                            className="dropdown time-dropdown"
-                        >
-                        <option value="" disabled>Min</option>
-                        {[0, 15, 30, 45].map((min) => (
-                            <option key={min} value={min}>
-                                {min.toString().padStart(2, "0")}
-                            </option>
-                        ))}
-                        </select>
-                    </div>
+        <select
+            name="toMin"
+            value={formData.toMin}
+            onChange={handleChange}
+            className="dropdown time-dropdown"
+        >
+            <option value="" disabled>Min</option>
+            {[0, 15, 30, 45].map((min) => (
+                <option key={min} value={min}>
+                    {min.toString().padStart(2, "0")}
+                </option>
+            ))}
+        </select>
+    </div>
+</div>
 
                     <button type="submit" className="submit-button">
                         Request
