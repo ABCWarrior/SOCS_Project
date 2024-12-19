@@ -12,6 +12,7 @@ const Landing = () => {
     const handleSearch = async (e) => {
         e.preventDefault();
         try {
+            console.log(searchCode)
             const response = await fetch(`http://localhost:5000/bookings/${searchCode}`, {
                 method: 'GET',
                 headers: {

@@ -25,10 +25,14 @@ const SelectedBookings = () => {
                 <div className="content-wrapper">
                     {booking ? (
                         <CalendarEvent 
-                            number={new Date(booking.date).getDate().toString().padStart(2, '0')}
-                            month={new Date(booking.date).toLocaleString('default', { month: 'short' })}
-                            professorName={booking.professor}
-                            time={`${booking.startTime} - ${booking.endTime}`}
+                            professor={booking.professor}
+                            date={booking.date}
+                            startTime={booking.startTime}
+                            endTime={booking.endTime}
+                            isRecurring={booking.isRecurring}
+                            page=""
+                            id={booking._id}
+                            email=""
                         />
                     ) : (
                         <p className="none">No booking selected</p>
