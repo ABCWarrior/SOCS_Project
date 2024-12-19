@@ -66,6 +66,8 @@ bookingsRouter.get('/:id', async (req, res) => {
 bookingsRouter.post('/:id/add_participants', async (req, res) => {
   const { email } = req.body;
   const meetingID = req.params.id;
+  console.log(email)
+  console.log(meetingID)
 
   const result = await addParticipantToBookingService(meetingID, email);
 

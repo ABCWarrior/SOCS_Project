@@ -77,11 +77,22 @@ const requestDecision = async ({ answer, professor, date, startTime, endTime, is
   }
 }
 
+// BOOKING!
 const book = async ({ bookingId }) => {
-  const email = "someone@mcgill.ca"
+  let email = ''
+  if (localStorage.getItem('isGuest'))
+  {
+    email = localStorage.getItem('guestEmail')
+  }
+  else
+  {
+    email = localStorage.getItem('userEmail')
+  }
 
+  console.log(email)
+  
   try {
-    const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}/add_participants`, {
+    const response = await fetch(`http://localhost:5000/api/bookings/${localStorage.getItem('selectedBookingCode')}/add_participants`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,12 +105,15 @@ const book = async ({ bookingId }) => {
     const data = await response.json();
 
     if (response.ok) {
-      console.log("Booking deleted successfully:", data);
+      console.log("Added participant:", data);
+      localStorage.setItem('isBooking', 'false');
+      localStorage.setItem('selectedBookingCode', '');
+      
     } else {
-      console.error("Failed to delete booking:", data.message);
+      console.error("Failed to add participant:", data.message);
     }
   } catch (error) {
-    console.error("Error deleting booking:", error);
+    console.error("Error adding participant:", error);
   }
 }
 
