@@ -122,8 +122,14 @@ membersRouter.post('/:member_id/requested_appointments/confirm_or_deny', async (
 })
 
 membersRouter.post('/:id/logout', (req, res) => {
-  logoutSecurity(req, res);
-})
+  try {
+    logoutSecurity(req, res);
+    res.status(200).json({ message: 'Logout successful' });
+  } catch (error) {
+    console.error('Logout error:', error);
+    res.status(500).json({ message: 'Logout failed' });
+  }
+});
 
 membersRouter.post('/:id/check_token', async (req, res) => {
   const { token } = req.body;
