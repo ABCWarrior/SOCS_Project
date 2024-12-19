@@ -67,7 +67,7 @@ function MyBookings() {
                 isRecurring={booking.isRecurring}
                 page="mybookings"
                 bookingId={booking._id}
-                email="someone@mail.mcgill.ca"
+                email=""
               />
             ))}
           </div>

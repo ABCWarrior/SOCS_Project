@@ -48,8 +48,7 @@ function MyBookings() {
 				}
 			}
 			fetchData()
-			// console.log(bookings._id)//not able to get the id
-		});
+		}, []);
 	
 
   	return (
@@ -78,7 +77,7 @@ function MyBookings() {
 								endTime={booking.endTime}
 								isRecurring={booking.isRecurring}
 								page="mybookings"
-								id="6763331f55cf2dfd1e95c315"
+								bookingId={booking._id}
 								email="someone@mail.mcgill.ca"
 							/>
 						))}

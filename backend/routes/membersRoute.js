@@ -86,7 +86,7 @@ membersRouter.post('/:id/delete_booking', async (req, res) => {
 //});
 
 membersRouter.get('/:member_id/requested_appointments', async (req, res) => {
-  console.log(req.params.member_id);//test
+  // console.log(req.params.member_id);//test
   const { token } = req.headers;
 
   if (!await privatePageAuthentication(token, req.params.member_id)) {

@@ -108,8 +108,6 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page,
   var month
   var number
 
-  console.log("bookingId", bookingId)//test
-
   if (isRecurring) {
     number = dayAbbreviations[date]
     month = "Weekly"
@@ -134,7 +132,11 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page,
 
         {page === 'mybookings' ? (
           <>
-            <NavLink to="/modify" className="modify-button">
+            <NavLink to="/modify" 
+              onClick={() => {
+                localStorage.setItem('modifyBookingId', bookingId);
+              }}  
+              className="modify-button">
               Modify
             </NavLink>
             <button className="cancel-button"
@@ -168,7 +170,12 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page,
               })}>Refuse</button>
           </>
         ) : <>
-          <NavLink to="/requests" className="modify-button">
+          <NavLink to="/requests" 
+            onClick={() => {
+              localStorage.setItem('modifyBookingId', bookingId);
+              localStorage.setItem('requestProf', professor);
+            }}  
+            className="modify-button">
             Request
           </NavLink>
           <button className="cancel-button"
