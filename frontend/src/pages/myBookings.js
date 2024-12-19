@@ -25,11 +25,11 @@ function MyBookings() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                fetch('http://127.0.0.1:5000/api/members/6762ccceb652ac86c05e7a85/dashboard', {
+                fetch(`http://127.0.0.1:5000/api/members/${id}/dashboard`, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
-                    'token': '2a5bfbd3d700d63a51a647ec2f64c3eb0e009ad789a2b798711cec9240f38a28'
+                    'token': token
                 }
                 }).then(res => res.json()).then(data => console.log(data))
             }
