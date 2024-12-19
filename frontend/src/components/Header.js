@@ -23,11 +23,13 @@ const Header = () => {
   };
 
   const handleLogout = async () => {
+    const userId = localStorage.getItem('userId');
+  
     try {
-      await fetch('http://localhost:5000/api/login/logout', {
+      await fetch(`http://localhost:5000/api/${userId}/logout`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'token': localStorage.getItem('token')
         }
       });
   
