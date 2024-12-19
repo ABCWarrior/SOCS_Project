@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { ObjectId } from 'mongodb';
 
-import { createAppointmentRequestService } from '../services/bookingServices.js';
+import { createAppointmentRequestService, addParticipantToBookingService } from '../services/bookingServices.js';
 import { bookingsEnums } from '../enums/bookingsEnums.js';
 
 import database from '../database/connectDatabase.js';
