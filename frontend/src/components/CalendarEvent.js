@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import '../styles/CalendarEvent.css';
 
 const dayAbbreviations = {
@@ -14,6 +14,8 @@ const dayAbbreviations = {
 
 const token = localStorage.getItem('token');
 const id = localStorage.getItem('userId')
+
+const navigate = useNavigate();
 
 const cancel = async ({ professor, date, startTime, endTime }) => {
 
@@ -95,11 +97,15 @@ const book = async ({ bookingId }) => {
 
     if (response.ok) {
       console.log("Booking deleted successfully:", data);
+      alert("You have booked the meeting")
+      navigate("/SelectedBookings")
     } else {
       console.error("Failed to delete booking:", data.message);
+      alert("Something went wrong")
     }
   } catch (error) {
     console.error("Error deleting booking:", error);
+    alert("Something went wrong")
   }
 }
 
