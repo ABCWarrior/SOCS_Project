@@ -9,7 +9,6 @@ const membersRouter = Router();
 
 membersRouter.get('/:id/dashboard', async (req, res) => {
   const { token } = req.headers; // Extract token from query parameters
-  console.log(token)//test
 
   if (!await privatePageAuthentication(token, req.params.id)) {
     return res.status(401).json({

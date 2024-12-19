@@ -12,14 +12,7 @@ function MyBookings() {
     const token = localStorage.getItem('token');
     const id = localStorage.getItem('userId')
 
-    // const bookings = [
-    //     { professor: "Jhon", date: "2024-02-01", startTime: "02:15", endTime: "02:30", isRecurring: false},
-    //     { professor: "Jhon", date: "2024-02-01", startTime: "03:15", endTime: "03:30", isRecurring: false},
-    //     { professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false},
-    // ];
-
-  // Filter the bookings based on search input
-  const filteredBookings = bookings.filter((booking) =>
+    const filteredBookings = bookings.filter((booking) =>
     booking.professor.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -71,6 +64,7 @@ function MyBookings() {
                 endTime={booking.endTime}
                 isRecurring={booking.isRecurring}
                 page="mybookings"
+                id={booking._id}
               />
             ))}
           </div>

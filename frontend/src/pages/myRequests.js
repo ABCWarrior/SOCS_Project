@@ -9,9 +9,9 @@ function MyBookings() {
   	const [search, setSearch] = useState("");
   
   	const bookings = [
-		{ professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false},
-		{ professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false},
-		{ professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false},
+		{ professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false, _id: "1"},
+		{ professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false, _id: "1"},
+		{ professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false, _id: "1"},
 	];
 
 	const filteredBookings = bookings.filter((booking) =>
@@ -48,6 +48,7 @@ function MyBookings() {
 								endTime={booking.endTime}
 								isRecurring={booking.isRecurring}
 								page="myrequests"
+								id={booking._id}
 							/>
 						))}
 					</div>
