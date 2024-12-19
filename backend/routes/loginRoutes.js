@@ -1,7 +1,7 @@
-import crypto from 'crypto';
 import { Router } from 'express';
 
 import database from '../database/connectDatabase.js'
+import { tokenCreation, passwordHashingForRegistration } from '../authentification/tokenAuthentification.js';
 
 const membersCollection = database.collection(process.env.MONGO_MEMBERS_COLLECTION);
 const tokensCollection = database.collection(process.env.MONGO_TOKENS_COLLECTION);
@@ -10,11 +10,6 @@ await tokensCollection.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 900 }
 
 const loginRouter = Router();
 
-const tokenCreation = (id) => {
-  const token = crypto.createHash('sha256').update(id.toString()).digest('hex');
-  const expiresAt = new Date(Date.now());
-  return { tokenValidation: { token, id }, expiresAt }
-}
 
 const isValidMcGillEmail = (email) => {
   const mcgillEmailRegex = /^[a-zA-Z0-9._%+-]+@(mail\.mcgill\.ca|mcgill\.ca)$/;
@@ -31,16 +26,16 @@ loginRouter.post('/', async (req, res) => {
   try {
     const member = await membersCollection.findOne({ email });
 
-    if (member && member.password === password) {
+    if (member && member.password === passwordHashingForRegistration(password)) {
       // TODO: Make tokenCreation randomized on login
       const tokenDocument = tokenCreation(member._id.toString());
       await tokensCollection.insertOne(tokenDocument);
       console.log("uniqueId for pages: ", member._id.toString());//test
-      res.status(200).json({ 
-        message: "Successful login", 
-        token: tokenDocument.tokenValidation.token, 
+      res.status(200).json({
+        message: "Successful login",
+        token: tokenDocument.tokenValidation.token,
         id: member._id,
-        professor: member.professor, 
+        professor: member.professor,
         professorName: member.professor
       });
     }
@@ -63,7 +58,7 @@ loginRouter.post('/registration', async (req, res) => {
   }
 
   try {
-    const newMember = { professor, email, password };
+    const newMember = { professor, email, password: passwordHashingForRegistration(password) };
     const member = await membersCollection.findOne({ email });
 
     if (!member || !member.password) {

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { privatePageAuthentication, logoutSecurity } from '../authentification/tokenAuthentification.js';
-import { getAllBookingsService, createBookingService, createBookingServiceWithParticipant, editBookingService, getAllAppointmentRequests, deleteAppointmentRequest, deleteBookingService } from '../services/bookingServices.js';
+import { getAllBookingsService, createBookingService, createBookingServiceWithParticipant, editBookingService, getAllAppointmentRequests, deleteAppointmentRequest, deleteBookingService, getMemberAttendance } from '../services/bookingServices.js';
 import { bookingsEnums } from '../enums/bookingsEnums.js';
 import sendAutomatedEmail from '../services/emailService.js';
 
