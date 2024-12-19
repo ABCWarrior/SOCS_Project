@@ -63,7 +63,7 @@ const Modify = () => {
         const token = localStorage.getItem('token');
         const professor = localStorage.getItem('professorName');
         const id = localStorage.getItem('userId')
-        const bookingId = localStorage.getItem('bookingId');
+        const bookingId = localStorage.getItem('modifyBookingId');
 
         try {
             const response = await fetch(`http://localhost:5000/api/members/${id}/edit_booking`, {

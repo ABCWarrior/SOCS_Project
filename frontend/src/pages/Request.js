@@ -42,7 +42,7 @@ const Request = () => {
         var startTime = `${formData.fromHour.padStart(2, "0")}:${formData.fromMin.padStart(2, "0")}`;
         var endTime = `${formData.toHour.padStart(2, "0")}:${formData.toMin.padStart(2, "0")}`;
         const professor = localStorage.getItem('requestProf');
-        const bookingId = localStorage.getItem('bookingId');
+        const bookingId = localStorage.getItem('requestBookingId');
         const userEmail = localStorage.getItem('guestEmail');
         // const professor = "Matthew"; test
         // const bookingId = "6763337055cf2dfd1e95c317";

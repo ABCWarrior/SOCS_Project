@@ -121,84 +121,76 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page,
   var time = startTime + " - " + endTime;
   return (
     <div className="calendar-event-container">
-      <div className="calendar-event-number">{number}</div>
-      <div className="calendar-event-details">
-        <div className="calendar-event-month">{month}</div>
-        <div className="calendar-event-professor">{professor}</div>
-        <div className="calendar-event-time">{time}</div>
-      </div>
+        <div className="calendar-event-number">{number}</div>
+        <div className="calendar-event-details">
+            <div className="calendar-event-month">{month}</div>
+            <div className="calendar-event-professor">{professor}</div>
+            <div className="calendar-event-time">{time}</div>
+        </div>
 
-      <div className="calendar-event-actions">
+        <div className="calendar-event-actions">
 
-        {page === 'mybookings' ? (
-          <>
-            <NavLink to="/modify" 
-              onClick={() => {
-                localStorage.setItem('modifyBookingId', bookingId);
-              }}  
-              className="modify-button">
-              Modify
-            </NavLink>
-            <button className="cancel-button"
-              onClick={() => cancel({
-                professor,
-                date,
-                startTime,
-                endTime
-              })}> Cancel</button>
-          </>
-        ) : page === 'myrequests' ? (
-          <>
-            <button className="accept-button"
-              onClick={() => requestDecision({
-                answer: true,
-                professor,
-                date,
-                startTime,
-                endTime,
-                isRecurring,
-                email
-              })}>Accept</button>
-            <button className="reschedule-button"
-              onClick={() => requestDecision({
-                answer: false,
-                professor,
-                date,
-                startTime,
-                endTime,
-                isRecurring
-              })}>Refuse</button>
-          </>
-        ) : page === 'selectedbookings' ? (
-          <>
-            <button className="accept-button"
-              onClick={() => book({
-                bookingId
-              })}>Accept</button>
-            <NavLink to="/publicreschedule" //need to change path
-              className="modify-button">
-              Reschedule
-            </NavLink>
-          </>
-        ): <>
-          <NavLink to="/requests" 
-            onClick={() => {
-              localStorage.setItem('modifyBookingId', bookingId);
-              localStorage.setItem('requestProf', professor);
-            }}  
-            className="modify-button">
-            Request
-          </NavLink>
-          <button className="cancel-button"
-            onClick={() => book({
-              professor,
-              date,
-              startTime,
-              endTime
-            })}> book </button>
-        </>
-        }
-      </div >
+            {page === 'mybookings' ? (
+            <>
+                <NavLink to="/modify" 
+                onClick={() => {
+                    localStorage.setItem('modifyBookingId', bookingId);
+                }}  
+                className="modify-button">
+                Modify
+                </NavLink>
+                <button className="cancel-button"
+                onClick={() => cancel({
+                    professor,
+                    date,
+                    startTime,
+                    endTime
+                })}> Cancel</button>
+            </>
+            ) : page === 'myrequests' ? (
+            <>
+                <button className="accept-button"
+                onClick={() => requestDecision({
+                    answer: true,
+                    professor,
+                    date,
+                    startTime,
+                    endTime,
+                    isRecurring,
+                    email
+                })}>Accept</button>
+                <button className="reschedule-button"
+                onClick={() => requestDecision({
+                    answer: false,
+                    professor,
+                    date,
+                    startTime,
+                    endTime,
+                    isRecurring,
+                    email
+                })}>Refuse</button>
+            </>
+            ) : page === 'selectedbookings' ? (
+                <>
+                    <button className="cancel-button"
+                        onClick={() => book({
+                            professor,
+                            date,
+                            startTime,
+                            endTime
+                    })}> book </button>
+                    <NavLink to="/requests" 
+                        onClick={() => {
+                            localStorage.setItem('requestBookingId', bookingId);
+                            localStorage.setItem('requestProf', professor);
+                        }}  
+                        className="modify-button"
+                    >
+                        Request
+                    </NavLink>
+                </>
+            ): null}
+        </div >
     </div >
   );
 };
