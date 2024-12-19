@@ -12,36 +12,33 @@ const Intermediary = () => {
   const handleGuestContinue = async (e) => {
     e.preventDefault();
     setError('');
-
-    localStorage.setItem('guestEmail', email)
-
+  
     try {
-      const response = await fetch('http://localhost:5000/api/login/registration', {
+      const response = await fetch('http://localhost:5000/api/login/check_email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-          professor: "",
-          email, 
-          password: "" 
-        }),
+        body: JSON.stringify({ email }),
       });
-
+  
       const data = await response.json();
-
-      if (response.ok) {
-        console.log('Registration successful', data);
-        navigate('/selected-bookings');
+  
+      if (response.ok && data.exists) {
+        console.log('Guest access successful', data);
+        localStorage.setItem('guestEmail', email);
+        document.cookie = `userEmail=${email}; expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+        localStorage.setItem('isGuest', 'true');
+        navigate('/SelectedBookings');
       } else {
-        setError(data.message || 'Registration failed');
+        setError(data.message || 'Failed to continue as guest');
       }
     } catch (err) {
-      console.error('Registration error:', err);
+      console.error('Guest access error:', err);
       setError('Network error. Please try again.');
     }
   };
-
+    
   const handleLoginRedirect = () => {
     navigate('/login');
   };

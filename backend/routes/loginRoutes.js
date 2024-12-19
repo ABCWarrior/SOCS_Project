@@ -66,7 +66,7 @@ loginRouter.post('/registration', async (req, res) => {
     const newMember = { professor, email, password };
     const member = await membersCollection.findOne({ email });
 
-    if (!member) {
+    if (!member || !member.password) {
       await membersCollection.insertOne(newMember);
       res.status(201).json({ message: "Successful Registration" })
     }
@@ -78,5 +78,26 @@ loginRouter.post('/registration', async (req, res) => {
     res.status(400).json({ message: "Error during registration with error: ", err })
   }
 })
+
+loginRouter.post('/check_email', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const member = await membersCollection.findOne({ email });
+
+    if (!member) {
+      await membersCollection.insertOne({ email });
+      return res.status(200).json({ exists: true });
+    }
+
+    if (member.password) {
+      return res.status(200).json({ exists: false });
+    } else {
+      return res.status(200).json({ exists: true });
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Error checking email", error: err });
+  }
+});
 
 export default loginRouter;
