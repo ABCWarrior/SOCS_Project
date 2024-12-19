@@ -7,15 +7,16 @@ import "../styles/myBookings.css";
 
 function MyBookings() {
     const [search, setSearch] = useState("");
+    const [bookings, setBookings] = useState([]);
     
     const token = localStorage.getItem('token');
     const id = localStorage.getItem('userId')
 
-    const bookings = [
-        { professor: "Jhon", date: "2024-02-01", startTime: "02:15", endTime: "02:30", isRecurring: false},
-        { professor: "Jhon", date: "2024-02-01", startTime: "03:15", endTime: "03:30", isRecurring: false},
-        { professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false},
-    ];
+    // const bookings = [
+    //     { professor: "Jhon", date: "2024-02-01", startTime: "02:15", endTime: "02:30", isRecurring: false},
+    //     { professor: "Jhon", date: "2024-02-01", startTime: "03:15", endTime: "03:30", isRecurring: false},
+    //     { professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false},
+    // ];
 
   // Filter the bookings based on search input
   const filteredBookings = bookings.filter((booking) =>
@@ -25,13 +26,17 @@ function MyBookings() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                fetch('http://127.0.0.1:5000/api/members/6762ccceb652ac86c05e7a85/dashboard', {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'token': '2a5bfbd3d700d63a51a647ec2f64c3eb0e009ad789a2b798711cec9240f38a28'
-                }
-                }).then(res => res.json()).then(data => console.log(data))
+                fetch(`http://127.0.0.1:5000/api/members/${id}/dashboard`, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'token': token
+                    }
+                })
+                .then(res => res.json())
+                .then( data => {
+                    setBookings(data.all_bookings || []);
+                })
             }
             catch (error) {
                 console.log(error)

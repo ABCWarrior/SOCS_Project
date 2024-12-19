@@ -81,7 +81,7 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page}
     
     if(isRecurring){
         number = dayAbbreviations[date]
-        month = ""
+        month = "Weekly"
     }
     else{
         const options = { month: 'long' };
