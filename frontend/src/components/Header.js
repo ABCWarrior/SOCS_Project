@@ -31,6 +31,7 @@ const Header = () => {
   
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
+      localStorage.removeItem('professorName');
       
       document.cookie.split(";").forEach((c) => {
         document.cookie = c
