@@ -43,10 +43,10 @@ const Request = () => {
         var endTime = `${formData.toHour.padStart(2, "0")}:${formData.toMin.padStart(2, "0")}`;
         const professor = localStorage.getItem('requestProf');
         const bookingId = localStorage.getItem('requestBookingId');
-        const userEmail = localStorage.getItem('guestEmail');
-        // const professor = "Matthew"; test
-        // const bookingId = "6763337055cf2dfd1e95c317";
-        // const userEmail = "Matthew@mail.mcgill.ca"; test
+        // const userEmail = localStorage.getItem('guestEmail');
+        // const professor = "Matthew";
+        // const bookingId = "6763ce6b94edf13c1898c952";
+        const userEmail = "Matthew@mail.mcgill.ca";
         // console.log(`http://localhost:5000/api/bookings/${bookingId}/edit_booking`) test
 
         try {
