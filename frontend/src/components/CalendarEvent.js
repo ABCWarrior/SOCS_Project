@@ -99,12 +99,7 @@ const requestDecision = async ({
 
 // BOOKING!
 const book = async ({ bookingId }) => {
-  let email = "";
-  if (localStorage.getItem("isGuest")) {
-    email = localStorage.getItem("guestEmail");
-  } else {
-    email = localStorage.getItem("guestEmail");
-  }
+  var email = localStorage.getItem("guestEmail");
 
   try {
     const response = await fetch(

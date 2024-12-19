@@ -24,34 +24,25 @@ const Modify = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const requiredFields =
-      formData.recurrence === "weekly"
-        ? ["recurrence", "day", "fromHour", "fromMin", "toHour", "toMin"]
-        : [
-            "recurrence",
-            "date",
-            "month",
-            "fromHour",
-            "fromMin",
-            "toHour",
-            "toMin",
-          ];
+    const requiredFields = formData.recurrence === "weekly" 
+            ? ["recurrence", "day", "fromHour", "fromMin", "toHour", "toMin"]
+            : ["recurrence", "date", "month", "fromHour", "fromMin", "toHour", "toMin"];
 
-    const isFormValid = requiredFields.every(
-      (field) => formData[field] !== "" && formData[field] !== null
+    const isFormValid = requiredFields.every(field => 
+        formData[field] !== "" && formData[field] !== null
     );
 
     if (!isFormValid) {
-      alert("Please fill out all the required fields before submitting.");
-      return;
+        alert("Please fill out all the required fields before submitting.");
+        return;
     }
 
     var isRecurring;
-    var formatDate;
+    var date;
 
     if (formData.recurrence === "weekly") {
       isRecurring = true;
-      formatDate = formData.day;
+      date = formData.day;
     } else {
       isRecurring = false;
       const year = new Date().getFullYear();
@@ -73,7 +64,7 @@ const Modify = () => {
       const month = monthIndex.toString().padStart(2, "0");
 
       const day = formData.date.toString().padStart(2, "0");
-      formatDate = `${year}-${month}-${day}`;
+      date = `${year}-${month}-${day}`;
     }
 
     var startTime = `${formData.fromHour.padStart(
@@ -88,6 +79,7 @@ const Modify = () => {
     const professor = localStorage.getItem("professorName");
     const id = localStorage.getItem("userId");
     const bookingId = localStorage.getItem("modifyBookingId");
+    // var date = formatDate
 
     try {
       const response = await fetch(
@@ -101,7 +93,7 @@ const Modify = () => {
             token,
             bookingId,
             professor,
-            formatDate,
+            date,
             startTime,
             endTime,
             isRecurring,
@@ -115,7 +107,7 @@ const Modify = () => {
         console.log("Booking modified successfully:", result.message);
         alert("Booking modified successfully");
       } else {
-        console.error("Failed to create booking:", result.message);
+        console.error("Failed to modify booking:", result.message);
         alert("Booking modified failed");
       }
     } catch (err) {
@@ -128,7 +120,7 @@ const Modify = () => {
       token,
       bookingId,
       professor,
-      formatDate,
+      date,
       startTime,
       endTime,
       isRecurring

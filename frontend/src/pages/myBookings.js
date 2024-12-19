@@ -6,17 +6,10 @@ import Footer from '../components/Footer.js';
 import "../styles/myBookings.css";
 
 function MyBookings() {
-  const [search, setSearch] = useState("");
   const [bookings, setBookings] = useState([]);
 
   const token = localStorage.getItem('token');
   const id = localStorage.getItem('userId')
-
-  const filteredBookings = () => {
-    return bookings.filter((booking) =>
-      booking.professor.toLowerCase().includes(search.toLowerCase())
-    )
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,18 +39,9 @@ function MyBookings() {
       <main className="mybookings-container">
         <Sidebar />
         <div className="content">
-          <div className="header">
-            <input
-              type="text"
-              placeholder="Search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="search-bar"
-            />
-          </div>
 
           <div className="bookings-list">
-            {filteredBookings().map((booking, index) => (
+            {bookings.map((booking, index) => (
               <CalendarEvent
                 key={index}
                 professor={booking.professor}

@@ -85,11 +85,14 @@ const CreateBooking = () => {
 
             if (response.ok) {
                 console.log("Booking created successfully:", result.message);
+                alert("Booking created")
             } else {
                 console.error("Failed to create booking:", result.message);
+                alert("Booking creation failed")
             }
         } catch (err) {
             console.error("Error during API call:", err);
+            alert("Error in creating booking")
         }
 
         console.log("Form Data Submitted:", token,
