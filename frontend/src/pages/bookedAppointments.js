@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../components/SideMenu.js";
 import CalendarEvent from "../components/CalendarEvent.js";
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
@@ -9,8 +8,7 @@ function Booked() {
   const [search, setSearch] = useState("");
   const [bookings, setBookings] = useState([]);
 
-  const token = localStorage.getItem('token');
-  const id = localStorage.getItem('userId')
+  const userEmail = localStorage.getItem('guestEmail');
 
   const filteredBookings = () => {
     return bookings.filter((booking) =>
@@ -21,11 +19,11 @@ function Booked() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetch(`http://127.0.0.1:5000/api/members/${id}/dashboard`, {
+        await fetch('http://127.0.0.1:5000/api/guests/', {
           method: "GET",
           headers: {
             'Content-Type': 'application/json',
-            'token': token
+            'email': userEmail
           }
         })
           .then(res => res.json())
@@ -44,7 +42,6 @@ function Booked() {
     <div className="container">
       <Header />
       <main className="mybookings-container">
-        <Sidebar />
         <div className="content">
           <div className="header">
             <input
@@ -65,8 +62,8 @@ function Booked() {
                 startTime={booking.startTime}
                 endTime={booking.endTime}
                 isRecurring={booking.isRecurring}
-                page="mybookings"
-                bookingId={booking._id}
+                page=""
+                bookingId=""
                 email=""
               />
             ))}
