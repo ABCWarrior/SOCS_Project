@@ -5,50 +5,42 @@ import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
 import "../styles/myBookings.css";
 
-function MyBookings() {
-  	// const [search, setSearch] = useState("");
-  
-  	// const bookings = [
-	// 	{ professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false, _id: "1"},
-	// 	{ professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false, _id: "1"},
-	// 	{ professor: "Jhon", date: "2024-02-01", startTime: "04:15", endTime: "04:30", isRecurring: false, _id: "1"},
-	// ];
+function MyRequests() {
 
-	// const filteredBookings = bookings.filter((booking) =>
-	// 	booking.professor.toLowerCase().includes(search.toLowerCase())
-	// );
-
-		const [search, setSearch] = useState("");
-		const [bookings, setBookings] = useState([]);
-		
-		const token = localStorage.getItem('token');
-		const id = localStorage.getItem('userId')
+	const [search, setSearch] = useState("");
+	const [bookings, setBookings] = useState([]);
 	
-		const filteredBookings = bookings.filter((booking) =>
+	const token = localStorage.getItem('token');
+	const id = localStorage.getItem('userId')
+	// console.log("token", token) //test
+	// console.log("id", id) //test
+
+	const filteredBookings = bookings.filter((booking) =>
 		booking.professor.toLowerCase().includes(search.toLowerCase())
-	  );
-	
-		useEffect(() => {
-			const fetchData = async () => {
-				try {
-					fetch(`http://127.0.0.1:5000/api/members/${id}/dashboard`, {
-						method: "GET",
-						headers: {
-							'Content-Type': 'application/json',
-							'token': token
-						}
-					})
-					.then(res => res.json())
-					.then( data => {
-						setBookings(data.all_bookings || []);
-					})
-				}
-				catch (error) {
-					console.log(error)
-				}
+	);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				fetch(`http://127.0.0.1:5000/api/members/${id}/requested_appointments`, {
+					method: "GET",
+					headers: {
+						'Content-Type': 'application/json',
+						'token': token
+					}
+				})
+				.then(res => res.json())
+				.then( data => {
+					setBookings(data.all_bookings || []);
+				})
 			}
-			fetchData()
-		}, []);
+			catch (error) {
+				console.log(error)
+			}
+		}
+		fetchData()
+		console.log(bookings)
+	}, []);
 	
 
   	return (
@@ -71,14 +63,14 @@ function MyBookings() {
 						{filteredBookings.map((booking, index) => (
 							<CalendarEvent
 								key={index}
-								professor={booking.professor}
-								date={booking.date}
-								startTime={booking.startTime}
-								endTime={booking.endTime}
-								isRecurring={booking.isRecurring}
-								page="mybookings"
+								professor={booking.requestedAppointment.professor}
+								date={booking.requestedAppointment.date}
+								startTime={booking.requestedAppointment.startTime}
+								endTime={booking.requestedAppointment.endTime}
+								isRecurring={false}
+								page="myrequests"
 								bookingId={booking._id}
-								email="someone@mail.mcgill.ca"
+								email={booking.requestingEmail}
 							/>
 						))}
 					</div>
@@ -89,4 +81,4 @@ function MyBookings() {
   	);
 }
 
-export default MyBookings;
+export default MyRequests;
