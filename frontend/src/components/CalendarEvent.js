@@ -179,7 +179,7 @@ const CalendarEvent = ({ professor, date, startTime, endTime, isRecurring, page,
                             startTime,
                             endTime
                     })}> book </button>
-                    <NavLink to="/requests" 
+                    <NavLink to="/request" 
                         onClick={() => {
                             localStorage.setItem('requestBookingId', bookingId);
                             localStorage.setItem('requestProf', professor);
