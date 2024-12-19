@@ -34,7 +34,10 @@ bookingsRouter.get('/:id', async (req, res) => {
         professor: booking.professor, 
         date: booking.date, 
         startTime: booking.startTime, 
-        endTime: booking.endTime 
+        endTime: booking.endTime,
+        _id: booking._id,
+        isRecurring: booking.isRecurring,
+        professorDatabaseId: booking.professorDatabaseId
       }
     });
   } catch (error) {
@@ -45,12 +48,12 @@ bookingsRouter.get('/:id', async (req, res) => {
   }
 });
 
-//bookingsRouter.post('/:id', async (req, res) => {
+// bookingsRouter.post('/:id', async (req, res) => {
 //  const { email } = req.body;
 //  try {
 //    const booking = bookingsCollection.findOne({ _id: req.params.id });
 //    if (booking == null) return res.status(500).json({ message: "Booking does not exist" });
-//
+
 //    bookingsCollection.updateOne({ _id: booking._id }, { $push: { participants: email } });
 //    return res.status(201).json({ message: "Successfully added you as a participant" });
 //  }
@@ -58,7 +61,7 @@ bookingsRouter.get('/:id', async (req, res) => {
 //    console.error(err);
 //    return res.status(500).json({ message: "Unable to add you as a participant" });
 //  }
-//})
+// })
 
 bookingsRouter.post('/:id/add_participants', async (req, res) => {
   const { email } = req.body;
@@ -75,7 +78,7 @@ bookingsRouter.post('/:id/add_participants', async (req, res) => {
 
 bookingsRouter.post('/:booking_id/appointment_request', async (req, res) => {
   const { userEmail, professor, date, startTime, endTime } = req.body;
-  console.log(req.params.booking_id)//test
+  // console.log(req.params.booking_id)//test
   const { professorDatabaseId } = await bookingsCollection.findOne({ _id: new ObjectId(req.params.booking_id) })
   const result = await createAppointmentRequestService(
     userEmail,
