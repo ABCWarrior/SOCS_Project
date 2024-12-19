@@ -6,38 +6,39 @@ import Footer from '../components/Footer.js';
 import "../styles/myBookings.css";
 
 function MyBookings() {
-    const [search, setSearch] = useState("");
-    const [bookings, setBookings] = useState([]);
-    
-    const token = localStorage.getItem('token');
-    const id = localStorage.getItem('userId')
+  const [search, setSearch] = useState("");
+  const [bookings, setBookings] = useState([]);
 
-    const filteredBookings = bookings.filter((booking) =>
-    booking.professor.toLowerCase().includes(search.toLowerCase())
-  );
+  const token = localStorage.getItem('token');
+  const id = localStorage.getItem('userId')
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                fetch(`http://127.0.0.1:5000/api/members/${id}/dashboard`, {
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'token': token
-                    }
-                })
-                .then(res => res.json())
-                .then( data => {
-                    setBookings(data.all_bookings || []);
-                })
-            }
-            catch (error) {
-                console.log(error)
-            }
-        }
-        fetchData()
-        console.log(bookings.professor)//not able to get the id
-    });
+  const filteredBookings = () => {
+    return bookings.filter((booking) =>
+      booking.professor.toLowerCase().includes(search.toLowerCase())
+    )
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await fetch(`http://127.0.0.1:5000/api/members/${id}/dashboard`, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+            'token': token
+          }
+        })
+          .then(res => res.json())
+          .then(data => {
+            setBookings(data.all_bookings || []);
+          })
+      }
+      catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData()
+  }, []);
 
   return (
     <div className="container">
@@ -56,7 +57,7 @@ function MyBookings() {
           </div>
 
           <div className="bookings-list">
-            {filteredBookings.map((booking, index) => (
+            {filteredBookings().map((booking, index) => (
               <CalendarEvent
                 key={index}
                 professor={booking.professor}
@@ -65,7 +66,7 @@ function MyBookings() {
                 endTime={booking.endTime}
                 isRecurring={booking.isRecurring}
                 page="mybookings"
-                id={booking._id}
+                bookingId={booking._id}
                 email="someone@mail.mcgill.ca"
               />
             ))}
