@@ -47,6 +47,7 @@ function MyRequests() {
     fetchData();
   }, [id, token]);
 
+
   return (
     <div className="container">
       <Header />
@@ -77,6 +78,7 @@ function MyRequests() {
       <div className="footer">
         <Footer />
       </div>
+
     </div>
   );
 }

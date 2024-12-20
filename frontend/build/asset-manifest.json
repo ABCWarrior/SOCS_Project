@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.810f6468.css",
+    "main.js": "/static/js/main.947c7dfa.js",
+    "static/js/488.3c22dbdf.chunk.js": "/static/js/488.3c22dbdf.chunk.js",
+    "static/media/mcgill_campus.webp": "/static/media/mcgill_campus.1dc59bd12f3a02e42f8f.webp",
+    "static/media/logo_color.jpg": "/static/media/logo_color.7c4d95a30e4470e02b7d.jpg",
+    "static/media/logo_bw.jpg": "/static/media/logo_bw.7de311aefabc971958bd.jpg",
+    "index.html": "/index.html",
+    "main.810f6468.css.map": "/static/css/main.810f6468.css.map",
+    "main.947c7dfa.js.map": "/static/js/main.947c7dfa.js.map",
+    "488.3c22dbdf.chunk.js.map": "/static/js/488.3c22dbdf.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.810f6468.css",
+    "static/js/main.947c7dfa.js"
+  ]
+}

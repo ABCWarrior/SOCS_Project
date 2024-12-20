@@ -30,8 +30,11 @@ const SelectedBookings = () => {
                 <Footer />
             </div>
         );
-    }
 
+    }
+  }, []);
+
+  if (!booking) {
     return (
         <div className="bookings-container">
             <Header />
@@ -55,7 +58,34 @@ const SelectedBookings = () => {
             </main>
             <Footer />
         </div>
+
     );
+  }
+
+  return (
+    <div className="bookings-container">
+      <Header />
+      <main className="landing-main">
+        <div className="content-wrapper">
+          {booking ? (
+            <CalendarEvent
+              professor={booking.professor}
+              date={booking.date}
+              startTime={booking.startTime}
+              endTime={booking.endTime}
+              isRecurring={booking.isRecurring}
+              page="selectedbookings"
+              id={booking._id}
+              email={localStorage.getItem('guestEmail')}
+            />
+          ) : (
+            <p className="none">No booking selected</p>
+          )}
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
 };
 
 export default SelectedBookings;

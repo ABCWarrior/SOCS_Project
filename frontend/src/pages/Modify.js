@@ -132,7 +132,6 @@ const Modify = () => {
       <Header />
       <div className="create-booking-container">
         <SideMenu />
-
         <div className="create-booking-content">
           <form onSubmit={handleSubmit} className="create-booking-form">
             <select
@@ -300,6 +299,7 @@ const Modify = () => {
       <div className="footer">
         <Footer />
       </div>
+
     </div>
   );
 };

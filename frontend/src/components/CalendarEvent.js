@@ -18,6 +18,7 @@ const id = localStorage.getItem("userId");
 
 const cancel = async ({ professor, date, startTime, endTime }) => {
   try {
+
     const response = await fetch(
       `http://localhost:5000/api/members/${id}/delete_booking`,
       {
@@ -250,6 +251,7 @@ const CalendarEvent = ({
               onClick={() => {
                 localStorage.setItem("requestBookingId", bookingId);
                 localStorage.setItem("requestProf", professor);
+
               }}
               className="modify-button"
             >
@@ -259,6 +261,7 @@ const CalendarEvent = ({
         ) : null}
       </div>
     </div>
+
   );
 };
 

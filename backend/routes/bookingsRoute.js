@@ -14,27 +14,27 @@ const bookingsRouter = Router();
 bookingsRouter.get('/:id', async (req, res) => {
   try {
     if (!ObjectId.isValid(req.params.id)) {
-      return res.status(400).json({ 
-        message: "Invalid booking code format" 
+      return res.status(400).json({
+        message: "Invalid booking code format"
       });
     }
 
-    const booking = await bookingsCollection.findOne({ 
-      _id: new ObjectId(req.params.id) 
+    const booking = await bookingsCollection.findOne({
+      _id: new ObjectId(req.params.id)
     });
 
     if (!booking) {
-      return res.status(404).json({ 
-        message: "Unable to find booking" 
+      return res.status(404).json({
+        message: "Unable to find booking"
       });
     }
 
     return res.status(200).json({
       message: "Successful booking query",
-      booking: { 
-        professor: booking.professor, 
-        date: booking.date, 
-        startTime: booking.startTime, 
+      booking: {
+        professor: booking.professor,
+        date: booking.date,
+        startTime: booking.startTime,
         endTime: booking.endTime,
         _id: booking._id,
         isRecurring: booking.isRecurring,
@@ -43,26 +43,11 @@ bookingsRouter.get('/:id', async (req, res) => {
     });
   } catch (error) {
     console.error('Booking query error:', error);
-    return res.status(500).json({ 
-      message: "Server error while finding booking" 
+    return res.status(500).json({
+      message: "Server error while finding booking"
     });
   }
 });
-
-// bookingsRouter.post('/:id', async (req, res) => {
-//  const { email } = req.body;
-//  try {
-//    const booking = bookingsCollection.findOne({ _id: req.params.id });
-//    if (booking == null) return res.status(500).json({ message: "Booking does not exist" });
-
-//    bookingsCollection.updateOne({ _id: booking._id }, { $push: { participants: email } });
-//    return res.status(201).json({ message: "Successfully added you as a participant" });
-//  }
-//  catch (err) {
-//    console.error(err);
-//    return res.status(500).json({ message: "Unable to add you as a participant" });
-//  }
-// })
 
 bookingsRouter.post('/:id/add_participants', async (req, res) => {
   const { email } = req.body;

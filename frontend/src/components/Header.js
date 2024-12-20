@@ -27,7 +27,7 @@ const Header = () => {
         throw new Error('No user credentials found');
       }
 
-      const response = await fetch(`http://localhost:5000/api/${userId}/logout`, {
+      const response = await fetch(`http://127.0.0.1:3000/api/${userId}/logout`, {
         method: 'POST',
         headers: {
           'token': token

@@ -25,7 +25,6 @@ const hasOverlappingBookings = (bookings, startMoment, endMoment, date, isRecurr
     if (isNewDateADayOfTheWeek && isCurrDateADayOfTheWeek && (DAYS_OF_THE_WEEK[newDate] !== DAYS_OF_THE_WEEK[currDate])) return;
     else if (isNewDateADayOfTheWeek && !isCurrDateADayOfTheWeek) {
       const tempDate = new Date(currDate);
-      console.log(tempDate, tempDate.getDay(), DAYS_OF_THE_WEEK[tempDate.getDay()], newDate)//test
       if (DAYS_OF_THE_WEEK[tempDate.getDay()] !== newDate) return;
     }
     else if (!isNewDateADayOfTheWeek && isCurrDateADayOfTheWeek) {
@@ -58,7 +57,6 @@ const overlappingBookingsList = (bookings, startMoment, endMoment, date, isRecur
     if (isNewDateADayOfTheWeek && isCurrDateADayOfTheWeek && (DAYS_OF_THE_WEEK[newDate] !== DAYS_OF_THE_WEEK[currDate])) return;
     else if (isNewDateADayOfTheWeek && !isCurrDateADayOfTheWeek) {
       const tempDate = new Date(currDate);
-      console.log(tempDate, tempDate.getDay(), DAYS_OF_THE_WEEK[tempDate.getDay()], newDate)//test
       if (DAYS_OF_THE_WEEK[tempDate.getDay()] !== newDate) return;
     }
     else if (!isNewDateADayOfTheWeek && isCurrDateADayOfTheWeek) {

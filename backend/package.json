@@ -4,9 +4,8 @@
   "description": "## To Get Started ### Install Node.js ``` # installs nvm (Node Version Manager) curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "build": "cd ../frontend && npm run build"
   },
   "author": "",
   "license": "ISC",

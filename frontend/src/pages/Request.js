@@ -93,129 +93,130 @@ const Request = () => {
         );
     };
 
+
   return (
     <div className="container">
-		<Header/>
-        <div className="request-booking-container">
-            <div className="request-booking-content">
-                <h1>Reschedule your appointment</h1>
-                <form onSubmit={handleSubmit} className="request-booking-form">
-                    <div className="request-date-time-container">
-                        <>
-                            <select
-                                name="date"
-                                value={formData.date}
-                                onChange={handleChange}
-                                className="dropdown"
-                            >
-                                <option value="" disabled>Date</option>
-                                {[...Array(31)].map((_, i) => (
-                                <option key={i} value={i + 1}>
-                                    {i + 1}
-                                </option>
-                                ))}
-                            </select>
+      <Header />
+      <div className="request-booking-container">
+        <div className="request-booking-content">
+          <h1>Reschedule your appointment</h1>
+          <form onSubmit={handleSubmit} className="request-booking-form">
+            <div className="request-date-time-container">
+              <>
+                <select
+                  name="date"
+                  value={formData.date}
+                  onChange={handleChange}
+                  className="dropdown"
+                >
+                  <option value="" disabled>Date</option>
+                  {[...Array(31)].map((_, i) => (
+                    <option key={i} value={i + 1}>
+                      {i + 1}
+                    </option>
+                  ))}
+                </select>
 
-                            <select
-                            name="month"
-                            value={formData.month}
-                            onChange={handleChange}
-                            className="dropdown"
-                            >
-                                <option value="" disabled>Month</option>
-                                {[
-                                    "January",
-                                    "February",
-                                    "March",
-                                    "April",
-                                    "May",
-                                    "June",
-                                    "July",
-                                    "August",
-                                    "September",
-                                    "October",
-                                    "November",
-                                    "December",
-                                ].map((month, i) => (
-                                    <option key={i} value={month}>
-                                        {month}
-                                    </option>
-                                ))}
-                            </select>
-                        </>
-                    </div>
-
-                    <div className="request-time-container">
-    <div className="request-time-row">
-        <label>From:</label>
-        <select
-            name="fromHour"
-            value={formData.fromHour}
-            onChange={handleChange}
-            className="dropdown request-time-dropdown"
-        >
-            <option value="" disabled>Hour</option>
-            {[...Array(24)].map((_, i) => (
-                <option key={i} value={i}>
-                    {i.toString().padStart(2, "0")}
-                </option>
-            ))}
-        </select>
-
-        <select
-            name="fromMin"
-            value={formData.fromMin}
-            onChange={handleChange}
-            className="dropdown request-time-dropdown"
-        >
-            <option value="" disabled>Min</option>
-            {[0, 15, 30, 45].map((min) => (
-                <option key={min} value={min}>
-                    {min.toString().padStart(2, "0")}
-                </option>
-            ))}
-        </select>
-    </div>
-
-    <div className="time-row">
-        <label>To:</label>
-        <select
-            name="toHour"
-            value={formData.toHour}
-            onChange={handleChange}
-            className="dropdown request-time-dropdown"
-        >
-            <option value="" disabled>Hour</option>
-            {[...Array(24)].map((_, i) => (
-                <option key={i} value={i}>
-                    {i.toString().padStart(2, "0")}
-                </option>
-            ))}
-        </select>
-
-        <select
-            name="toMin"
-            value={formData.toMin}
-            onChange={handleChange}
-            className="dropdown request-time-dropdown"
-        >
-            <option value="" disabled>Min</option>
-            {[0, 15, 30, 45].map((min) => (
-                <option key={min} value={min}>
-                    {min.toString().padStart(2, "0")}
-                </option>
-            ))}
-        </select>
-    </div>
-</div>
-
-                    <button type="submit" className="submit-button">
-                        Request
-                    </button>
-                </form>
+                <select
+                  name="month"
+                  value={formData.month}
+                  onChange={handleChange}
+                  className="dropdown"
+                >
+                  <option value="" disabled>Month</option>
+                  {[
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                    "July",
+                    "August",
+                    "September",
+                    "October",
+                    "November",
+                    "December",
+                  ].map((month, i) => (
+                    <option key={i} value={month}>
+                      {month}
+                    </option>
+                  ))}
+                </select>
+              </>
             </div>
+
+            <div className="request-time-container">
+              <div className="request-time-row">
+                <label>From:</label>
+                <select
+                  name="fromHour"
+                  value={formData.fromHour}
+                  onChange={handleChange}
+                  className="dropdown request-time-dropdown"
+                >
+                  <option value="" disabled>Hour</option>
+                  {[...Array(24)].map((_, i) => (
+                    <option key={i} value={i}>
+                      {i.toString().padStart(2, "0")}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  name="fromMin"
+                  value={formData.fromMin}
+                  onChange={handleChange}
+                  className="dropdown request-time-dropdown"
+                >
+                  <option value="" disabled>Min</option>
+                  {[0, 15, 30, 45].map((min) => (
+                    <option key={min} value={min}>
+                      {min.toString().padStart(2, "0")}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="time-row">
+                <label>To:</label>
+                <select
+                  name="toHour"
+                  value={formData.toHour}
+                  onChange={handleChange}
+                  className="dropdown request-time-dropdown"
+                >
+                  <option value="" disabled>Hour</option>
+                  {[...Array(24)].map((_, i) => (
+                    <option key={i} value={i}>
+                      {i.toString().padStart(2, "0")}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  name="toMin"
+                  value={formData.toMin}
+                  onChange={handleChange}
+                  className="dropdown request-time-dropdown"
+                >
+                  <option value="" disabled>Min</option>
+                  {[0, 15, 30, 45].map((min) => (
+                    <option key={min} value={min}>
+                      {min.toString().padStart(2, "0")}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" className="submit-button">
+              Request
+            </button>
+          </form>
         </div>
-        <Footer/>
+      </div>
+      <Footer />
     </div>
   );
 };

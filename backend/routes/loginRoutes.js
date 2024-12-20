@@ -30,7 +30,7 @@ loginRouter.post('/', async (req, res) => {
       // TODO: Make tokenCreation randomized on login
       const tokenDocument = tokenCreation(member._id.toString());
       await tokensCollection.insertOne(tokenDocument);
-      console.log("uniqueId for pages: ", member._id.toString());//test
+
       res.status(200).json({
         message: "Successful login",
         token: tokenDocument.tokenValidation.token,
