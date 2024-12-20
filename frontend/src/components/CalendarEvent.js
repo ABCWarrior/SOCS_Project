@@ -63,7 +63,7 @@ const requestDecision = async ({
 
   try {
     const response = await fetch(
-      `http://localhost:5000/api/members/${id}/request_appointments/confirm_or_deny`,
+      `http://localhost:5000/api/members/${id}/requested_appointments/confirm_or_deny`,
       {
         method: "POST",
         headers: {

@@ -109,8 +109,10 @@ membersRouter.post('/:member_id/requested_appointments/confirm_or_deny', async (
 
   if (answer) {
     const status = await createBookingServiceWithParticipant(req.params.member_id, professor, date, startTime, endTime, isRecurring, email);
-    return status == bookingsEnums.SUCCESSFUL_BOOKING_DELETION ?
-      res.status(201).json({ message: "Succesfullly created an appointment", code }) :
+    const returnedEnum = status.status
+    const bookingCode = status.bookingCode
+    return returnedEnum == bookingsEnums.SUCCESSFUL_BOOKING_CREATION ?
+      res.status(201).json({ message: "Succesfullly created an appointment", bookingCode }) :
       res.status(500).json({ message: "Failed to create booking", error: status });
   }
   else {
