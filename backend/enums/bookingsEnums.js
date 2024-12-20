@@ -1,3 +1,4 @@
+// Philip
 export const bookingsEnums = {
   SUCCESSFUL_BOOKING_EDIT: "successful booking edit",
   SUCCESSFUL_BOOKING_CREATION: "successful booking creation",

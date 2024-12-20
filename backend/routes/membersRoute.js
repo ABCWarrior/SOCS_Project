@@ -1,3 +1,4 @@
+// Philip
 import { Router } from 'express';
 
 import { privatePageAuthentication, logoutSecurity } from '../authentification/tokenAuthentification.js';

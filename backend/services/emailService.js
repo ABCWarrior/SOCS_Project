@@ -1,3 +1,4 @@
+// Philip
 import nodemailer from 'nodemailer';
 
 import { emailEnums } from '../enums/emailEnums.js';

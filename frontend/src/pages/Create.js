@@ -66,7 +66,7 @@ const CreateBooking = () => {
     var endTime = `${formData.toHour.padStart(2, "0")}:${formData.toMin.padStart(2, "0")}`;
 
     try {
-      const response = await fetch(`https://fall2024-comp307-group16.cs.mcgill.ca/apiapi/apiapi/members/${id}/create_booking`, {
+      const response = await fetch(`https://fall2024-comp307-group16.cs.mcgill.ca/apiapi/members/${id}/create_booking`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

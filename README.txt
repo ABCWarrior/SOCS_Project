@@ -1,6 +1,8 @@
 ## Website URL
 The website is live at: https://fall2024-comp307-group16.cs.mcgill.ca/
 
+Please note that the source code is meant to work only on the server, as the api calls will not work if ran locally.
+
 ## Team Contributions, for specific files, see the contributors as a comment at the beginning of the file
 
 | Name               | Contributions                                                                             |
