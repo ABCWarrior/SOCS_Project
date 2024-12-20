@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,  useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
@@ -8,6 +8,15 @@ const Intermediary = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      localStorage.setItem('isGuest', 'false');
+      localStorage.setItem('isBooking', 'true');
+      navigate('/SelectedBookings');
+    }
+  }, [navigate]);
 
   const handleGuestContinue = async (e) => {
     e.preventDefault();
