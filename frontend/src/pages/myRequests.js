@@ -6,18 +6,14 @@ import Footer from "../components/Footer.js";
 import "../styles/myBookings.css";
 
 function MyRequests() {
-  const [search, setSearch] = useState("");
   const [bookings, setBookings] = useState([]);
-
   const token = localStorage.getItem("token");
   const id = localStorage.getItem("userId");
-  // console.log("token", token) //test
-  // console.log("id", id) //test
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        fetch(
+        const response = await fetch(
           `http://127.0.0.1:5000/api/members/${id}/requested_appointments`,
           {
             method: "GET",
@@ -26,26 +22,28 @@ function MyRequests() {
               token: token,
             },
           }
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            console.log("data is", data); //test
-            const addBooking = (newBook) => {
-              const book = newBook.map((booking) => ({
-                professor: booking.requestedAppointment.professor,
-                date: booking.requestedAppointment.date,
-                startTime: booking.requestedAppointment.startTime,
-                endTime: booking.requestedAppointment.endTime,
-                _id: booking._id,
-                email: booking.requestingEmail
-              }))
-            }
-            setBookings((bookings) => [...bookings, ...book]);
-            });
+        );
+        const data = await response.json();
+
+        console.log("data is", data);
+
+        const mappedBookings = data.map((booking) => ({
+          professor: booking.requestedAppointment.professor,
+          date: booking.requestedAppointment.date,
+          startTime: booking.requestedAppointment.startTime,
+          endTime: booking.requestedAppointment.endTime,
+          _id: booking._id,
+          email: booking.requestingEmail,
+          professorDatabaseId: booking.requestedAppointment.professorDatabaseId
+        }));
+
+        setBookings(mappedBookings);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching appointments:", error);
+        setBookings([]);
       }
     };
+
     fetchData();
   }, [id, token]);
 
@@ -55,21 +53,24 @@ function MyRequests() {
       <main className="mybookings-container">
         <Sidebar />
         <div className="content">
-
           <div className="bookings-list">
-            {bookings.map((booking, index) => (
-              <CalendarEvent
-                key={index}
-                professor={booking.professor}
-                date={booking.date}
-                startTime={booking.startTime}
-                endTime={booking.endTime}
-                isRecurring={false}
-                page="myrequests"
-                bookingId={booking._id}
-                email={booking.email}
-              />
-            ))}
+            {bookings.length > 0 ? (
+              bookings.map((booking, index) => (
+                <CalendarEvent
+                  key={booking._id}
+                  professor={booking.professor}
+                  date={booking.date}
+                  startTime={booking.startTime}
+                  endTime={booking.endTime}
+                  isRecurring={false}
+                  page="myrequests"
+                  bookingId={booking._id}
+                  email={booking.email}
+                />
+              ))
+            ) : (
+              <p>No requested appointments found.</p>
+            )}
           </div>
         </div>
       </main>

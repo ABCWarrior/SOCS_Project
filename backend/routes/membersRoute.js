@@ -79,7 +79,6 @@ membersRouter.get('/:member_id/request_attendance', async (req, res) => {
   const { status, attendances } = await getMemberAttendance(email);
 
   if (status === bookingsEnums.SUCCESSFUL_BOOKING_QUERY) {
-    console.log(attendances)
     return res.status(200).json({ message: "Successfully fetched attendance data", attendances });
   }
   else {
@@ -88,7 +87,6 @@ membersRouter.get('/:member_id/request_attendance', async (req, res) => {
 });
 
 membersRouter.get('/:member_id/requested_appointments', async (req, res) => {
-  // console.log(req.params.member_id);//test
   const { token } = req.headers;
 
   if (!await privatePageAuthentication(token, req.params.member_id)) {
