@@ -26,8 +26,6 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // console.log('Login successful', data); //test
-        // console.log("email", email)
         localStorage.setItem("isGuest", "false");
 
         localStorage.setItem("token", data.token);
