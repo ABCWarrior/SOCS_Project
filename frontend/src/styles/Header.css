@@ -73,9 +73,6 @@
 .header-nav a[href="/booked-appointments"] {
     color: black;
 }
-.header-nav a[href="/booked-appointments"]:hover {
-    color: #77777A;
-}
 
 @media screen and (max-width: 768px) {
     .mobile-menu-icon {
