@@ -52,6 +52,10 @@
     color: #ED1B2F;
 }
 
+.header-nav a[href="/booked-appointments"] {
+    color: black;
+}
+
 .header-nav a[href="/register"] {
     color: black;
 }
@@ -61,6 +65,10 @@
 }
 
 .header-nav a[href="/register"]:hover {
+    color: #77777A;
+}
+
+.header-nav a[href="/booked-appointments"]:hover {
     color: #77777A;
 }
 
