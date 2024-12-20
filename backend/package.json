@@ -5,7 +5,11 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "build": "cd ../frontend && npm run build"
+    "build": "cd ../frontend && npm run build",
+    "start:pm2": "node ./node_modules/pm2/bin/pm2 start app.js --name 'backend' --exp-backoff-restart-delay=100",
+    "stop:pm2": "node ./node_modules/pm2/bin/pm2 stop backend",
+    "status:pm2": "node ./node_modules/pm2/bin/pm2 status",
+    "logs:pm2": "node ./node_modules/pm2/bin/pm2 logs backend"
   },
   "author": "",
   "license": "ISC",
@@ -18,5 +22,8 @@
     "mongosh": "^2.3.7",
     "nodemailer": "^6.9.16"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "pm2": "^5.4.3"
+  }
 }

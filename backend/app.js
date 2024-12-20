@@ -16,7 +16,7 @@ const port = process.env.BACKEND_PORT;
 app.use(express.static('../frontend/build'));
 
 app.use(cors({
-origin: `https://${process.env.HOESTNAME}`,
+origin: `https://${process.env.SERVER_HOSTNAME}`,
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'token', 'email'],
   credentials: true

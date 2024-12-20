@@ -37,7 +37,7 @@ const Registration = () => {
     }
 
     try {
-      const response = await fetch('https://fall2024-comp307-group16.cs.mcgill.ca/apiapi/login/registration', {
+      const response = await fetch("https://fall2024-comp307-group16.cs.mcgill.ca/apiapi/login/registration", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

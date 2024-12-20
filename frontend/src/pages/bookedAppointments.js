@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CalendarEvent from "../components/CalendarEvent.js";
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
-import "../styles/myBookings.css";
+import "../styles/bookedAppointments.css";
 
 function Booked() {
   const [bookings, setBookings] = useState([]);
