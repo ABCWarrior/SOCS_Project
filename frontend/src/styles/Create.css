@@ -1,0 +1,118 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.create-booking-container {
+    display: flex;
+    font-family: Arial, sans-serif;
+    background-color: #F6F8F9;
+}
+  
+.create-booking-content {
+    margin: 20px;
+    position: relative;
+    z-index: 1;
+    width: 420px;
+    height: auto;
+    padding-top: 60px;
+    padding-bottom: 50px;
+    padding-left: 40px;
+    padding-right: 40px;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+  
+.create-title {
+    margin-bottom: 20px;
+}
+  
+.create-booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+  
+.input-field,.dropdown {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.recurrence-dropdown {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 150px;
+    margin-bottom: 20px;
+}
+  
+.date-time-container, .time-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.time-container {
+    margin-bottom: 30px;
+}
+  
+.time-container label {
+    margin-right: 5px;
+}
+  
+.time-dropdown {
+    padding: 8px;
+    width: 70px !important;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+  
+.submit-button {
+    background-color: #ED1B2F;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    width: 394px;
+}
+  
+.submit-button:hover {
+    background-color: #ff7582;
+}
+
+@media screen and (max-width: 768px) {
+    .create-booking-content {
+        width: 220px;
+    }
+
+    .time-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .time-container > div {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .submit-button {
+        width: 220px;
+    }
+
+    .time-container {
+        margin-bottom: 14px;
+    }
+}

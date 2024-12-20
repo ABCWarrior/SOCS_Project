@@ -1,0 +1,7 @@
+# ignore keys file
+.env
+cs307-group16-key
+
+# ignore modules and platform specific files
+node_modules/
+.DS_Store

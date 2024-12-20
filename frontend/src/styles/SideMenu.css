@@ -1,0 +1,31 @@
+.SideMenu {
+    display: flex;
+    flex-direction: column;
+    background-color: #F6F8F9;
+    padding: 20px;
+}
+  
+.SideMenu-button {
+    background-color: #77777A;
+    color: white;
+    border-width: 0;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 4px;
+    margin-bottom: 14px;
+    margin-top: 0px;
+    text-decoration: none;
+}
+  
+.SideMenu-button.active {
+    background-color: #ED1B2F;
+}
+
+@media screen and (max-width: 768px) {
+    .SideMenu-button {
+        font-size: 14px;
+    }
+}
