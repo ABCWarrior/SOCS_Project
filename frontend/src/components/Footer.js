@@ -1,3 +1,5 @@
+//Louis
+
 import React, { useState, useEffect } from 'react';
 import '../styles/Footer.css';
 import logo from '../img/logo_bw.jpg';

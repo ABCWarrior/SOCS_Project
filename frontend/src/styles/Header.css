@@ -1,3 +1,5 @@
+/* Louis */
+
 .header-container {
     display: flex;
     justify-content: space-between;
@@ -50,6 +52,10 @@
 
 .header-nav a[href="/login"] {
     color: #ED1B2F;
+}
+
+.header-nav a[href="/booked-appointments"] {
+    color: black;
 }
 
 .header-nav a[href="/register"] {
