@@ -1,3 +1,5 @@
+//Celia
+
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "../styles/SideMenu.css"; // Add your styling here
