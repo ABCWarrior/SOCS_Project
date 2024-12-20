@@ -107,6 +107,13 @@ const Header = () => {
         ) : (
           <>
             <a
+              href="/booked-appointments"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <b>Booked Appointments</b>
+            </a>
+
+            <a
               id="register"
               href="/register"
               onClick={() => setIsMenuOpen(false)}
