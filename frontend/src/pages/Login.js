@@ -90,7 +90,16 @@ const Login = () => {
               />
             </div>
             <button type="submit" className="login-button">
-              <b>Log in</b>
+              <a
+                id="login"
+                href="/login"
+                onClick={() => {
+                  localStorage.setItem("isBooking", false);
+                  localStorage.setItem("selectedBookingCode", "");
+                }}
+              >
+                <b>Log in</b>
+              </a>
             </button>
           </form>
         </div>
