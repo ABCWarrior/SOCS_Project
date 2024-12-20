@@ -7,6 +7,7 @@ import { bookingsEnums } from '../enums/bookingsEnums.js';
 import database from '../database/connectDatabase.js';
 
 const bookingsCollection = database.collection(process.env.MONGO_BOOKINGS_COLLECTION);
+const membersCollection = database.collection(process.env.MONGO_MEMBERS_COLLECTION);
 
 const bookingsRouter = Router();
 
@@ -80,8 +81,11 @@ bookingsRouter.post('/:id/add_participants', async (req, res) => {
 
 bookingsRouter.post('/:booking_id/appointment_request', async (req, res) => {
   const { userEmail, professor, date, startTime, endTime } = req.body;
-  // console.log(req.params.booking_id)//test
   const { professorDatabaseId } = await bookingsCollection.findOne({ _id: new ObjectId(req.params.booking_id) })
+  if (!professorDatabaseId)
+    {
+      return res.status(500).json({message: "Professor not found"})
+    }
   const result = await createAppointmentRequestService(
     userEmail,
     professorDatabaseId,
