@@ -67,23 +67,25 @@ membersRouter.post('/:id/delete_booking', async (req, res) => {
     res.status(500).json({ message: "Failed to delete booking" });
 })
 
-//membersRouter.get('/:id/request_attendance', async (req, res) => {
-//  const { token, email } = req.headers;
-//
-//  if (!await privatePageAuthentication(token, req.params.id)) {
-//    res.redirect(301, '/');
-//    return;
-//  }
-//
-//  const { status, attendances } = await getMemberAttendance(email);
-//
-//  if (status === bookingsEnums.SUCCESSFUL_BOOKING_QUERY) {
-//    return res.status(200).json({ message: "Successfully fetched attendance data", attendances });
-//  }
-//  else {
-//    return res.status(500).json({ message: "Failed to fetch attendance data", attendances });
-//  }
-//});
+membersRouter.get('/:member_id/request_attendance', async (req, res) => {
+  console.log("Request recieved")
+  const { token, email } = req.headers;
+
+  if (!await privatePageAuthentication(token, req.params.member_id)) {
+    res.redirect(301, '/');
+    return;
+  }
+
+  const { status, attendances } = await getMemberAttendance(email);
+
+  if (status === bookingsEnums.SUCCESSFUL_BOOKING_QUERY) {
+    console.log(attendances)
+    return res.status(200).json({ message: "Successfully fetched attendance data", attendances });
+  }
+  else {
+    return res.status(500).json({ message: "Failed to fetch attendance data", attendances });
+  }
+});
 
 membersRouter.get('/:member_id/requested_appointments', async (req, res) => {
   // console.log(req.params.member_id);//test

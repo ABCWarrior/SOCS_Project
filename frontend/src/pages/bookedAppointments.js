@@ -48,7 +48,7 @@ function Booked() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetch(`http://127.0.0.1:5000/api/members/${id}/request_attendance`, {
+        await fetch(`http://localhost:5000/api/members/${id}/request_attendance`, {
           method: "GET",
           headers: {
             'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ function Booked() {
         })
           .then(res => res.json())
           .then(data => {
-            setBookings(data.all_bookings || []);
+            setBookings(data.attendances || []);
           })
       }
       catch (error) {

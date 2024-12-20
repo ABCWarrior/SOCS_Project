@@ -5,6 +5,7 @@ import database from '../database/connectDatabase.js';
 import { bookingsEnums } from '../enums/bookingsEnums.js';
 import sendAutomatedEmail from './emailService.js';
 
+const membersCollection = database.collection(process.env.MONGO_MEMBERS_COLLECTION);
 const bookingsCollection = database.collection(process.env.MONGO_BOOKINGS_COLLECTION)
 const requestAppointmentsCollection = database.collection(process.env.MONGO_REQUEST_APPOINTMENTS_COLLECTION);
 
@@ -76,21 +77,48 @@ const overlappingBookingsList = (bookings, startMoment, endMoment, date, isRecur
   return overlaps;
 }
 
+// To request all your attendances!
 export const getMemberAttendance = async (email) => {
+  console.log("Being Reached")
   try {
-    await membersCollection.findOne({ email, password: { $exists: true } })
-    return {
-      status: bookingsEnums.SUCCESSFUL_BOOKING_QUERY, attendances: bookingsCollection.find({ participants: { $in: [email] } })
+    // Ensure the member exists
+    const member = await membersCollection.findOne({ email, password: { $exists: true } });
+    if (member) {
+      // Get the attendances with all booking details
+      const attendances = await bookingsCollection.find({ 
+        participants: { $in: [email] } 
+      }).toArray();
+
+      // Clean the booking objects to avoid circular references
+      const cleanedAttendances = attendances.map(attendance => ({
+        _id: attendance._id,
+        professorDatabaseId: attendance.professorDatabaseId,
+        professor: attendance.professor,
+        date: attendance.date,
+        startTime: attendance.startTime,
+        endTime: attendance.endTime,
+        isRecurring: attendance.isRecurring,
+        participants: attendance.participants,
+      }));
+
+      return {
+        status: bookingsEnums.SUCCESSFUL_BOOKING_QUERY,
+        attendances: cleanedAttendances
+      };
     }
+    return {
+      status: bookingsEnums.MEMBER_NOT_FOUND,
+      attendances: []
+    };
   }
   catch (err) {
     console.error(err);
     return {
-      status: bookingsEnums.DATABASE_OPERATION_ERROR, attendances: []
-    }
+      status: bookingsEnums.DATABASE_OPERATION_ERROR,
+      attendances: []
+    };
   }
-}
-
+};
 export const getBookingDetailsForUser = async (bookingId) => {
   try {
     return { booking: await bookingsCollection.findOne({ _id: bookingId }) }
