@@ -22,22 +22,36 @@ function Booked() {
     }
   }, []);
 
+  let isFetching = false;  // Lock variable to ensure only one fetch call happens at a time
   const fetchDataForLoggedInUser = async () => {
+    if (isFetching) return;  // If a fetch request is already in progress, exit early
+
+    isFetching = true;  // Set the lock to true to indicate the fetch is in progress
+    console.log(id);
+    console.log(token);
+    console.log(userEmail);
+
     try {
-      await fetch(`http://localhost:5000/api/members/${id}/request_attendance`, {
+      const response = await fetch(`http://localhost:5000/api/members/${id}/request_attendance`, {
         method: "GET",
         headers: {
           'Content-Type': 'application/json',
           'token': token,
-          'email': userEmail,
-        },
-      })
-        .then(res => res.json())
-        .then(data => {
-          setBookings(data.attendances || []);
-        });
+          'email': userEmail
+        }
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setBookings(data.attendances || []);
+      } else {
+        console.error("Failed to fetch data:", data.message);
+      }
     } catch (error) {
-      console.log(error);
+      console.log("User error:", error);
+    } finally {
+      isFetching = false;  // Release the lock after the fetch is complete
     }
   };
 
@@ -55,7 +69,7 @@ function Booked() {
           setBookings(data.attendances || []);
         });
     } catch (error) {
-      console.log(error);
+      console.log("Guest error: ", error);
     }
   };
 
