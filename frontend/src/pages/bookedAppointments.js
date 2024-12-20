@@ -57,7 +57,7 @@ function Booked() {
 
   const fetchDataForGuestUser = async (email) => {
     try {
-      await fetch(`https://fall2024-comp307-group16.cs.mcgill.ca/apiapi/apiapi/guests/`, {
+      await fetch(`https://fall2024-comp307-group16.cs.mcgill.ca/apiapi/guests/`, {
         method: "GET",
         headers: {
           'Content-Type': 'application/json',
