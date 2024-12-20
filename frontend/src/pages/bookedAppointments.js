@@ -5,105 +5,126 @@ import Footer from '../components/Footer.js';
 import "../styles/myBookings.css";
 
 function Booked() {
-  const [search, setSearch] = useState("");
   const [bookings, setBookings] = useState([]);
-
-  const filteredBookings = () => {
-    return bookings.filter((booking) =>
-      booking.professor.toLowerCase().includes(search.toLowerCase())
-    )
-  }
-
-  //wrote 2 api one for guests which is the commented version and one for members, i'll let you guys do the 
-  //logic of knowing which one to call
-
-  // const userEmail = localStorage.getItem('guestEmail');
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       await fetch(`http://127.0.0.1:5000/api/guests/`, {
-  //         method: "GET",
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           'email': userEmail
-  //         }
-  //       })
-  //         .then(res => res.json())
-  //         .then(data => {
-  //           setBookings(data.all_bookings || []);
-  //         })
-  //     }
-  //     catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  //   fetchData()
-  // }, []);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [guestEmail, setGuestEmail] = useState("");
+  const [isEmailEntered, setIsEmailEntered] = useState(false);
 
   const userEmail = localStorage.getItem('guestEmail');
   const id = localStorage.getItem("userId");
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await fetch(`http://localhost:5000/api/members/${id}/request_attendance`, {
-          method: "GET",
-          headers: {
-            'Content-Type': 'application/json',
-            'token': token,
-            'email': userEmail
-          }
-        })
-          .then(res => res.json())
-          .then(data => {
-            setBookings(data.attendances || []);
-          })
-      }
-      catch (error) {
-        console.log(error)
-      }
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+      fetchDataForLoggedInUser();
     }
-    fetchData()
   }, []);
+
+  const fetchDataForLoggedInUser = async () => {
+    try {
+      await fetch(`http://localhost:5000/api/members/${id}/request_attendance`, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+          'token': token,
+          'email': userEmail,
+        },
+      })
+        .then(res => res.json())
+        .then(data => {
+          setBookings(data.attendances || []);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchDataForGuestUser = async (email) => {
+    try {
+      await fetch(`http://localhost:5000/api/guests/`, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+          'email': email,
+        },
+      })
+        .then(res => res.json())
+        .then(data => {
+          setBookings(data.attendances || []);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleEmailSubmit = (e) => {
+    e.preventDefault();
+    if (guestEmail) {
+      setIsEmailEntered(true);
+      fetchDataForGuestUser(guestEmail);
+    }
+  };
 
   return (
     <div className="container">
       <Header />
       <main className="mybookings-container">
         <div className="content">
-          <div className="header">
-            <input
-              type="text"
-              placeholder="Search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="search-bar"
-            />
-          </div>
-
-          <div className="bookings-list">
-            {filteredBookings().map((booking, index) => (
-              <CalendarEvent
-                key={index}
-                professor={booking.professor}
-                date={booking.date}
-                startTime={booking.startTime}
-                endTime={booking.endTime}
-                isRecurring={booking.isRecurring}
-                //these calendar events should have no buttons on the side, in my calendar implementation
-                //the last switch statement i return null for buttons so yeah should work if the page is an empty string
-                //else just make anoter swtich statement ig
-                page=""
-                bookingId="" //might need it idk, but since its just view i dont think so
-                email=""//same here
-              />
-            ))}
-          </div>
+          {isLoggedIn ? (
+            <div className="bookings-list">
+              {bookings.map((booking, index) => (
+                <CalendarEvent
+                  key={index}
+                  professor={booking.professor}
+                  date={booking.date}
+                  startTime={booking.startTime}
+                  endTime={booking.endTime}
+                  isRecurring={booking.isRecurring}
+                  page=""
+                  bookingId=""
+                  email=""
+                />
+              ))}
+            </div>
+          ) : (
+            <div>
+              {!isEmailEntered ? (
+                <div className="email-input">
+                  <p>Enter your email:</p>
+                  <form onSubmit={handleEmailSubmit}>
+                    <input
+                      type="email"
+                      placeholder="Enter email"
+                      value={guestEmail}
+                      onChange={(e) => setGuestEmail(e.target.value)}
+                    />
+                    <button type="submit">Submit</button>
+                  </form>
+                </div>
+              ) : (
+                <div className="bookings-list">
+                  {bookings.map((booking, index) => (
+                    <CalendarEvent
+                      key={index}
+                      professor={booking.professor}
+                      date={booking.date}
+                      startTime={booking.startTime}
+                      endTime={booking.endTime}
+                      isRecurring={booking.isRecurring}
+                      page=""
+                      bookingId=""
+                      email={guestEmail}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </main>
-      <div class="footer"><Footer /></div>
+      <div className="footer"><Footer /></div>
     </div>
   );
 }

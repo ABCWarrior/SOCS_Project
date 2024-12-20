@@ -13,15 +13,33 @@ export const getGuestAttendance = async (email) => {
         message: "This email is associated with an account. Please login to access your bookings."
       }
     }
+    const attendances = await bookingsCollection.find({ 
+      participants: { $in: [email] } 
+    }).toArray()
+
+    const cleanedAttendances = attendances.map(attendance => ({
+      _id: attendance._id,
+      professorDatabaseId: attendance.professorDatabaseId,
+      professor: attendance.professor,
+      date: attendance.date,
+      startTime: attendance.startTime,
+      endTime: attendance.endTime,
+      isRecurring: attendance.isRecurring,
+      participants: attendance.participants,
+    }))
+    
+    console.log(cleanedAttendances)
 
     return {
-      status: bookingsEnums.SUCCESSFUL_BOOKING_QUERY, attendances: bookingsCollection.find({ participants: { $in: [email] } })
+      status: bookingsEnums.SUCCESSFUL_BOOKING_QUERY,
+      attendances: cleanedAttendances
     }
   }
   catch (err) {
     console.error(err);
     return {
-      status: bookingsEnums.DATABASE_OPERATION_ERROR, attendances: []
+      status: bookingsEnums.DATABASE_OPERATION_ERROR,
+      attendances: []
     }
   }
 }
