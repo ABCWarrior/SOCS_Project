@@ -1,7 +1,7 @@
 ## Website URL
 The website is live at: https://fall2024-comp307-group16.cs.mcgill.ca/
 
-## Team Contributions
+## Team Contributions, for specific files, see the contributors as a comment at the beginning of the file
 
 | Name               | Contributions                                                                             |
 |--------------------|-------------------------------------------------------------------------------------------|
