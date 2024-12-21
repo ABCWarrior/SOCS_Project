@@ -64,7 +64,6 @@
 .calendar-event-actions button,
 .modify-button{
     width: 100%;
-    padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -151,7 +150,6 @@
 
     .calendar-event-actions button,
     .modify-button {
-        padding: 6px 12px;
         font-size: 13px;
     }
 }

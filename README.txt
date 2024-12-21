@@ -1,9 +1,9 @@
 ## Website URL
-The website is live at: https://fall2024-comp307-group16.cs.mcgill.ca/
+The website requires you to be on the McGill VPN and is live at: https://fall2024-comp307-group16.cs.mcgill.ca/
 
 If the website is not running:
 ```
-cd SOCS_PROJECT-MAIN/frontend
+cd frontend
 npm install
 cd ../backend
 npm install
@@ -32,7 +32,7 @@ Please note that the source code is meant to work only on the server, as the api
 |                    | modify, request,accept, deny, myBookings, myRequests, bookedAppointments, cancel). Made   |
 |                    | the CalendarEvent and SideMenu components.                                                |  
 |--------------------|-------------------------------------------------------------------------------------------|
-| Aakarsh Dhar       |                                                                                           |
+| Aakarsh Dhar       | Did 10% of the backend                                                                    |
 |                    | Did API testing through Postman                                                           |
 |                    | Made a tester to test functionality                                                       |
 |                    | Fixed some API issues on the frontend                                                     |
