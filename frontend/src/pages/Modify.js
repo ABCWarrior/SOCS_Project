@@ -1,3 +1,5 @@
+//Celia Shi
+
 import React, { useState } from "react";
 import SideMenu from "../components/SideMenu";
 import Header from "../components/Header.js";
@@ -79,7 +81,6 @@ const Modify = () => {
     const professor = localStorage.getItem("professorName");
     const id = localStorage.getItem("userId");
     const bookingId = localStorage.getItem("modifyBookingId");
-    // var date = formatDate
 
     try {
       const response = await fetch(

@@ -1,8 +1,8 @@
-//Celia
+//Celia Shi
 
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "../styles/SideMenu.css"; // Add your styling here
+import "../styles/SideMenu.css";
 
 function Sidebar() {
     return (

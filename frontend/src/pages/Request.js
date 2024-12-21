@@ -1,9 +1,10 @@
+//Celia Shi
+
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
 import "../styles/Request.css";
-import { Navigate } from "react-router-dom";
 
 const Request = () => {
     const navigate = useNavigate();
@@ -89,13 +90,12 @@ const Request = () => {
         );
     };
 
-
   return (
     <div className="container">
       <Header />
       <div className="request-booking-container">
         <div className="request-booking-content">
-          <h1>Reschedule your appointment</h1>
+          <h1>Make a request</h1>
           <form onSubmit={handleSubmit} className="request-booking-form">
             <div className="request-date-time-container">
               <>

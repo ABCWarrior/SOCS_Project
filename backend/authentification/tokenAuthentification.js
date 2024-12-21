@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import database from '../database/connectDatabase.js';
 
 const tokensCollection = database.collection(process.env.MONGO_TOKENS_COLLECTION);
+await tokensCollection.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 900 });
 
 export const tokenCreation = (id) => {
   const token = crypto.createHash('sha256').update(id.toString()).digest('hex');

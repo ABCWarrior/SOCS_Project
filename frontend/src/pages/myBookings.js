@@ -1,3 +1,5 @@
+//Celia Shi
+
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/SideMenu";
 import CalendarEvent from "../components/CalendarEvent";
@@ -33,33 +35,30 @@ function MyBookings() {
     fetchData()
   }, []);
 
-  return (
-    <div className="container">
-      <Header />
-      <main className="mybookings-container">
-        <Sidebar />
-        <div className="content">
-
-          <div className="bookings-list">
-            {bookings.map((booking, index) => (
-              <CalendarEvent
-                key={index}
-                professor={booking.professor}
-                date={booking.date}
-                startTime={booking.startTime}
-                endTime={booking.endTime}
-                isRecurring={booking.isRecurring}
-                page="mybookings"
-                bookingId={booking._id}
-                email=""
-              />
-            ))}
-          </div>
-        </div>
-      </main>
-      <div class="footer"><Footer /></div>
-    </div>
-  );
+return (
+  <div className="container">
+    <Header />
+    <main className="mybookings-container">
+      	<Sidebar />
+	      <div className="content">
+          {bookings.map((booking, index) => (
+            <CalendarEvent
+              key={index}
+              professor={booking.professor}
+              date={booking.date}
+              startTime={booking.startTime}
+              endTime={booking.endTime}
+              isRecurring={booking.isRecurring}
+              page="mybookings"
+              bookingId={booking._id}
+              email=""
+            />
+          ))}
+      </div>
+    </main>
+    <Footer />
+  </div>
+);
 }
 
 export default MyBookings;

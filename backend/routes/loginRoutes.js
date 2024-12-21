@@ -7,8 +7,6 @@ import { tokenCreation, passwordHashingForRegistration } from '../authentificati
 const membersCollection = database.collection(process.env.MONGO_MEMBERS_COLLECTION);
 const tokensCollection = database.collection(process.env.MONGO_TOKENS_COLLECTION);
 
-await tokensCollection.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 900 });
-
 const loginRouter = Router();
 
 

@@ -1,4 +1,4 @@
-// Philip
+// Philip + Aakarsh Dhar
 import moment from 'moment';
 import { ObjectId } from 'mongodb';
 
@@ -76,6 +76,7 @@ const overlappingBookingsList = (bookings, startMoment, endMoment, date, isRecur
   return overlaps;
 }
 
+// This is the only function Aakarsh Dhar worked on in this file
 // To request all your attendances!
 export const getMemberAttendance = async (email) => {
   console.log("Being Reached")
@@ -185,11 +186,7 @@ export const createBookingServiceWithParticipant = async (professorDatabaseId, p
 
 export const addParticipantToBookingService = async (meetingID, email) => {
   try {
-    console.log(meetingID)
-
     const booking = await bookingsCollection.findOne({ _id: new ObjectId(meetingID) });
-
-    console.log(booking);
 
     if (!booking) {
       return { status: bookingsEnums.BOOKING_NOT_FOUND, message: "Booking not found" };

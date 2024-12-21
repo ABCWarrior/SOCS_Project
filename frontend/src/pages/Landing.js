@@ -23,7 +23,6 @@ const Landing = () => {
             });
     
             const data = await response.json();
-            // console.log(data) //test
     
             if (response.ok) {
                 localStorage.setItem('selectedBookingCode', searchCode);

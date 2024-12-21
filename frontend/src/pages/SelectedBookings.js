@@ -18,33 +18,7 @@ const SelectedBookings = () => {
         }
     }, []);
 
-  if (!booking) {
-    return (
-        <div className="bookings-container">
-            <Header />
-            <main className="landing-main">
-                <div className="content-wrapper">
-                    {booking ? (
-                        <CalendarEvent 
-                            professor={booking.professor}
-                            date={booking.date}
-                            startTime={booking.startTime}
-                            endTime={booking.endTime}
-                            isRecurring={booking.isRecurring}
-                            page="selectedbookings"
-                            bookingId={booking._id}
-                            email={localStorage.getItem('guestEmail')}
-                        />
-                    ) : (
-                        <p className="none">No booking selected</p>
-                    )}
-                </div>
-            </main>
-            <Footer />
-        </div>
-
-    );
-  }
+  console.log("booking", booking)
 
   return (
     <div className="bookings-container">
@@ -59,7 +33,7 @@ const SelectedBookings = () => {
               endTime={booking.endTime}
               isRecurring={booking.isRecurring}
               page="selectedbookings"
-              id={booking._id}
+              bookingId={booking._id}
               email={localStorage.getItem('guestEmail')}
             />
           ) : (

@@ -6,99 +6,135 @@
     background-color: white;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    padding: 20px;
     margin-bottom: 20px;
+    position: relative;
+    gap: 24px; 
+    padding: 16px;
+    width: calc(100% - 32px);
+    gap: 16px;
 }
 
 .calendar-event-number {
-    font-size: 87px;
-    font-weight: 600;
+    font-size: 64px;
+    font-weight: 700;
     color: #ED1B2F;
-    margin-right: 20px;
-    margin-left: 10px;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 80px;
+    text-align: center;
 }
 
 .calendar-event-details {
-    flex-grow: 1;
+    flex: 1;
+    min-width: 0; 
+    padding-right: 24px; 
+    text-align: left;
 }
 
 .calendar-event-month {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     color: #333;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    text-align: left;
 }
 
 .calendar-event-professor {
     font-size: 16px;
     color: #666;
-    margin-bottom: 5px;
+    text-align: left;
+    margin-bottom: 4px;
 }
 
 .calendar-event-time {
-    font-size: 16px;
+    font-size: 14px;
     color: #666;
+    margin-bottom: 4px;
+    text-align: left;
 }
 
 .calendar-event-actions {
     display: flex;
     flex-direction: column;
-    margin-left: 200px;
-    margin-right: 10px;
+    flex-shrink: 0;
+    gap: 8px; 
+    width: 120px; 
 }
 
-.calendar-event-actions button {
+.calendar-event-actions button,
+.modify-button{
+    width: 100%;
+    padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.2s ease;
     color: white;
     background-color: #ED1B2F;
-    border-width: 0;
-    padding: 4px 20px;
-    font-size: 16px;
+    border: none;
+    font-size: 14px;
     font-weight: 500;
-}
-
-.calendar-event-actions button:hover {
-    transition: background-color 0.3s ease;
-    background-color: #ff7582;
-}
-
-.modify-button {
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    color: white;
-    background-color: #ED1B2F;
-    border-width: 0;
-    padding: 4px 20px;
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 10px;
-    text-decoration: none;
     text-align: center;
-    border-radius: 4px;
-    width: 125px;
+    text-decoration: none;
+    line-height: 1.4;
 }
 
-.accept-button {
-    margin-bottom: 10px;
-    width: 125px;
+.calendar-event-actions button:hover,
+.modify-button:hover {
+    background-color: #ff3d51;
+    transform: translateY(-1px);
 }
 
-.reschedule-button {
-    margin-bottom: 10px;
+.calendar-event-actions button:active,
+.modify-button:active {
+    transform: translateY(0);
 }
 
+.modify-button,
+.accept-button,
+.reschedule-button,
 .cancel-button {
-    margin-bottom: 10px;
+    margin-bottom: 0;
 }
+
+.nav-link {
+    width: 100%;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: white;
+    background-color: #ED1B2F;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    line-height: 1.4;
+}
+
+.nav-link:hover {
+    background-color: #ff3d51;
+    transform: translateY(-1px);
+}
+
+.nav-link:active {
+    transform: translateY(0);
+}
+
 
 @media screen and (max-width: 768px) {
-    .calendar-event-actions {
-        margin-left: 40px;
+    .calendar-event-number {
+        font-size: 48px;
+        width: 60px;
     }
+
+    .calendar-event-details {
+        padding-right: 16px;
+    }
+
     .calendar-event-month {
-        font-size: 16px;
+        font-size: 18px;
+        margin-bottom: 6px;
     }
     
     .calendar-event-professor {
@@ -106,23 +142,36 @@
     }
     
     .calendar-event-time {
-        font-size: 14px;
+        font-size: 13px;
     }
 
-    .calendar-event-number {
-        font-size: 56px;
-        font-weight: 800;
+    .calendar-event-actions {
+        width: 100px;
     }
-    .calendar-event-actions button{
-        padding: 4px 8px;
-        width: 80px;
-        font-size: 14px;
-        font-weight: 500;
-    }
-    .modify-button, .cancel-button{
-        padding: 4px 8px !important;
-        width: 80px !important;
-        font-size: 14px !important;
-        font-weight: 500 !important;
+
+    .calendar-event-actions button,
+    .modify-button {
+        padding: 6px 12px;
+        font-size: 13px;
     }
 }
+
+@media screen and (max-width: 480px) {
+    .calendar-event-container {
+        flex-wrap: wrap;
+    }
+
+    .calendar-event-actions {
+        width: 100%;
+        flex-direction: row;
+        justify-content: flex-start;
+        margin-top: 12px;
+    }
+
+    .calendar-event-actions button,
+    .modify-button {
+        width: auto;
+        flex: 1;
+    }
+}
+

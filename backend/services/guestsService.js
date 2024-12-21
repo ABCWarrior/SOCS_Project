@@ -1,3 +1,5 @@
+//Philip Luo + Aakarsh Dhar
+
 import database from '../database/connectDatabase.js';
 import { bookingsEnums } from '../enums/bookingsEnums.js';
 const membersCollection = database.collection(process.env.MONGO_MEMBERS_COLLECTION);

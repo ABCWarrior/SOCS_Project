@@ -1,4 +1,4 @@
-//Celia
+//Celia 
 
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -246,7 +246,7 @@ const CalendarEvent = ({
               }
             >
               {" "}
-              book{" "}
+              Book{" "}
             </button>
             <NavLink
               to="/request"

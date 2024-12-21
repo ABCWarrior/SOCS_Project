@@ -1,3 +1,4 @@
+//Aakarsh Dhar
 import React, { useState, useEffect } from "react";
 import CalendarEvent from "../components/CalendarEvent.js";
 import Header from '../components/Header.js';
@@ -22,17 +23,9 @@ function Booked() {
     }
   }, []);
 
-  let isFetching = false;  // Lock variable to ensure only one fetch call happens at a time
   const fetchDataForLoggedInUser = async () => {
-    if (isFetching) return;  // If a fetch request is already in progress, exit early
-
-    isFetching = true;  // Set the lock to true to indicate the fetch is in progress
-    console.log(id);
-    console.log(token);
-    console.log(userEmail);
-
     try {
-      const response = await fetch(`http://fall2024-comp307-group16.cs.mcgill.ca/apiapi/members/${id}/request_attendance`, {
+      const response = await fetch(`https://fall2024-comp307-group16.cs.mcgill.ca/apiapi/members/${id}/request_attendance`, {
         method: "GET",
         headers: {
           'Content-Type': 'application/json',
@@ -45,13 +38,12 @@ function Booked() {
 
       if (response.ok) {
         setBookings(data.attendances || []);
+        console.log()
       } else {
         console.error("Failed to fetch data:", data.message);
       }
     } catch (error) {
       console.log("User error:", error);
-    } finally {
-      isFetching = false;  // Release the lock after the fetch is complete
     }
   };
 
@@ -97,7 +89,7 @@ function Booked() {
                   endTime={booking.endTime}
                   isRecurring={booking.isRecurring}
                   page=""
-                  bookingId=""
+                  bookingId={booking._id}
                   email=""
                 />
               ))}

@@ -1,3 +1,5 @@
+//Celia Shi Aakarsh Dhar
+
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/SideMenu.js";
 import CalendarEvent from "../components/CalendarEvent";
@@ -58,7 +60,7 @@ function MyRequests() {
             {bookings.length > 0 ? (
               bookings.map((booking, index) => (
                 <CalendarEvent
-                  key={booking._id}
+                  key={index}
                   professor={booking.professor}
                   date={booking.date}
                   startTime={booking.startTime}

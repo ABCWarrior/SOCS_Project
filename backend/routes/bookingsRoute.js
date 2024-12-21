@@ -1,3 +1,4 @@
+// Philip
 import { Router } from 'express';
 import { ObjectId } from 'mongodb';
 
@@ -7,7 +8,6 @@ import { bookingsEnums } from '../enums/bookingsEnums.js';
 import database from '../database/connectDatabase.js';
 
 const bookingsCollection = database.collection(process.env.MONGO_BOOKINGS_COLLECTION);
-const membersCollection = database.collection(process.env.MONGO_MEMBERS_COLLECTION);
 
 const bookingsRouter = Router();
 

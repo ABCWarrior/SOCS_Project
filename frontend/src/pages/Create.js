@@ -1,3 +1,5 @@
+//Celia Shi
+
 import React, { useState } from "react";
 import SideMenu from "../components/SideMenu";
 import Header from '../components/Header.js';
@@ -111,7 +113,6 @@ const CreateBooking = () => {
 
           <form onSubmit={handleSubmit} className="create-booking-form">
 
-            {/* Recurrence Dropdown */}
             <select
               name="recurrence"
               value={formData.recurrence}
@@ -125,10 +126,8 @@ const CreateBooking = () => {
               <option value="weekly">Weekly</option>
             </select>
 
-            {/* Date and Month Dropdowns */}
             <div className="date-time-container">
               {formData.recurrence === "weekly" ? (
-                // Day selection for weekly recurrence
                 <select
                   name="day"
                   value={formData.day}
@@ -145,7 +144,6 @@ const CreateBooking = () => {
                   )}
                 </select>
               ) : (
-                // Default Date and Month selection
                 <>
                   <select
                     name="date"
@@ -191,7 +189,6 @@ const CreateBooking = () => {
               )}
             </div>
 
-            {/* Time Selection */}
             <div className="time-container">
               <div>
                 <label>From:</label>
@@ -256,7 +253,6 @@ const CreateBooking = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
             <button type="submit" className="submit-button">
               Submit
             </button>
